@@ -7,6 +7,7 @@ import { AuthData } from '../../providers/auth-data';
 import { TranslateService } from 'ng2-translate';
 import { NavController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
+import { AdminPage } from '../admin/admin';
 
 @Component({
   templateUrl: 'tabs.html'
@@ -14,7 +15,7 @@ import { LoginPage } from '../login/login';
 export class TabsPage {
 
   tab1Root = HomePage;
-  tab2Root = ChatPage;
+  tab2Root = AdminPage;
   tab3Root = ContactPage;
   constructor(public nav: NavController, public authData: AuthData, public translate: TranslateService) {
     this.translate.setDefaultLang('en');

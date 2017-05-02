@@ -7,6 +7,7 @@ import { TranslateService } from 'ng2-translate';
 import { Component, NgZone } from '@angular/core';
 import firebase from 'firebase';
 import { LoginPage } from '../pages/login/login';
+import { AdminPage } from '../pages/admin/admin';
 ///////////////////////////////
 import { Push, PushObject, PushOptions } from '@ionic-native/push';
 
