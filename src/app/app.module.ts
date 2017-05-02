@@ -1,23 +1,9 @@
-import { NgModule, ErrorHandler } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
-import { MyApp } from './app.component';
-
+//Pages
 import { AboutPage } from '../pages/about/about';
 import { ChatPage } from '../pages/chat/chat';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { Http } from '@angular/http';
-
-import {HttpModule} from '@angular/http';
-import {TranslateModule, TranslateStaticLoader, TranslateLoader} from "ng2-translate";
-export function createTranslateLoader(http: Http) {
-    return new TranslateStaticLoader(http, './assets/i18n', '.json');
-}
-
 import { HomePage2 } from '../pages/home2/home';
 import { EventCreatePage } from '../pages/event-create/event-create';
 import { EventDetailPage } from '../pages/event-detail/event-detail';
@@ -27,13 +13,14 @@ import { ProfilePage } from '../pages/profile/profile';
 import { ResetPasswordPage } from '../pages/reset-password/reset-password';
 import { SignupPage } from '../pages/signup/signup';
 import { AdminPage } from '../pages/admin/admin';
-import { AuthData } from '../providers/auth-data';
-import { EventData } from '../providers/event-data';
-import { ProfileData } from '../providers/profile-data';
+import { TaskTypesPage } from '../pages/task-types/task-types';
+import { ChatViewPage } from '../pages/chat-view/chat-view';
+
+//Providers
 import { Camera } from '@ionic-native/camera';
 import { GetProviders } from './app.providers';
-/////////////////////////////////////////////////////
-import { ChatViewPage } from '../pages/chat-view/chat-view';
+
+//Others
 import { AngularFireModule } from 'angularfire2';
 export const firebaseConfig = {
     apiKey: "AIzaSyB5IMqaEgPDA_Js_T6ZlcjoqaZBoFQYTtw",
@@ -43,11 +30,19 @@ export const firebaseConfig = {
       storageBucket: "project-10af2.appspot.com",
       messagingSenderId: "919226115038"
 };
-/*const myFirebaseAuthConfig = {
-  provider: AuthProviders.Password,
-  method: AuthMethods.Password
-}*/
-////////////////////////////////////////////////////////
+
+import { NgModule, ErrorHandler } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { MyApp } from './app.component';
+import {HttpModule} from '@angular/http';
+import {TranslateModule, TranslateStaticLoader, TranslateLoader} from "ng2-translate";
+export function createTranslateLoader(http: Http) {
+    return new TranslateStaticLoader(http, './assets/i18n', '.json');
+}
+import { Http } from '@angular/http';
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
 
 @NgModule({
   declarations: [
@@ -66,7 +61,8 @@ export const firebaseConfig = {
     ProfilePage,
     ResetPasswordPage,
     SignupPage,
-    AdminPage
+    AdminPage,
+    TaskTypesPage
   ],
   imports: [
     BrowserModule,
@@ -85,9 +81,7 @@ export const firebaseConfig = {
             useFactory: (createTranslateLoader),
             deps: [Http]
         }),
-//////////////////////////////////////////////////////
   AngularFireModule.initializeApp(firebaseConfig)
-  /////////////////////////////////////////////////////
   ],
 
   bootstrap: [IonicApp],
@@ -107,7 +101,8 @@ export const firebaseConfig = {
     ProfilePage,
     ResetPasswordPage,
     SignupPage,
-    AdminPage
+    AdminPage,
+    TaskTypesPage
   ],
   providers: GetProviders()
 })

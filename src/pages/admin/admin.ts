@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { TaskTypesPage } from '../task-types/task-types';
 
-/**
- * Generated class for the Admin page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+
 @IonicPage()
 @Component({
   selector: 'page-admin',
@@ -14,7 +10,11 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class AdminPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public nav: NavController, public navParams: NavParams) {
+  }
+
+   goToTaskTypesPage(): void {
+    this.nav.push(TaskTypesPage);
   }
 
   ionViewDidLoad() {
