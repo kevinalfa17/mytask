@@ -8,12 +8,67 @@
 
 <ion-content padding text-center>
 
-  <div color="danger">
+  <!--<div color="danger">
     <h2>{{ "HELLOHOMEPAGE" | translate }}</h2>
     <p>
       {{ "INFOHOMEPAGE"| translate}}
     </p>
   </div>
-  <button ion-button (click)="goToHomePage2()">HP2</button>
+  <button ion-button (click)="goToHomePage2()">HP2</button>-->
+
+  <ion-list>
+  <ion-item>
+    <ion-thumbnail item-left>
+      <img src="assets/img/logo2.jpg">
+    </ion-thumbnail>
+    <h2>Task name 1</h2>
+    <p>Other task information 1</p>
+    <button ion-button clear item-right>View</button>
+  </ion-item>
+<!--DELETE DOWN AND ADD NGFOR-->
+  <ion-item>
+    <ion-thumbnail item-left>
+      <img src="assets/img/logo2.jpg">
+    </ion-thumbnail>
+    <h2>Task name 2</h2>
+    <p>Other task information 2</p>
+    <button ion-button clear item-right>View</button>
+  </ion-item>
+
+  <ion-item>
+    <ion-thumbnail item-left>
+      <img src="assets/img/logo2.jpg">
+    </ion-thumbnail>
+    <h2>Task name 3</h2>
+    <p>Other task information 3</p>
+    <button ion-button clear item-right>View</button>
+  </ion-item>
+
+ <ion-item>
+    <ion-thumbnail item-left>
+      <img src="assets/img/logo2.jpg">
+    </ion-thumbnail>
+    <h2>Task name 4</h2>
+    <p>Other task information 4</p>
+    <button ion-button clear item-right>View</button>
+  </ion-item>
+
+   <ion-item>
+    <ion-thumbnail item-left>
+      <img src="assets/img/logo2.jpg">
+    </ion-thumbnail>
+    <h2>Task name 5</h2>
+    <p>Other task information 5</p>
+    <button ion-button clear item-right>View</button>
+  </ion-item>
+
+  <!--DELETE UP AND ADD NGFOR-->
+</ion-list>
+
+
+
+ <ion-fab right bottom edge>
+    <button ion-fab color="danger"><ion-icon name="add"></ion-icon></button>
+</ion-fab>
 
 </ion-content>
