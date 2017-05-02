@@ -22,5 +22,9 @@
     "TEXTPASSMORE6": "Tu contrasena debe tener mas de 6 caracteres",
     "LOGFACE": "Ingresar con Facebook",
     "LOGTWITTER": "Ingresar con Twitter",
-    "LOGGOOGLE": "Ingresar con Google"
+    "LOGGOOGLE": "Ingresar con Google",
+    "ADMINTITLE": "Administracion",
+    "TASKTYPES": "Tipos de tareas",
+    "NOTIFICATIONS": "Notificaciones",
+    "TYPESTITLE":"Tipos de tarea"
 }
