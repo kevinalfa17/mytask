@@ -1,0 +1,26 @@
+{
+    "PROJECTNAME":"Project Home Page",
+    "HELLOHOMEPAGE": "Welcome to the home page of the project!!",
+    "INFOHOMEPAGE": "This is the main window of the Project.",
+    "WORDTAB1":"Home",
+    "WORDTAB2":"Messenger",
+    "WORDTAB3":"Contact",
+    "WORDTAB4":"Activities",
+    "WORDPROFILE":"Profile",
+
+    "WORDEMAIL": "Email",
+    "WORDNAME": "Name",
+    "TEXTDOB": "Date of birth",
+
+    "WORDPASSWORD": "Password",
+    "EMAILBACKTEXT": "Your email address",
+    "PASSBACKTEXT": "Your password",
+    "WORDLOGIN": "Login",
+    "TEXTNA": "Create a new account",
+    "TEXTFMP": "I forgot my password",
+    "TEXTENTERVALIDEMAIL": "Please enter a valid email",
+    "TEXTPASSMORE6": "Your password needs more than 6 characters",
+    "LOGFACE": "Login with Facebook",
+    "LOGTWITTER": "Login with Twitter",
+    "LOGGOOGLE": "Login with Google"
+}

@@ -1,0 +1,26 @@
+{
+    "PROJECTNAME":"Pagina principal del projecto",
+    "HELLOHOMEPAGE": "Bienvenido a la pagina principal del proyecto!!",
+    "INFOHOMEPAGE": "Esta es la ventana principal del Proyecto.",
+    "WORDTAB1":"Inicio",
+    "WORDTAB2":"Mensajeria",
+    "WORDTAB3":"Contactos",
+    "WORDTAB4":"Actividades",
+    "WORDPROFILE":"Perfil",
+
+    "WORDEMAIL": "Correo",
+    "WORDNAME": "Nombre",
+    "TEXTDOB": "Fecha de nacimiento",
+
+    "WORDPASSWORD": "Constrasena",
+    "EMAILBACKTEXT": "Tu direccion electronica",
+    "PASSBACKTEXT": "Tu contrasena",
+    "WORDLOGIN": "Ingresar",
+    "TEXTNA": "CREAR NUEVA CUENTA",
+    "TEXTFMP": "OLVIDE MI CONTRASENA",
+    "TEXTENTERVALIDEMAIL": "Por favor ingrese un email valido",
+    "TEXTPASSMORE6": "Tu contrasena debe tener mas de 6 caracteres",
+    "LOGFACE": "Ingresar con Facebook",
+    "LOGTWITTER": "Ingresar con Twitter",
+    "LOGGOOGLE": "Ingresar con Google"
+}

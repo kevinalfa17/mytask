@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle><ion-icon name="apps"></ion-icon>
+    </button>
+    <ion-title>{{"PROJECTNAME" | translate }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding text-center>
+
+  <div color="danger">
+    <h2>{{ "HELLOHOMEPAGE" | translate }}</h2>
+    <p>
+      {{ "INFOHOMEPAGE"| translate}}
+    </p>
+  </div>
+  <button ion-button (click)="goToHomePage2()">HP2</button>
+
+</ion-content>

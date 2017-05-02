@@ -1,0 +1,24 @@
+<ion-tabs color="terceary">
+  <ion-tab [root]="tab1Root" tabTitle=" {{'WORDTAB1' | translate}}" tabIcon="home">
+    <ion-nav #Menu [root]="tab1Root"></ion-nav>
+  </ion-tab>
+  <ion-tab [root]="tab2Root" tabTitle=" {{'WORDTAB4' | translate}}" tabIcon="globe"><ion-nav #Menu [root]="tab2Root"></ion-nav></ion-tab>
+  <ion-tab [root]="tab3Root" tabTitle=" {{'WORDTAB2' | translate}}" tabIcon="text"><ion-nav #Menu [root]="tab3Root"></ion-nav></ion-tab>
+</ion-tabs>
+
+
+<ion-menu type="overlay" [content]="Menu">
+  <ion-content>
+    <ion-list>
+
+      <button ion-button icon-only (click)="gotoProfile()">
+        <ion-icon name="person"></ion-icon>
+        </button>
+      <div>{{ "HELLOHOMEPAGE" | translate }}</div>
+      <p>menu content, could be list items</p>
+      <p>menu content, could be list items</p>
+      <button ion-button (click)="translateToSpanish()">Traducir esp</button>
+      <button ion-button (click)="translateToEnglish()">Traducir ing</button>
+    </ion-list>
+  </ion-content>
+</ion-menu>

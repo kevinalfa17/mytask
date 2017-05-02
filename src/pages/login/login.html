@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>
+      {{"WORDLOGIN" | translate }}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding center text-center>
+  <img src="http://static.tumblr.com/5c90a92aa8597626a00a0845eea82ca3/e5nd402/pEdn4g1vc/tumblr_static_kvycde7padscokkwgs8k88oc.png"
+    alt="Logo" height="100" width="100">
+
+  <form [formGroup]="loginForm" (submit)="loginUser()" novalidate>
+
+    <ion-item>
+      <ion-label stacked>{{ "WORDEMAIL" | translate }}</ion-label>
+      <ion-input #email formControlName="email" type="email" placeholder=" {{'TEXTENTERVALIDEMAIL' | translate}}" [class.invalid]="!loginForm.controls.email.valid && loginForm.controls.email.dirty"></ion-input>
+    </ion-item>
+    <ion-item class="error-message" *ngIf="!loginForm.controls.email.valid  && loginForm.controls.email.dirty">
+      <p>{{"TEXTENTERVALIDEMAIL"| translate}}</p>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>{{"WORDPASSWORD" | translate }}</ion-label>
+      <ion-input #password formControlName="password" type="password" placeholder=" {{'PASSBACKTEXT' | translate}}" [class.invalid]="!loginForm.controls.password.valid && loginForm.controls.password.dirty"></ion-input>
+    </ion-item>
+    <ion-item class="error-message" *ngIf="!loginForm.controls.password.valid  && loginForm.controls.password.dirty">
+      <p>{{"TEXTPASSMORE6"| translate}}</p>
+    </ion-item>
+
+    <button ion-button block type="submit">
+      {{"WORDLOGIN" | translate }}
+    </button>
+
+  </form>
+  <button ion-button icon-left (click)="facebookLogin()">
+      <ion-icon name="logo-facebook"></ion-icon>
+      {{"LOGFACE" | translate}}
+    </button>
+
+  <button ion-button icon-left (click)="twitterLogin()">
+    <ion-icon name="logo-twitter"></ion-icon>
+    {{"LOGTWITTER" | translate}}
+  </button>
+
+  <button ion-button icon-left color = "danger" (click)="googleLogin()" *ngIf="!userProfile">
+    <ion-icon name="logo-google"></ion-icon>
+    {{"LOGGOOGLE" | translate}}
+  </button>
+
+  <button ion-button block (click)="goToSignup()" class="button1">
+      {{"TEXTNA" | translate }}
+    </button>
+
+  <button ion-button block (click)="goToResetPassword()">
+      {{"TEXTFMP" | translate }}
+    </button>
+
+  <button ion-button (click)="translateToSpanish()">Espanol</button>
+  <button ion-button (click)="translateToEnglish()">English</button>
+
+</ion-content>
