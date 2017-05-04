@@ -35,11 +35,11 @@ export class MyApp {
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
       this.zone.run(() => {
         if (!user) {
-          this.nav.setRoot(LoginPage);
-          this.rootPage = LoginPage; /////////AQUI PAG PRINCIPAL
+          //this.nav.setRoot(LoginPage);
+        /this.rootPage = LoginPage; /////////AQUI PAG PRINCIPAL
           unsubscribe();
         } else {
-          this.nav.setRoot(TabsPage);
+          //this.nav.setRoot(TabsPage);
           this.rootPage = TabsPage;
           unsubscribe();
         }

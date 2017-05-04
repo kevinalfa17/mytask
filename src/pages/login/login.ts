@@ -23,7 +23,7 @@ import { GooglePlus } from '@ionic-native/google-plus';
 
 @Component({
   selector: 'page-login',
-  templateUrl: 'login.html',
+  templateUrl: 'login.html'
 
 })
 export class LoginPage {

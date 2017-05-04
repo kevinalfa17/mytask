@@ -1,37 +1,36 @@
 import { NavController, AlertController } from 'ionic-angular';
-import { Component } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { ProfileData } from '../../providers/profile-data';
 import { AuthData } from '../../providers/auth-data';
 import { LoginPage } from '../login/login';
 import { TabsPage } from '../tabs/tabs';
 
-import { Platform } from 'ionic-angular';
+
 
 @Component({
   selector: 'page-profile',
-  templateUrl: 'profile.html',
+  templateUrl: 'profile.html'
 })
 export class ProfilePage {
   public userProfile: any;
   public birthDate: string;
 
-  constructor(public platform: Platform, public navCtrl: NavController, public profileData: ProfileData,
-    public authData: AuthData, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public profileData: ProfileData, public authData: AuthData, public alertCtrl: AlertController) {
+
   }
 
   ionViewDidEnter() {
-    this.profileData.getUserProfile().on('value', (data) => {
-      this.userProfile = data.val();
+    this.profileData.getUserProfile().then(profileSnap => {
+      this.userProfile = profileSnap;
       this.birthDate = this.userProfile.birthDate;
     });
   }
 
   logOut() {
     this.authData.logoutUser().then(() => {
-      
+      this.profileData.gooutuser();
       this.navCtrl.setRoot(LoginPage);
-      this.platform.exitApp();
-      
+
     });
   }
 
@@ -119,6 +118,31 @@ export class ProfilePage {
           text: 'Save',
           handler: data => {
             this.profileData.updatePassword(data.newPassword, data.oldPassword);
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  updateaddress() {
+    let alert = this.alertCtrl.create({
+      message: "Your address",
+      inputs: [
+        {
+          name: 'address',
+          placeholder: 'Your address',
+          value: this.userProfile.address
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+        },
+        {
+          text: 'Save',
+          handler: data => {
+            this.profileData.updateaddress(data.address);
           }
         }
       ]

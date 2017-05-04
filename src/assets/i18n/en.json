@@ -22,9 +22,5 @@
     "TEXTPASSMORE6": "Your password needs more than 6 characters",
     "LOGFACE": "Login with Facebook",
     "LOGTWITTER": "Login with Twitter",
-    "LOGGOOGLE": "Login with Google",
-    "ADMINTITLE": "Administration",
-    "TASKTYPES": "Task types",
-    "NOTIFICATIONS": "Notifications",
-    "TYPESTITLE":"Task types"
+    "LOGGOOGLE": "Login with Google"
 }

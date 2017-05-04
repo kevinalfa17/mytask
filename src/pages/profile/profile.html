@@ -59,6 +59,25 @@
       </ion-grid>
     </ion-item>
 
+    <ion-item (click)="updateaddress()">
+      <ion-grid>
+        <ion-row>
+          <ion-col col-6>
+            ADDRESSSSSS
+          </ion-col>
+          <ion-col col-6 *ngIf="userProfile?.address">
+            {{userProfile?.address}}
+          </ion-col>
+          <ion-col class="placeholder-profile" *ngIf="!userProfile?.address">
+            <span>
+              Tap here to edit.
+            </span>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+
+
     <ion-item (click)="updatePassword()">
       <ion-grid>
         <ion-row>
