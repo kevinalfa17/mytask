@@ -7,15 +7,19 @@ export class ProfileData {
   public userProfile: firebase.database.Reference;
   public currentUser: firebase.User;
 
+  public currenUserUid: string;
+
 
   constructor(public af: AngularFire) {
+    
     firebase.auth().onAuthStateChanged((user) => {
       this.currentUser = user;
+      this.currenUserUid = user.uid;
     });
     this.userProfile = firebase.database().ref('/userProfile');
   }
 
-  
+
   getUserProfile(): Promise<any> {
     return new Promise((resolve, reject) => {
       firebase.database().ref('/userProfile')
@@ -72,13 +76,21 @@ export class ProfileData {
     });
   }
 
+  updatephone(newphone: string): firebase.Promise<any> {
+    return this.userProfile.child(this.currentUser.uid).update({
+      phone: newphone,
+    });
+  }
+
   getAllUsers() {
     return this.af.database.list('/userProfile');
   }
 
-  gooutuser(){
-   // firebase.database().ref('/userProfile').child(firebase.auth().currentUser.uid).off();
-    this.currentUser.reload();
+  getuidcurrent() {
+    return this.currentUser.uid;
+  }
 
+  gooutuser() {
+    this.currentUser.reload();
   }
 }

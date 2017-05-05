@@ -149,6 +149,32 @@ export class ProfilePage {
     });
     alert.present();
   }
+updatephone() {
+    let alert = this.alertCtrl.create({
+      message: "Your phone",
+      inputs: [
+        {
+          name: 'phone',
+          placeholder: 'Your phone',
+          value: this.userProfile.phone
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+        },
+        {
+          text: 'Save',
+          handler: data => {
+            this.profileData.updatephone(data.phone);
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  
 
   goToHome(): void {
     this.navCtrl.setRoot(TabsPage);

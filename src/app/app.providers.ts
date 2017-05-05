@@ -6,6 +6,7 @@ import { ChatProvider } from '../providers/chat-provider';
 import { UtilsProvider } from '../providers/utils-provider';
 import { TypesProvider } from '../providers/types-provider';
 
+
 //Others
 import { ErrorHandler } from '@angular/core';
 import { IonicErrorHandler } from 'ionic-angular';
