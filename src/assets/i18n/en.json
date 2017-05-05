@@ -22,5 +22,9 @@
     "TEXTPASSMORE6": "Your password needs more than 6 characters",
     "LOGFACE": "Login with Facebook",
     "LOGTWITTER": "Login with Twitter",
-    "LOGGOOGLE": "Login with Google"
+    "LOGGOOGLE": "Login with Google",
+
+    "WORDNOTIFICATIONS": "Notifications",
+    "TEXTNOADMIN": "You are not an administrator"
+
 }

@@ -212,6 +212,7 @@ export class LoginPage {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   }
+
   displayAlert(value, title) {
     let coolAlert = this.alertCtrl.create({
       title: title,
@@ -225,6 +226,7 @@ export class LoginPage {
     coolAlert.present();
 
   }
+  
   goToSignup(): void {
     this.nav.push(SignupPage);
   }
