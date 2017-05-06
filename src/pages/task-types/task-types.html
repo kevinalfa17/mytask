@@ -1,13 +1,9 @@
-<!--
-  Generated template for the TaskTypes page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>taskTypes</ion-title>
+    <ion-navbar color="primary">
+    <button ion-button menuToggle><ion-icon name="apps"></ion-icon>
+    </button>
+    <ion-title>{{'TYPESTITLE' | translate}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -18,7 +14,6 @@
   <ion-list>
     <div *ngFor="let type of types | async">
       <ion-item>
-<<<<<<< HEAD
 
         <div item-left>
           {{ type.typeName }}
@@ -34,20 +29,14 @@
           </button>
         </div>
 
-=======
-        {{ type.typeName }}
->>>>>>> c6c38244d016aefd5d59ab1059a4f9bef231498d
       </ion-item>  
+      
     </div>
 
-  
 </ion-list>
 
-<<<<<<< HEAD
  <ion-fab right bottom>
     <button ion-fab color="#98A21E" (click)="goToCreateTypePage()"><ion-icon name="add"></ion-icon></button>
 </ion-fab>
 
-=======
->>>>>>> c6c38244d016aefd5d59ab1059a4f9bef231498d
 </ion-content>

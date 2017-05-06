@@ -7,13 +7,6 @@ import { EditTypePage } from '../edit-type/edit-type';
 import { CreateTypePage } from '../create-type/create-type';
 
 
-
-/**
- * Generated class for the TaskTypes page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @IonicPage()
 @Component({
   selector: 'page-task-types',
