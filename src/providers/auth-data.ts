@@ -4,7 +4,7 @@ import firebase from 'firebase';
 
 @Injectable()
 export class AuthData {
-  constructor() {}
+  constructor() { }
 
   /**
    * [loginUser We'll take an email and password and log the user into the firebase app]
@@ -45,7 +45,8 @@ export class AuthData {
   /**
    * This function doesn't take any params, it just logs the current user out of the app.
    */
-  logoutUser(): firebase.Promise<any> {
+  logoutUser(): firebase.Promise<void> {
+    firebase.database().ref('/userProfile').child(firebase.auth().currentUser.uid).off();
     return firebase.auth().signOut();
   }
 

@@ -34,5 +34,7 @@
     "SUBTYPENAME":"Nombre del subtipo",
     "ENTERNEWSUBTYPE":"Ingrese un nuevo nombre",
     "CREATETYPE":"Crear tipo",
-    "EDITTYPE":"Editar tipo"
+    "EDITTYPE":"Editar tipo",
+    "WORDNOTIFICATIONS": "Notificaciones",
+    "TEXTNOADMIN": "No eres administrador"
 }

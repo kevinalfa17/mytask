@@ -15,8 +15,13 @@ import { SignupPage } from '../pages/signup/signup';
 import { AdminPage } from '../pages/admin/admin';
 import { TaskTypesPage } from '../pages/task-types/task-types';
 import { ChatViewPage } from '../pages/chat-view/chat-view';
+<<<<<<< HEAD
 import { CreateTypePage } from '../pages/create-type/create-type';
 import { EditTypePage } from '../pages/edit-type/edit-type';
+=======
+import { Notifications } from '../pages/notifications/notifications';
+import { Tasksinteractions } from '../pages/tasksinterations/tasksinteractions';
+>>>>>>> c6c38244d016aefd5d59ab1059a4f9bef231498d
 
 //Providers
 import { Camera } from '@ionic-native/camera';
@@ -65,8 +70,13 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     SignupPage,
     AdminPage,
     TaskTypesPage,
+<<<<<<< HEAD
     CreateTypePage,
     EditTypePage
+=======
+    Notifications,
+    Tasksinteractions    
+>>>>>>> c6c38244d016aefd5d59ab1059a4f9bef231498d
   ],
   imports: [
     BrowserModule,
@@ -107,8 +117,13 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     SignupPage,
     AdminPage,
     TaskTypesPage,
+<<<<<<< HEAD
     CreateTypePage,
     EditTypePage
+=======
+    Notifications,
+    Tasksinteractions
+>>>>>>> c6c38244d016aefd5d59ab1059a4f9bef231498d
   ],
   providers: GetProviders()
 })

@@ -24,17 +24,12 @@ $font-path: "../assets/fonts";
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    #5E1716,
-
-
-  secondary:  #B48888,
-  terceary:   #7D0300,
+  primary:    #98A21E,
+  secondary:  #3E4119,
+  terceary:   #E3EF51,
   danger:     #f53d3d,
   light:      #f4f4f4,
   dark:       #222,
-  twitter: #1893c1,
-  face: blue,
-
 
   Date:blue,
   Homework:red,
@@ -43,7 +38,7 @@ $colors: (
 );
 
 
- $label-md-text-color: color($colors, primary);
+ $label-md-text-color: #98A21E;
   
 
 .scroll-content{

@@ -7,16 +7,29 @@ export class ProfileData {
   public userProfile: firebase.database.Reference;
   public currentUser: firebase.User;
 
+  public currenUserUid: string;
 
-  constructor(public af:AngularFire) {
-    this.currentUser = firebase.auth().currentUser;
+
+  constructor(public af: AngularFire) {
+    
+    firebase.auth().onAuthStateChanged((user) => {
+      this.currentUser = user;
+      this.currenUserUid = user.uid;
+    });
     this.userProfile = firebase.database().ref('/userProfile');
-
   }
 
-  getUserProfile(): firebase.database.Reference {
-    return this.userProfile.child(this.currentUser.uid);
+
+  getUserProfile(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      firebase.database().ref('/userProfile')
+        .child(firebase.auth().currentUser.uid)
+        .on('value', data => {
+          resolve(data.val());
+        });
+    });
   }
+
 
   updateName(firstName: string, lastName: string): firebase.Promise<any> {
     return this.userProfile.child(this.currentUser.uid).update({
@@ -32,11 +45,11 @@ export class ProfileData {
   }
 
   updateEmail(newEmail: string, password: string): firebase.Promise<any> {
-    const credential =  firebase.auth.EmailAuthProvider
+    const credential = firebase.auth.EmailAuthProvider
       .credential(this.currentUser.email, password);
 
-    return this.currentUser.reauthenticate(credential).then( user => {
-      this.currentUser.updateEmail(newEmail).then( user => {
+    return this.currentUser.reauthenticate(credential).then(user => {
+      this.currentUser.updateEmail(newEmail).then(user => {
         this.userProfile.child(this.currentUser.uid)
           .update({ email: newEmail });
       });
@@ -45,11 +58,11 @@ export class ProfileData {
 
 
   updatePassword(newPassword: string, oldPassword: string): firebase.Promise<any> {
-    const credential =  firebase.auth.EmailAuthProvider
+    const credential = firebase.auth.EmailAuthProvider
       .credential(this.currentUser.email, oldPassword);
 
-    return this.currentUser.reauthenticate(credential).then( user => {
-      this.currentUser.updatePassword(newPassword).then( user => {
+    return this.currentUser.reauthenticate(credential).then(user => {
+      this.currentUser.updatePassword(newPassword).then(user => {
         console.log("Password Changed");
       }, error => {
         console.log(error);
@@ -57,9 +70,27 @@ export class ProfileData {
     });
   }
 
-getAllUsers() {
-  return this.af.database.list('/userProfile');
-}
-  
+  updateaddress(newAddress: string): firebase.Promise<any> {
+    return this.userProfile.child(this.currentUser.uid).update({
+      address: newAddress,
+    });
+  }
 
+  updatephone(newphone: string): firebase.Promise<any> {
+    return this.userProfile.child(this.currentUser.uid).update({
+      phone: newphone,
+    });
+  }
+
+  getAllUsers() {
+    return this.af.database.list('/userProfile');
+  }
+
+  getuidcurrent() {
+    return this.currentUser.uid;
+  }
+
+  gooutuser() {
+    this.currentUser.reload();
+  }
 }

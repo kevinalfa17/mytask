@@ -7,6 +7,7 @@ import { TranslateService } from 'ng2-translate';
 import { Component, NgZone } from '@angular/core';
 import firebase from 'firebase';
 import { LoginPage } from '../pages/login/login';
+
 ///////////////////////////////
 import { Push, PushObject, PushOptions } from '@ionic-native/push';
 
@@ -35,11 +36,11 @@ export class MyApp {
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
       this.zone.run(() => {
         if (!user) {
-          this.nav.setRoot(LoginPage);
-          this.rootPage = LoginPage; /////////AQUI PAG PRINCIPAL
+          //this.nav.setRoot(LoginPage);
+        /this.rootPage = LoginPage; /////////AQUI PAG PRINCIPAL
           unsubscribe();
         } else {
-          this.nav.setRoot(TabsPage);
+          //this.nav.setRoot(TabsPage);
           this.rootPage = TabsPage;
           unsubscribe();
         }

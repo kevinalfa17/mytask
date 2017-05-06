@@ -34,5 +34,7 @@
     "SUBTYPENAME":"Subyype Name",
     "ENTERNEWSUBTYPE":"Enter new subtype name",
     "CREATETYPE":"Create Type",
-    "EDITTYPE":"Edit Type"
+    "EDITTYPE":"Edit Type",
+    "WORDNOTIFICATIONS": "Notifications",
+    "TEXTNOADMIN": "You are not an administrator"
 }

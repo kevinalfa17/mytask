@@ -23,7 +23,7 @@ import { GooglePlus } from '@ionic-native/google-plus';
 
 @Component({
   selector: 'page-login',
-  templateUrl: 'login.html',
+  templateUrl: 'login.html'
 
 })
 export class LoginPage {
@@ -212,6 +212,7 @@ export class LoginPage {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   }
+
   displayAlert(value, title) {
     let coolAlert = this.alertCtrl.create({
       title: title,
@@ -225,6 +226,7 @@ export class LoginPage {
     coolAlert.present();
 
   }
+  
   goToSignup(): void {
     this.nav.push(SignupPage);
   }
