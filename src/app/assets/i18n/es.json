@@ -23,7 +23,18 @@
     "LOGFACE": "Ingresar con Facebook",
     "LOGTWITTER": "Ingresar con Twitter",
     "LOGGOOGLE": "Ingresar con Google",
-
+    "ADMINTITLE": "Administracion",
+    "TASKTYPES": "Tipos de tareas",
+    "NOTIFICATIONS": "Notificaciones",
+    "TYPESTITLE":"Tipos de tarea",
+    "CREATETYPETITLEE":"Nuevo Tipo",
+    "EDITTYPETITLE":"Editar Tipo",
+    "TYPENAME":"Nombre del tipo",
+    "ENTERNEWTYPE":"Ingrese un nuevo nombre",
+    "SUBTYPENAME":"Nombre del subtipo",
+    "ENTERNEWSUBTYPE":"Ingrese un nuevo nombre",
+    "CREATETYPE":"Crear tipo",
+    "EDITTYPE":"Editar tipo",
     "WORDNOTIFICATIONS": "Notificaciones",
     "TEXTNOADMIN": "No eres administrador"
 }

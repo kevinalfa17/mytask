@@ -6,15 +6,26 @@ export class TypesProvider {
 
   types:FirebaseListObservable<any[]>; 
   subtypes:FirebaseListObservable<any[]>; 
+  totalSubtypes:FirebaseListObservable<any[]>; 
 
   constructor(public af: AngularFire) {
     this.types = af.database.list('/types');
-    this.subtypes = af.database.list('/taskSubtypes');
+    this.totalSubtypes = af.database.list('/subtypes');
 
   }
 
   getTypesRef() {
     return this.types;
+  }
+
+  getSubtypesRef(typeName: string){
+    this.subtypes = this.af.database.list('subtypes', {
+      query: {
+        orderByChild: 'typeName',
+        equalTo: typeName
+      }
+    });
+    return this.subtypes;
   }
 
 
@@ -34,7 +45,7 @@ export class TypesProvider {
           subtypeName:subName
     };
 
-        this.subtypes.push(subtype);
+        this.totalSubtypes.push(subtype);
   };
 
   editType(key,newName) {
@@ -49,7 +60,7 @@ export class TypesProvider {
     this.types.remove(key);
   };
    
-  removeSubyype(key) {
+  removeSubtype(key) {
     this.subtypes.remove(key);
   };
 

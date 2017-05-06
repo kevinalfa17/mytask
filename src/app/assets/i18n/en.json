@@ -23,8 +23,18 @@
     "LOGFACE": "Login with Facebook",
     "LOGTWITTER": "Login with Twitter",
     "LOGGOOGLE": "Login with Google",
-
+    "ADMINTITLE": "Administration",
+    "TASKTYPES": "Task types",
+    "NOTIFICATIONS": "Notifications",
+    "TYPESTITLE":"Task types",
+    "CREATETYPETITLEE":"New Type",
+    "EDITTYPETITLE":"Edit Type",
+    "TYPENAME":"Type Name",
+    "ENTERNEWTYPE":"Enter new type name",
+    "SUBTYPENAME":"Subyype Name",
+    "ENTERNEWSUBTYPE":"Enter new subtype name",
+    "CREATETYPE":"Create Type",
+    "EDITTYPE":"Edit Type",
     "WORDNOTIFICATIONS": "Notifications",
     "TEXTNOADMIN": "You are not an administrator"
-
 }
