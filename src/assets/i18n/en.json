@@ -28,5 +28,11 @@
     "NOTIFICATIONS": "Notifications",
     "TYPESTITLE":"Task types",
     "CREATETYPETITLEE":"New Type",
-    "EDITTYPETITLE":"Edit Type"
+    "EDITTYPETITLE":"Edit Type",
+    "TYPENAME":"Type Name",
+    "ENTERNEWTYPE":"Enter new type name",
+    "SUBTYPENAME":"Subyype Name",
+    "ENTERNEWSUBTYPE":"Enter new subtype name",
+    "CREATETYPE":"Create Type",
+    "EDITTYPE":"Edit Type"
 }

@@ -28,5 +28,11 @@
     "NOTIFICATIONS": "Notificaciones",
     "TYPESTITLE":"Tipos de tarea",
     "CREATETYPETITLEE":"Nuevo Tipo",
-    "EDITTYPETITLE":"Editar Tipo"
+    "EDITTYPETITLE":"Editar Tipo",
+    "TYPENAME":"Nombre del tipo",
+    "ENTERNEWTYPE":"Ingrese un nuevo nombre",
+    "SUBTYPENAME":"Nombre del subtipo",
+    "ENTERNEWSUBTYPE":"Ingrese un nuevo nombre",
+    "CREATETYPE":"Crear tipo",
+    "EDITTYPE":"Editar tipo"
 }
