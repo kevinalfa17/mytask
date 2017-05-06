@@ -21,7 +21,7 @@ export class AdminPage {
     this.translate.setDefaultLang('es');
 }
   ionViewDidLoad() {
-    this.currentUseruid = this.profilData.currenUserUid;
+    this.currentUseruid = this.profilData.currentUser.uid;
 
     firebase.database().ref("/userProfile").child(this.currentUseruid).on("value", (data)=>{
       this.currentUserType = data.val().type;

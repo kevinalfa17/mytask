@@ -7,14 +7,11 @@ export class ProfileData {
   public userProfile: firebase.database.Reference;
   public currentUser: firebase.User;
 
-  public currenUserUid: string;
-
 
   constructor(public af: AngularFire) {
     
     firebase.auth().onAuthStateChanged((user) => {
       this.currentUser = user;
-      this.currenUserUid = user.uid;
     });
     this.userProfile = firebase.database().ref('/userProfile');
   }

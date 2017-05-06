@@ -1,5 +1,5 @@
 import { Platform } from 'ionic-angular';
-import { NavController } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -17,10 +17,10 @@ import { Push, PushObject, PushOptions } from '@ionic-native/push';
 })
 export class MyApp {
   rootPage: any = LoginPage;
-  
+
 
   constructor(public platform: Platform, public zone: NgZone, public push: Push, public nav: NavController,
-    public translate: TranslateService, statusBar: StatusBar, splashScreen: SplashScreen) {
+    public translate: TranslateService, statusBar: StatusBar, splashScreen: SplashScreen, public alertCtrl: AlertController) {
     translate.setDefaultLang('es');
     ///////////////////////////////////////////////////////////////////////
     this.zone = new NgZone({});
@@ -37,7 +37,7 @@ export class MyApp {
       this.zone.run(() => {
         if (!user) {
           //this.nav.setRoot(LoginPage);
-        /this.rootPage = LoginPage; /////////AQUI PAG PRINCIPAL
+          /this.rootPage = LoginPage; /////////AQUI PAG PRINCIPAL
           unsubscribe();
         } else {
           //this.nav.setRoot(TabsPage);
@@ -53,6 +53,8 @@ export class MyApp {
       statusBar.styleDefault();
       splashScreen.hide();
       //////////////////////////////////////////////////////////////////////////////////////
+
+      
       const options: PushOptions = {
         android: {
           senderID: '919226115038'
@@ -67,14 +69,30 @@ export class MyApp {
 
       const pushObject: PushObject = this.push.init(options);
 
-      pushObject.on('notification').subscribe((notification: any) => console.log('Received a notification', notification));
+      //pushObject.on('notification').subscribe((notification: any) => console.log('Received a notification', notification));
 
-      pushObject.on('registration').subscribe((registration: any) => console.log('Device registered', registration));
+      pushObject.on('notification').subscribe((notification: any) => {
+        if (notification.additionalData.foreground) {
+          let youralert = this.alertCtrl.create({
+            title: 'New notification',
+            message: notification.message
+          });
+          youralert.present();
+        }
+      });
+
+      pushObject.on('registration').subscribe((registration: any) => {
+      
+      //console.log('Device registered', registration)
+      alert(registration.registrationId);
+    });
 
       pushObject.on('error').subscribe(error => console.error('Error with Push plugin', error));
       //////////////////////////////////////////////////////////////////////////////////////
     });
   }
+
+  
   translateToSpanish() {
     this.translate.use('es');
   }

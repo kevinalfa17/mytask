@@ -16,20 +16,17 @@ export class Tasksinteractions {
 
     public tasksAcceptReference: firebase.database.Reference;
     public tasksRejectedReference: firebase.database.Reference;
-
-
     public currentUser: any;
 
 
 
-    constructor(public navCtrl: NavController, public profilData: ProfileData, ) { }
+    constructor(public navCtrl: NavController, public profilData: ProfileData) { }
 
     ionViewDidEnter() {
 
-        this.currentUser = this.profilData.currenUserUid;
-        this.tasksAcceptReference = firebase.database().ref(`userProfile/${this.currentUser}/taskManage/Accept`);
-        
-        this.tasksRejectedReference = firebase.database().ref(`userProfile/${this.currentUser}/taskManage/Rejected`);
+        this.currentUser = this.profilData.currentUser;
+        this.tasksAcceptReference = firebase.database().ref(`userProfile/${this.currentUser.uid}/taskManage/Accept`);
+        this.tasksRejectedReference = firebase.database().ref(`userProfile/${this.currentUser.uid}/taskManage/Rejected`);
 
         this.tasksAcceptReference.on('value', snapshot => {
 
@@ -42,7 +39,16 @@ export class Tasksinteractions {
                 });
                 return false
             })
-            this.tasksAcceptList = rawList;
+            if (rawList.length == 0) {
+                rawList.push({
+                    id: 0,
+                    Name: "No hay tareas aceptadas",
+                    Description: "Vacio",
+                });
+                this.tasksAcceptList = rawList;
+            } else {
+                this.tasksAcceptList = rawList;
+            }
         });
 
         this.tasksRejectedReference.on('value', snapshot => {
@@ -56,11 +62,21 @@ export class Tasksinteractions {
                 });
                 return false
             })
-            this.tasksRejectedList = rawList;
+            if (rawList.length == 0) {
+                rawList.push({
+                    id: 0,
+                    Name: "No hay tareas rechazadas",
+                    Description: "Vacio",
+                });
+                this.tasksRejectedList = rawList;
+            } else {
+                this.tasksRejectedList = rawList;
+            }
+
         });
     }
 
-    goToNotificationDetail(eventId) {
+    goTotaskDetail(eventId) {
         // this.nav.push(EventDetailPage, { eventId: eventId });
     }
 

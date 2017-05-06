@@ -13,6 +13,7 @@ import { TabsPage } from '../tabs/tabs';
 })
 export class ProfilePage {
   public userProfile: any;
+  profilePicture: string;
   public birthDate: string;
 
   constructor(public navCtrl: NavController, public profileData: ProfileData, public authData: AuthData, public alertCtrl: AlertController) {
@@ -23,6 +24,7 @@ export class ProfilePage {
     this.profileData.getUserProfile().then(profileSnap => {
       this.userProfile = profileSnap;
       this.birthDate = this.userProfile.birthDate;
+      this.profilePicture = this.userProfile.profilePicture;
     });
   }
 

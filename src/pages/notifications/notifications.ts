@@ -4,6 +4,7 @@ import { EventDetailPage } from '../event-detail/event-detail';
 import { EventData } from '../../providers/event-data';
 import firebase from 'firebase'
 
+import { ProfileData } from '../../providers/profile-data';
 
 @Component({
     selector: 'notifications',
@@ -17,11 +18,11 @@ export class Notifications {
 
 
 
-    constructor(public navCtrl: NavController) { }
+    constructor(public navCtrl: NavController, public profilData: ProfileData) { }
 
     ionViewDidEnter() {
 
-        this.currentUser = firebase.auth().currentUser;
+        this.currentUser = this.profilData.currentUser;
         this.notificationsReference = firebase.database().ref(`userProfile/${this.currentUser.uid}/notifications`);
 
         this.notificationsReference.orderByChild('Type').on('value', snapshot => {

@@ -19,14 +19,12 @@ import firebase from 'firebase';
 ////////////////////////////////////////////////////
 import { Push } from '@ionic-native/push';
 import { GooglePlus } from '@ionic-native/google-plus';
-/////////////////////////////////////////////////////
 
-class CameraMock extends Camera {
-  getPicture(options){
-    return new Promise( (resolve, reject) => {
-      resolve("ADD_BASE64_STRING_RESPONSE_HERE");
-    });
-  }
+
+
+/////////////////////////////////////////////////////
+export class CameraMock extends Camera{
+  
 }
  
 export function GetProviders() {

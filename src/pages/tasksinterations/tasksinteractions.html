@@ -8,6 +8,7 @@
 
 <ion-content padding>
   <ion-list>
+    <h1>Lista de tareas aceptadas</h1>
     <ion-item *ngFor="let task of tasksAcceptList">
       <h2>{{task?.name}}</h2>
       <p>Name: <strong>{{task?.Name}}</strong></p>
@@ -16,6 +17,7 @@
   </ion-list>
 
   <ion-list>
+    <h1>Lista de tareas rechazadas</h1>
     <ion-item *ngFor="let task of tasksRejectedList">
       <h2>{{task?.name}}</h2>
       <p>Name: <strong>{{task?.Name}}</strong></p>

@@ -18,6 +18,14 @@
       {{ "WORDPROFILE"| translate}}
     </ion-list-header>
 
+    <div class="row row-center">
+      <div class="center">
+        <img [src]="profilePicture" *ngIf="profilePicture"  border=4 WIDTH=178 HEIGHT=180 ALIGN="middle">
+      </div>
+    </div>
+
+
+
     <ion-item (click)="updateName()">
       <ion-grid>
         <ion-row>

@@ -16,7 +16,7 @@ export class ContactPage {
     constructor(public nav: NavController, public profileData: ProfileData) { }
 
     ionViewWillEnter() {
-        this.uid = firebase.auth().currentUser.uid.toString();
+        this.uid = this.profileData.currentUser.uid;
         this.users = this.profileData.getAllUsers();
     };
 

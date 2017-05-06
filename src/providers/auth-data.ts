@@ -23,12 +23,28 @@ export class AuthData {
    * @param  {string} email    [User's email address]
    * @param  {string} password [User's password]
    */
-  signupUser(email: string, password: string): firebase.Promise<any> {
+  signupUser(email: string, password: string, picRef: string): firebase.Promise<any> {
     return firebase.auth().createUserWithEmailAndPassword(email, password).then((newUser) => {
+
+
       firebase.database().ref('/userProfile').child(newUser.uid).set({
-        email: email
+        email: email,
+        picture: picRef
       });
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      if (picRef != null) {
+      firebase.storage().ref('/ProfilePictures/').child(newUser.uid).child('profilePicture.png').putString(picRef, 'base64', { contentType: 'image/png' }).then((savedPicture) => {
+        firebase.database().ref("/userProfile").child(newUser.uid).child('profilePicture').set(savedPicture.downloadURL);
+      });
+    }else{
+      firebase.database().ref("/userProfile").child(newUser.uid).child('profilePicture').set("null");
+    }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     });
+
+    
   }
 
   /**
