@@ -3,7 +3,7 @@
   <ion-navbar color="primary">
     <button ion-button menuToggle><ion-icon name="apps"></ion-icon>
     </button>
-    <ion-title>{{'ADMINTITLE' | translate}}</ion-title>
+    <ion-title>{{'ADMINTITLE' | translate}} eres "{{currentUserType}}"</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,8 +15,11 @@
   <button ion-item (click)="goToTaskTypesPage()">
     {{'TASKTYPES' | translate}}
   </button>  
+    <button ion-item (click)="goToTaskInteractions()">
+    Listas de tareas
+  </button>
 
-  <button ion-item>
+  <button ion-item (click)="goToNotifications()">
     {{'NOTIFICATIONS' | translate}}
   </button>
 </ion-list>
