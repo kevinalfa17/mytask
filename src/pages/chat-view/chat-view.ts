@@ -40,7 +40,7 @@ export class ChatViewPage {
       if(this.message) {
           let chat = {
               from: this.uid,
-              message: this.message,
+              message: this.profileData.currentUser.email +" "+ this.message,
               type: 'message'
           };
           this.chats.push(chat);
