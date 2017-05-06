@@ -22,6 +22,7 @@ export class SignupPage {
   public signupForm;
   loading: any;
   public image: string;
+  public image64: string;
 
 
 
@@ -47,10 +48,10 @@ export class SignupPage {
     } else {
 
       // if(this.image.length == 0){
-        this.image = null;
+      // this.image = null;
       // }
-      
-      this.authData.signupUser(this.signupForm.value.email, this.signupForm.value.password, this.image)
+
+      this.authData.signupUser(this.signupForm.value.email, this.signupForm.value.password, this.image64)
         .then(() => {
           this.loading.dismiss().then(() => {
             this.nav.setRoot(TabsPage);
@@ -83,10 +84,12 @@ export class SignupPage {
         allowEdit: true,
         encodingType: this.camera.EncodingType.PNG,
         targetWidth: 500,
-        targetHeight: 500
-      }).then((imagen) => {
+        targetHeight: 500,
+        saveToPhotoAlbum: true
+    }).then((imagen) => {
         console.log(imagen);
         this.image = "data:image/jpeg;base64," + imagen;
+        this.image64 = imagen;
       }, (err) => {
         console.log(err);
       });
@@ -98,8 +101,7 @@ export class SignupPage {
     if (this.platform.is("android")) {
       this.camera.getPicture({
         quality: 95,
-
-        destinationType: this.camera.DestinationType.FILE_URI,
+        destinationType: this.camera.DestinationType.DATA_URL,
         sourceType: this.camera.PictureSourceType.CAMERA,
         allowEdit: true,
         encodingType: this.camera.EncodingType.PNG,
@@ -108,7 +110,9 @@ export class SignupPage {
         saveToPhotoAlbum: true
       }).then((imagen) => {
         console.log(imagen);
-        this.image = imagen
+        this.image = "data:image/jpeg;base64," + imagen;
+        this.image64 = imagen;
+
       }, (err) => {
         console.log(err);
       });
