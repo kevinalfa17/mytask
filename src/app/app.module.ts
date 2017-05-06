@@ -15,6 +15,8 @@ import { SignupPage } from '../pages/signup/signup';
 import { AdminPage } from '../pages/admin/admin';
 import { TaskTypesPage } from '../pages/task-types/task-types';
 import { ChatViewPage } from '../pages/chat-view/chat-view';
+import { CreateTypePage } from '../pages/create-type/create-type';
+import { EditTypePage } from '../pages/edit-type/edit-type';
 
 //Providers
 import { Camera } from '@ionic-native/camera';
@@ -62,7 +64,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     ResetPasswordPage,
     SignupPage,
     AdminPage,
-    TaskTypesPage
+    TaskTypesPage,
+    CreateTypePage,
+    EditTypePage
   ],
   imports: [
     BrowserModule,
@@ -102,7 +106,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     ResetPasswordPage,
     SignupPage,
     AdminPage,
-    TaskTypesPage
+    TaskTypesPage,
+    CreateTypePage,
+    EditTypePage
   ],
   providers: GetProviders()
 })

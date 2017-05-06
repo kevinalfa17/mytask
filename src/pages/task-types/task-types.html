@@ -20,11 +20,11 @@
         </div>
 
         <div item-right>
-          <button ion-button icon-only icon-right>
+          <button ion-button icon-only icon-right (click)="goToEditTypePage(type.$key,type.typeName)">
             <ion-icon name="md-create"></ion-icon>
           </button>
 
-          <button ion-button icon-only icon-right>
+          <button ion-button icon-only icon-right (click)="deleteType(type.$key)">
             <ion-icon name="md-trash"></ion-icon>
           </button>
         </div>
@@ -36,7 +36,7 @@
 </ion-list>
 
  <ion-fab right bottom>
-    <button ion-fab color="#98A21E"><ion-icon name="add"></ion-icon></button>
+    <button ion-fab color="#98A21E" (click)="goToCreateTypePage()"><ion-icon name="add"></ion-icon></button>
 </ion-fab>
 
 </ion-content>

@@ -26,5 +26,7 @@
     "ADMINTITLE": "Administration",
     "TASKTYPES": "Task types",
     "NOTIFICATIONS": "Notifications",
-    "TYPESTITLE":"Task types"
+    "TYPESTITLE":"Task types",
+    "CREATETYPETITLEE":"New Type",
+    "EDITTYPETITLE":"Edit Type"
 }

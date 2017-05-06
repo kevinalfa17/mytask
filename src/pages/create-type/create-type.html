@@ -1,0 +1,61 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <button ion-button menuToggle><ion-icon name="apps"></ion-icon>
+    </button>
+    <ion-title>{{'CREATETYPETITLE' | translate}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <div style="margin-bottom:20px">
+    <ion-item>
+      <ion-label stacked>Type Name</ion-label>
+      <ion-input [(ngModel)]="typeName" type="text" placeholder="Enter New Type" (change)="checkChanges()"></ion-input>
+    </ion-item>
+  </div>
+
+  <div style="margin-bottom:10px">
+    <ion-item>
+      <ion-label stacked>Subtype Name</ion-label>
+      <ion-input [(ngModel)]="subtypeName" type="text" placeholder="Enter New Subtype" (change)="checkChanges()"></ion-input>
+
+      <button ion-button item-right icon-only icon-right (click)="addSubtype()" [disabled]="subtypeDisable">
+      <ion-icon name="md-add-circle"></ion-icon>     
+    </button>
+
+    </ion-item>
+
+  </div>
+
+  <div>
+    <ion-list>
+
+      <div *ngFor="let subtype of subtypes; let i=index">
+        <ion-item>
+
+          <div item-left>
+            {{ subtype}}
+          </div>
+
+          <div item-right>
+            <button ion-button icon-only icon-right (click)="deleteSubtype(i)">
+              <ion-icon name="md-trash"></ion-icon>
+            </button>
+          </div>
+
+        </ion-item>
+
+      </div>
+    </ion-list>
+  </div>
+
+
+  <button ion-button block (click)="createType()"  [disabled]="typeDisable">
+    Create Type
+  </button>
+
+</ion-content>

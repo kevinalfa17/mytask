@@ -26,5 +26,7 @@
     "ADMINTITLE": "Administracion",
     "TASKTYPES": "Tipos de tareas",
     "NOTIFICATIONS": "Notificaciones",
-    "TYPESTITLE":"Tipos de tarea"
+    "TYPESTITLE":"Tipos de tarea",
+    "CREATETYPETITLEE":"Nuevo Tipo",
+    "EDITTYPETITLE":"Editar Tipo"
 }
