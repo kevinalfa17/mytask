@@ -11,16 +11,19 @@ import { Notifications } from '../notifications/notifications';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  
 
+  enableSearch:boolean;
   constructor(public nav: NavController, public translate: TranslateService) {
 
     this.translate.setDefaultLang('es');
+    this.enableSearch = false;
 
   }
-////////////////////////////////////////////////////
 
-/////////////////////////////////////////////////////
+  toggleSearchBar(){
+    this.enableSearch = !this.enableSearch;
+  }
+
   goToHomePage2(): void {
     this.nav.push(HomePage2);
   }
