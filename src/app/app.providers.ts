@@ -14,6 +14,8 @@ import { Camera } from '@ionic-native/camera';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { NavController } from 'ionic-angular';
+import {InAppBrowser} from '@ionic-native/in-app-browser'
+import {File} from '@ionic-native/file'
 import { Facebook } from '@ionic-native/facebook';
 import firebase from 'firebase';
 ////////////////////////////////////////////////////
@@ -24,7 +26,13 @@ import { GooglePlus } from '@ionic-native/google-plus';
 
 /////////////////////////////////////////////////////
 export class CameraMock extends Camera{
-  
+  getPicture(options) {
+    return new Promise((resolve, reject) => {
+      resolve(this.fakeImage);
+    })
+  }
+
+  fakeImage = "base94";
 }
  
 export function GetProviders() {
@@ -45,7 +53,9 @@ export function GetProviders() {
       GooglePlus,
       ChatProvider,
       UtilsProvider,
-      TypesProvider
+      TypesProvider,
+      InAppBrowser,
+      File
     ];
   } else {
     // Use device providers
@@ -63,7 +73,9 @@ export function GetProviders() {
       GooglePlus,
       ChatProvider,
       UtilsProvider,
-      TypesProvider
+      TypesProvider,
+      InAppBrowser,
+      File
     ];  
   }
   return providers;

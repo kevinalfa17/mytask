@@ -36,5 +36,6 @@
     "CREATETYPE":"Crear tipo",
     "EDITTYPE":"Editar tipo",
     "WORDNOTIFICATIONS": "Notificaciones",
-    "TEXTNOADMIN": "No eres administrador"
+    "TEXTNOADMIN": "No eres administrador",
+    "TEXTNOPARAESTAPLATAFORMA" : "Esta caracteristica no esta disponible para esta plataforma"
 }

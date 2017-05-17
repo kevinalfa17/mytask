@@ -17,7 +17,7 @@ import { Push, PushObject, PushOptions } from '@ionic-native/push';
 })
 export class MyApp {
   rootPage: any = LoginPage;
-
+  public pNoti: string;
 
   constructor(public platform: Platform, public zone: NgZone, public push: Push, public nav: NavController,
     public translate: TranslateService, statusBar: StatusBar, splashScreen: SplashScreen, public alertCtrl: AlertController) {
@@ -73,6 +73,7 @@ export class MyApp {
 
       pushObject.on('notification').subscribe((notification: any) => {
         if (notification.additionalData.foreground) {
+           
           let youralert = this.alertCtrl.create({
             title: 'New notification',
             message: notification.message
