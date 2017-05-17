@@ -9,10 +9,12 @@ import { AuthData } from '../../providers/auth-data';
 import { EmailValidator } from '../../validators/email';
 import { HomePage } from '../home/home';
 import { TabsPage } from '../tabs/tabs';
-
-
+import { InAppBrowser } from '@ionic-native/in-app-browser'
+import { File } from '@ionic-native/file';
 import { Camera } from '@ionic-native/camera';
 import { Platform } from 'ionic-angular';
+
+import { TranslateService } from 'ng2-translate'
 
 @Component({
   selector: 'page-signup',
@@ -23,17 +25,20 @@ export class SignupPage {
   loading: any;
   public image: string;
   public image64: string;
+  window: any;
 
 
 
-  constructor(public nav: NavController, public authData: AuthData, public platform: Platform,
+  constructor(public nav: NavController, public translate: TranslateService, public authData: AuthData, public platform: Platform,
     public formBuilder: FormBuilder, public loadingCtrl: LoadingController,
-    public alertCtrl: AlertController, public camera: Camera) {
+    public alertCtrl: AlertController, public camera: Camera, public browser: InAppBrowser, public file: File) {
 
     this.signupForm = formBuilder.group({
       email: ['', Validators.compose([Validators.required, EmailValidator.isValid])],
       password: ['', Validators.compose([Validators.minLength(6), Validators.required])]
     })
+
+    this.translate.setDefaultLang('es');
   }
 
   /**
@@ -57,6 +62,8 @@ export class SignupPage {
             this.nav.setRoot(TabsPage);
           });
         }, (error) => {
+
+
           this.loading.dismiss().then(() => {
             let alert = this.alertCtrl.create({
               message: error.message,
@@ -86,7 +93,7 @@ export class SignupPage {
         targetWidth: 500,
         targetHeight: 500,
         saveToPhotoAlbum: true
-    }).then((imagen) => {
+      }).then((imagen) => {
         console.log(imagen);
         this.image = "data:image/jpeg;base64," + imagen;
         this.image64 = imagen;
@@ -94,7 +101,17 @@ export class SignupPage {
         console.log(err);
       });
     } else {
-
+      this.translate.get('TEXTNOPARAESTAPLATAFORMA').subscribe((text: string) => {
+        let alert = this.alertCtrl.create({
+          message: text,
+          buttons: [
+            {
+              text: 'ok',
+            }
+          ]
+        });
+        alert.present();
+      })
     }
   }
   takePicture() {
@@ -117,7 +134,17 @@ export class SignupPage {
         console.log(err);
       });
     } else {
-
+      this.translate.get('TEXTNOPARAESTAPLATAFORMA').subscribe((text: string) => {
+        let alert = this.alertCtrl.create({
+          message: text,
+          buttons: [
+            {
+              text: 'ok',
+            }
+          ]
+        });
+        alert.present();
+      })
     }
   }
 }
