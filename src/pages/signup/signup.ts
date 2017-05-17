@@ -27,8 +27,6 @@ export class SignupPage {
   public image64: string;
   window: any;
 
-
-
   constructor(public nav: NavController, public translate: TranslateService, public authData: AuthData, public platform: Platform,
     public formBuilder: FormBuilder, public loadingCtrl: LoadingController,
     public alertCtrl: AlertController, public camera: Camera, public browser: InAppBrowser, public file: File) {
@@ -51,11 +49,6 @@ export class SignupPage {
     if (!this.signupForm.valid) {
       console.log(this.signupForm.value);
     } else {
-
-      // if(this.image.length == 0){
-      // this.image = null;
-      // }
-
       this.authData.signupUser(this.signupForm.value.email, this.signupForm.value.password, this.image64)
         .then(() => {
           this.loading.dismiss().then(() => {

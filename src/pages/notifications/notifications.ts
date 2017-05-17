@@ -3,7 +3,7 @@ import { NavController } from 'ionic-angular';
 import { EventDetailPage } from '../event-detail/event-detail';
 import { EventData } from '../../providers/event-data';
 import firebase from 'firebase'
-
+import moment from 'moment';
 import { ProfileData } from '../../providers/profile-data';
 
 @Component({
@@ -15,6 +15,7 @@ export class Notifications {
     public notificationsReference: firebase.database.Reference;
     public currentUser: firebase.User;
     public currenUserUid: string;
+    destineUser: any;
 
 
 
@@ -44,5 +45,22 @@ export class Notifications {
     goToNotificationDetail(eventId) {
         // this.nav.push(EventDetailPage, { eventId: eventId });
     }
-
+    sendPushnoti(id:string, text:string){
+        firebase.database().ref(`userProfile/${this.currentUser.uid}/notifications`).child(id).update({
+            Description: text,
+    });
+    }
+    
+    sendNotification(destinatario:string, mensajeID: string, mensaje:string, mensajeName:string){
+            firebase.database().ref('userProfile/'+destinatario+'/notifications/'+mensajeID).update({
+                Name: mensajeName,
+                Description: mensaje,
+                Type: "PLAY",
+                From: this.currentUser.email,
+                DateSended: moment().format('D/M/YYYY'),
+                HourSended: moment().format('h:m:s a'),
+                Condition: 'Pending',
+                Read: 'false',
+            });
+    }
 }
