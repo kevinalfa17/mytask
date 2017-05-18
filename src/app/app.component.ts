@@ -54,7 +54,7 @@ export class MyApp {
       splashScreen.hide();
       //////////////////////////////////////////////////////////////////////////////////////
 
-      
+
       const options: PushOptions = {
         android: {
           senderID: '919226115038'
@@ -69,11 +69,9 @@ export class MyApp {
 
       const pushObject: PushObject = this.push.init(options);
 
-      //pushObject.on('notification').subscribe((notification: any) => console.log('Received a notification', notification));
-
       pushObject.on('notification').subscribe((notification: any) => {
         if (notification.additionalData.foreground) {
-           
+
           let youralert = this.alertCtrl.create({
             title: 'New notification',
             message: notification.message
@@ -83,17 +81,17 @@ export class MyApp {
       });
 
       pushObject.on('registration').subscribe((registration: any) => {
-      
-      //console.log('Device registered', registration)
-      alert(registration.registrationId);
-    });
+
+        //console.log('Device registered', registration)
+        alert(registration.registrationId);
+      });
 
       pushObject.on('error').subscribe(error => console.error('Error with Push plugin', error));
       //////////////////////////////////////////////////////////////////////////////////////
     });
   }
 
-  
+
   translateToSpanish() {
     this.translate.use('es');
   }

@@ -45,22 +45,22 @@ export class Notifications {
     goToNotificationDetail(eventId) {
         // this.nav.push(EventDetailPage, { eventId: eventId });
     }
-    sendPushnoti(id:string, text:string){
+    sendPushnoti(id: string, text: string) {
         firebase.database().ref(`userProfile/${this.currentUser.uid}/notifications`).child(id).update({
             Description: text,
-    });
+        });
     }
-    
-    sendNotification(destinatario:string, mensajeID: string, mensaje:string, mensajeName:string){
-            firebase.database().ref('userProfile/'+destinatario+'/notifications/'+mensajeID).update({
-                Name: mensajeName,
-                Description: mensaje,
-                Type: "PLAY",
-                From: this.currentUser.email,
-                DateSended: moment().format('D/M/YYYY'),
-                HourSended: moment().format('h:m:s a'),
-                Condition: 'Pending',
-                Read: 'false',
-            });
+
+    sendNotification(destinatario: string, notiID: string, descriptionNoti: string, nameNoti: string, typeNoti: string) {
+        firebase.database().ref('userProfile/' + destinatario + '/notifications/' + notiID).update({
+            Name: nameNoti,
+            Description: descriptionNoti,
+            Type: typeNoti,
+            From: this.currentUser.email,
+            DateSended: moment().format('D/M/YYYY'),
+            HourSended: moment().format('h:m:s a'),
+            Condition: 'Pending',
+            Read: 'false',
+        });
     }
 }

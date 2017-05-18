@@ -35,8 +35,8 @@ export class LoginPage {
   public loginForm;
   loading: any;
 
-  constructor(public platform: Platform, public nav: NavController, public translate: TranslateService, public googlePlus: GooglePlus, private facebook: Facebook, 
-      public angfire: AngularFire, public authData: AuthData, public formBuilder: FormBuilder, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
+  constructor(public platform: Platform, public nav: NavController, public translate: TranslateService, public googlePlus: GooglePlus, private facebook: Facebook,
+    public angfire: AngularFire, public authData: AuthData, public formBuilder: FormBuilder, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
     this.translate.setDefaultLang('es');
 
     /**
@@ -119,8 +119,9 @@ export class LoginPage {
 
             firebase.database().ref('/userProfile').child(success.uid).update({
               email: success.email,
-              firstName: success.displayName
-              //profilePicture: success.photoURL
+              firstName: success.displayName,
+              profilePicture: success.photoURL,
+              type: "user"
             });
             this.userProfile = success;
             this.nav.setRoot(TabsPage);
@@ -138,7 +139,8 @@ export class LoginPage {
         us.update({
           email: user.email,
           firstName: user.displayName,
-          profilePicture: user.photoURL
+          profilePicture: user.photoURL,
+          type: "user"
         });
         this.userProfile = newUser;
         this.nav.setRoot(TabsPage);
@@ -159,7 +161,8 @@ export class LoginPage {
       firebase.database().ref('/userProfile').child(response.uid).update({
         email: response.auth.email,
         firstName: response.auth.displayName,
-        profilePicture: response.auth.photoURL
+        profilePicture: response.auth.photoURL,
+        type: "user"
       });
 
       this.userProfile = response;
@@ -184,7 +187,8 @@ export class LoginPage {
             firebase.database().ref('/userProfile').child(success.uid).update({
               email: success.email,
               firstName: success.displayName,
-              profilePicture: success.photoURL
+              profilePicture: success.photoURL,
+              type: "user"
             });
 
             this.userProfile = success;
@@ -202,7 +206,8 @@ export class LoginPage {
         us.update({
           email: user.email,
           firstName: user.displayName,
-          profilePicture: user.photoURL
+          profilePicture: user.photoURL,
+          type: "user"
         });
         this.userProfile = newUser;
         this.nav.setRoot(TabsPage);
@@ -230,7 +235,7 @@ export class LoginPage {
     coolAlert.present();
 
   }
-  
+
   goToSignup(): void {
     this.nav.push(SignupPage);
   }
