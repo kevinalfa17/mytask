@@ -19,34 +19,35 @@ export class AdminPage {
   constructor(public nav: NavController, public navParams: NavParams, public alertCtrl: AlertController, public translate: TranslateService, public profilData: ProfileData) {
     this.translate.setDefaultLang('es');
 
-}
+  }
   ionViewDidLoad() {
     this.currentUseruid = this.profilData.currentUser.uid;
 
-    firebase.database().ref("/userProfile").child(this.currentUseruid).on("value", (data)=>{
+    firebase.database().ref("/userProfile").child(this.currentUseruid).on("value", (data) => {
       this.currentUserType = data.val().type;
     });
 
   }
 
-   goToTaskTypesPage(): void {
-    if ((this.currentUserType) == "admin"){
+  goToTaskTypesPage(): void {
+    if ((this.currentUserType) == "Admin") {
       this.nav.push(TaskTypesPage);
     } else {
-      let coolAlert = this.alertCtrl.create({
-      title: "Notifications",
-      message:" You are not an administrator",
-      buttons: [
-        {
-          text: "OK"
-        }
-      ]
-    });
-    coolAlert.present();
+      this.translate.get('TEXTNOADMIN').subscribe((text: string) => {
+        let alert = this.alertCtrl.create({
+          message: text,
+          buttons: [
+            {
+              text: 'ok',
+            }
+          ]
+        });
+        alert.present();
+      })
     }
   }
 
-    goToTaskInteractions() {
+  goToTaskInteractions() {
     this.nav.push(Tasksinteractions);
   }
 

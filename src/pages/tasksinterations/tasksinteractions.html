@@ -1,27 +1,26 @@
-
 <ion-header>
   <ion-navbar color="primary">
-    <ion-title>MANAGE </ion-title>
+    <ion-title>{{"" | translate}} </ion-title>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
   <ion-list>
-    <h1>Lista de tareas aceptadas</h1>
+    <h1>{{"TEXTLISTADETAREAS" | translate}} {{"WORDACCEPT" | translate}} </h1>
     <ion-item *ngFor="let task of tasksAcceptList">
       <h2>{{task?.name}}</h2>
-      <p>Name: <strong>{{task?.Name}}</strong></p>
-      <p>Description: <strong>{{task?.Description}}</strong></p>
+      <p>{{"WORDNAME" | translate}}: <strong>{{task?.Name}}</strong></p>
+      <p>{{"WORDDESCRIPTION" | translate}}: <strong>{{task?.Description}}</strong></p>
     </ion-item>
   </ion-list>
 
   <ion-list>
-    <h1>Lista de tareas rechazadas</h1>
+    <h1>{{"TEXTLISTADETAREAS" | translate}} {{"WORDREJECT" | translate}}</h1>
     <ion-item *ngFor="let task of tasksRejectedList">
       <h2>{{task?.name}}</h2>
-      <p>Name: <strong>{{task?.Name}}</strong></p>
-      <p>Description: <strong>{{task?.Description}}</strong></p>
+      <p>{{"WORDNAME" | translate}}: <strong>{{task?.Name}}</strong></p>
+      <p>{{"WORDDESCRIPTION" | translate}}: <strong>{{task?.Description}}</strong></p>
     </ion-item>
   </ion-list>
 

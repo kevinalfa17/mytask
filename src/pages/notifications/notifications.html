@@ -1,20 +1,19 @@
-
 <ion-header>
   <ion-navbar color="primary">
-    <ion-title> NOTIFICATIONS </ion-title>
-    
+    <ion-title> {{"WORDNOTIFICATIONS" | translate}} </ion-title>
+
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
-  <button ion-button icon-left color = "face" (click)="sendNotification('2EGLQk5MerSIIcfVLigyGrhFSxO2', '1', 'izi', 'no se')">
+  <button ion-button icon-left color="face" (click)="sendNotification('2EGLQk5MerSIIcfVLigyGrhFSxO2', '1', 'izi', 'no se', 'Play')">
       <ion-icon name="logo-facebook"></ion-icon>
       {{"LOGFACE" | translate}}
     </button>
 
   <ion-list>
-    <ion-item *ngFor="let noti of notificationsList" color = "{{noti?.Type}}">
+    <ion-item *ngFor="let noti of notificationsList" color="{{noti?.Type}}">
       <h2>{{noti?.name}}</h2>
       <p>Name: <strong>{{noti?.Name}}</strong></p>
       <p>Description: <strong>{{noti?.Description}}</strong></p>
@@ -22,5 +21,5 @@
     </ion-item>
   </ion-list>
 
-    
+
 </ion-content>
