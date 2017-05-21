@@ -20,6 +20,7 @@ import { EditTypePage } from '../pages/edit-type/edit-type';
 import { Notifications } from '../pages/notifications/notifications';
 import { Tasksinteractions } from '../pages/tasksinterations/tasksinteractions';
 
+import { GoogleCalendar } from '../pages/googleCalendar/googleCalendar';
 
 //Providers
 import { Camera } from '@ionic-native/camera';
@@ -71,7 +72,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     CreateTypePage,
     EditTypePage,
     Notifications,
-    Tasksinteractions    
+    Tasksinteractions,
+    GoogleCalendar
   ],
   imports: [
     BrowserModule,
@@ -115,7 +117,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     CreateTypePage,
     EditTypePage,
     Notifications,
-    Tasksinteractions
+    Tasksinteractions,
+    GoogleCalendar
   ],
   providers: GetProviders()
 })
