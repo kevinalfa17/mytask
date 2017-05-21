@@ -120,8 +120,7 @@ export class LoginPage {
             firebase.database().ref('/userProfile').child(success.uid).update({
               email: success.email,
               firstName: success.displayName,
-              profilePicture: success.photoURL,
-              type: "user"
+              profilePicture: success.photoURL
             });
             this.userProfile = success;
             this.nav.setRoot(TabsPage);
@@ -139,8 +138,7 @@ export class LoginPage {
         us.update({
           email: user.email,
           firstName: user.displayName,
-          profilePicture: user.photoURL,
-          type: "user"
+          profilePicture: user.photoURL
         });
         this.userProfile = newUser;
         this.nav.setRoot(TabsPage);
@@ -161,8 +159,7 @@ export class LoginPage {
       firebase.database().ref('/userProfile').child(response.uid).update({
         email: response.auth.email,
         firstName: response.auth.displayName,
-        profilePicture: response.auth.photoURL,
-        type: "user"
+        profilePicture: response.auth.photoURL
       });
 
       this.userProfile = response;
@@ -187,8 +184,7 @@ export class LoginPage {
             firebase.database().ref('/userProfile').child(success.uid).update({
               email: success.email,
               firstName: success.displayName,
-              profilePicture: success.photoURL,
-              type: "user"
+              profilePicture: success.photoURL
             });
 
             this.userProfile = success;
@@ -206,8 +202,7 @@ export class LoginPage {
         us.update({
           email: user.email,
           firstName: user.displayName,
-          profilePicture: user.photoURL,
-          type: "user"
+          profilePicture: user.photoURL
         });
         this.userProfile = newUser;
         this.nav.setRoot(TabsPage);
