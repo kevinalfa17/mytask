@@ -38,7 +38,7 @@ export class GoogleCalendar {
     var startDateTimeISO = this.buildISODate(this.calendarEvent.startDate, this.calendarEvent.startTime);
     var enddateTimeISO = this.buildISODate(this.calendarEvent.endDate, this.calendarEvent.endTime);
     this.popLastAttendeeIfEmpty(this.attendees);
-    if (this.platform.is('android')){
+    if (this.platform.is('android')) {
       var browserRef = window.open('https://accounts.google.com/o/oauth2/auth?client_id=' + this.CLIENT_ID_AN + '&redirect_uri=' + this.REDIRECTURL + '&scope=https://www.googleapis.com/auth/calendar&approval_prompt=force&response_type=token', '_blank', 'location=no');
     } else {
       var browserRef = window.open('https://accounts.google.com/o/oauth2/auth?client_id=' + this.CLIENT_ID + '&redirect_uri=' + this.REDIRECTURL + '&scope=https://www.googleapis.com/auth/calendar&approval_prompt=force&response_type=token', '_blank', 'location=no');
@@ -102,6 +102,30 @@ export class GoogleCalendar {
       }
     });
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
+  }
+
+  temp() {
+    var browserRef = window.open('https://accounts.google.com/o/oauth2/auth?client_id=' + this.CLIENT_ID + '&redirect_uri=' + this.REDIRECTURL + '&scope=https://www.googleapis.com/auth/calendar&approval_prompt=force&response_type=token', '_blank', 'location=no');
+    gapi.client.setApiKey(this.APIKEY);
+
+
+
+    gapi.client.load('calendar', 'v3', function () {
+      var request = gapi.client.calendar.events.insert({
+        "calendarId": "primary",
+        resource: {
+          "summary": "Appointment",
+          "location": "Somewhere",
+          "start": {
+            "dateTime": "2017-01-01T10:00:00.000-07:00"
+          },
+          "end": {
+            "dateTime": "2017-01-01T10:25:00.000-07:00"
+          }
+        }
+      });
+    });
+
   }
 
   buildISODate(date, time) {
