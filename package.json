@@ -53,5 +53,5 @@
     "cordova-plugin-device"
   ],
   "cordovaPlatforms": [],
-  "description": "Project: An Ionic project"
+  "description": "Mytask: Task manager"
 }
