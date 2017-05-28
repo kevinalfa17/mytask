@@ -6,13 +6,38 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>NewContact</ion-title>
+  <ion-navbar color="primary">
+    <ion-title>{{'NEWCONTACTTITLE' | translate}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+
+   <div style="margin-bottom:10px">
+    <ion-item>
+      <ion-label stacked>{{'WORDEMAIL' | translate}}</ion-label>
+      <ion-input [(ngModel)]="contactEmail" type="text"></ion-input>
+    </ion-item>
+  </div>
+
+  <div style="margin-bottom:10px">
+    <ion-item>
+      <ion-label stacked>{{'WORDNAME' | translate}}</ion-label>
+      <ion-input [(ngModel)]="contactName" type="text"></ion-input>
+    </ion-item>
+  </div>
+
+  <div style="margin-bottom:10px">
+    <ion-item>
+      <ion-label stacked>{{'PHONE' | translate}}</ion-label>
+      <ion-input [(ngModel)]="contactPhone" type="text"></ion-input>
+    </ion-item>
+  </div>
+
+  <button ion-button block (click)="addContact()">
+    {{'ADDCONTACT' | translate}}
+  </button>
 
 </ion-content>

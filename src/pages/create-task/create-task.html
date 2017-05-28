@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-title>CreateTask</ion-title>
   </ion-navbar>
 
@@ -66,21 +66,9 @@
       <ion-scroll scrollY="true" style="height:20vh" id="scroll-user">
 
         <ion-list>
-          <ion-item>
-            <ion-label>User1</ion-label>
-            <button ion-button item-right icon-only icon-right clear (click)="quitUser()">
-            <ion-icon name="md-close"></ion-icon>     
-          </button>
-          </ion-item>
-          <ion-item>
-            <ion-label>User2</ion-label>
-            <button ion-button item-right icon-only icon-right clear (click)="quitUser()">
-            <ion-icon name="md-close"></ion-icon>     
-          </button>
-          </ion-item>
-          <ion-item>
-            <ion-label>User3</ion-label>
-            <button ion-button item-right icon-only icon-right clear (click)="quitUser()">
+          <ion-item *ngFor="let user of users; let i=index">
+            <ion-label>{{user}}</ion-label>
+            <button ion-button item-right icon-only icon-right clear (click)="quitUser(i)">
             <ion-icon name="md-close"></ion-icon>     
           </button>
           </ion-item>

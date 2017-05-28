@@ -4,7 +4,7 @@
     "INFOHOMEPAGE": "This is the main window of the Project.",
     "WORDTAB1":"Home",
     "WORDTAB2":"Messenger",
-    "WORDTAB3":"Contact",
+    "WORDTAB3":"Contacts",
     "WORDTAB4":"Administration",
     "WORDPROFILE":"Profile",
 
@@ -27,7 +27,7 @@
     "TASKTYPES": "Task types",
     "NOTIFICATIONS": "Notifications",
     "TYPESTITLE":"Task types",
-    "CREATETYPETITLEE":"New Type",
+    "CREATETYPETITLE":"New Type",
     "EDITTYPETITLE":"Edit Type",
     "TYPENAME":"Type Name",
     "ENTERNEWTYPE":"Enter new type name",
@@ -36,5 +36,8 @@
     "CREATETYPE":"Create Type",
     "EDITTYPE":"Edit Type",
     "WORDNOTIFICATIONS": "Notifications",
-    "TEXTNOADMIN": "You are not an administrator"
+    "TEXTNOADMIN": "You are not an administrator",
+    "ADDCONTACT": "Add contact",
+    "PHONE": "Phone",
+    "NEWCONTACTTITLE":"New contact"
 }

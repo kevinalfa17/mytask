@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { IonicModule } from 'ionic-angular';
-import { NewContact } from './new-contact';
+import { NewContactPage } from './new-contact';
 
 @NgModule({
   declarations: [
-    NewContact,
+    NewContactPage,
   ],
   imports: [
-    IonicModule.forChild(NewContact),
+    //IonicModule.forChild(NewContact),
   ],
   exports: [
-    NewContact
+    NewContactPage
   ]
 })
 export class NewContactModule {}

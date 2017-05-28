@@ -5,7 +5,7 @@ import { ProfileData } from '../providers/profile-data';
 import { ChatProvider } from '../providers/chat-provider';
 import { UtilsProvider } from '../providers/utils-provider';
 import { TypesProvider } from '../providers/types-provider';
-
+import { ContactsProvider } from '../providers/contacts-provider';
 
 //Others
 import { ErrorHandler } from '@angular/core';
@@ -45,7 +45,8 @@ export function GetProviders() {
       GooglePlus,
       ChatProvider,
       UtilsProvider,
-      TypesProvider
+      TypesProvider,
+      ContactsProvider
     ];
   } else {
     // Use device providers
@@ -63,7 +64,8 @@ export function GetProviders() {
       GooglePlus,
       ChatProvider,
       UtilsProvider,
-      TypesProvider
+      TypesProvider,
+      ContactsProvider
     ];  
   }
   return providers;

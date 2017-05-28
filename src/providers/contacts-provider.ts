@@ -1,18 +1,42 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import { ProfileData } from "./profile-data";
 import 'rxjs/add/operator/map';
 
-/*
-  Generated class for the ContactsProvider provider.
 
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular 2 DI.
-*/
 @Injectable()
 export class ContactsProvider {
 
-  constructor(public http: Http) {
+  contactsList:FirebaseListObservable<any[]>; 
+
+  constructor(public af: AngularFire, public up: ProfileData) {
     console.log('Hello ContactsProvider Provider');
   }
+
+
+
+   getContactsRef(){
+    return  this.af.database.list('contacts', {
+      query: {
+        orderByChild: 'ownerid',
+        equalTo: this.up.currentUser.uid
+      }
+    });
+
+  }
+
+
+
+  addNewContact(cName,cEmail,cPhone) {
+
+    let contact = {
+          ownerid: this.up.currentUser.uid,
+          name: cName,
+          email:cEmail,
+          phone:cPhone
+    };
+        this.af.database.list(`/contacts`).push(contact);
+  };
+
 
 }
