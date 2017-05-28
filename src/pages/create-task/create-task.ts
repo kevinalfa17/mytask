@@ -20,23 +20,42 @@ export class CreateTaskPage {
   taskName: string;
   data: string;
   users: Array<string>;
+  permissons: Array<string>;
+  type: string;
+  subtype: string;
+  recurrence: string;
+  priority: string;
+  newComment: string;
+  repeatToggle: boolean;
+  notificationsToggle: boolean;
+  advanced: boolean;
+
+
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public typesProvider: TypesProvider,
-    public af: AngularFire, public translate: TranslateService,public modalCtrl: ModalController) {
+    public af: AngularFire, public translate: TranslateService, public modalCtrl: ModalController) {
 
     this.types = typesProvider.getTypesRef();
     this.translate.setDefaultLang('es');
-    this.users=[];
-
+    this.users = [];
+    this.permissons = [];
   }
 
   loadSubtypes(selectedType) {
-    console.log(selectedType);
+    this.type = selectedType;
     this.subtypes = this.typesProvider.getSubtypesRef(selectedType);
-    console.log(this.subtypes)
 
   }
+
+  selectSubtype(selectedSubtype) {
+    this.subtype = selectedSubtype;
+  }
+
+  selectRecurrence(selectedRecurrence) {
+    this.recurrence = selectedRecurrence;
+  }
+
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CreateTask');
@@ -50,12 +69,12 @@ export class CreateTaskPage {
       });
   }
 
-  addUser(){
+  addUser() {
     let chooseModal = this.modalCtrl.create(ContactListPage);
-   chooseModal.onDidDismiss(data => {
-     this.addUserToList(data);
-   });
-   chooseModal.present();
+    chooseModal.onDidDismiss(data => {
+      this.addUserToList(data);
+    });
+    chooseModal.present();
   }
 
   getData = (data) => {
@@ -74,6 +93,43 @@ export class CreateTaskPage {
 
   addUserToList(name) {
     this.users.push(name);
+  }
+
+
+
+
+  newUserPermissons() {
+    this.navCtrl.push(NewContactPage,
+      {
+        callback: this.getDataPermissons
+      });
+  }
+
+  addUserPermissons() {
+    let chooseModal = this.modalCtrl.create(ContactListPage);
+    chooseModal.onDidDismiss(data => {
+      this.addPermissonsToList(data);
+    });
+    chooseModal.present();
+  }
+
+  getDataPermissons = (data) => {
+    return new Promise((resolve, reject) => {
+      this.data = data;
+      this.addPermissonsToList(data);
+      resolve();
+    });
+  };
+
+
+  quitUserPermissons(i) {
+    this.permissons.splice(i, 1);
+
+  }
+
+
+  addPermissonsToList(name) {
+    this.permissons.push(name);
   }
 
 

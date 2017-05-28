@@ -34,7 +34,7 @@
 
       <ion-item>
         <ion-label>Subtipo</ion-label>
-        <ion-select>
+        <ion-select (ionChange)="selectSubtype($event)">
           <ion-option *ngFor="let subtype of subtypes | async" value="{{subtype.subtypeName}}">
             {{ subtype.subtypeName }}
           </ion-option>
@@ -82,23 +82,35 @@
     <ion-list>
       <ion-item>
         <ion-label>Start Date</ion-label>
-        <ion-datetime displayFormat="MMM DD YYYY"></ion-datetime>
+        <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="startDate"></ion-datetime>
       </ion-item>
 
 
       <ion-item>
         <ion-label>Start Time</ion-label>
-        <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A"></ion-datetime>
+        <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="startTime"></ion-datetime>
       </ion-item>
 
       <ion-item>
         <ion-label> Repeat</ion-label>
-        <ion-toggle checked="true"></ion-toggle>
+        <ion-toggle checked="false" [(ngModel)]="repeatToggle"></ion-toggle>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Recurrence</ion-label>
+        <ion-select (ionChange)="selectRecurrence($event)" [disabled]="!repeatToggle">
+          <ion-option>
+            Weekly
+          </ion-option>
+          <ion-option>
+            Monthly
+          </ion-option>
+        </ion-select>
       </ion-item>
 
       <ion-item>
         <ion-label>Ends</ion-label>
-        <ion-datetime displayFormat="MMM DD YYYY"></ion-datetime>
+        <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="endTime" [disabled]="repeatToggle"></ion-datetime>
       </ion-item>
 
     </ion-list>
@@ -109,7 +121,7 @@
     <ion-list>
       <ion-item>
         <ion-label stacked> Priority</ion-label>
-        <ion-range min="1" max="5" step="1" snaps="true" [(ngModel)]="warmth" color="danger">
+        <ion-range min="1" max="5" step="1" snaps="true" [(ngModel)]="priority" color="danger">
           <ion-icon range-left small color="danger" name="alert"></ion-icon>
           <ion-icon range-right color="danger" name="alert"></ion-icon>
         </ion-range>
@@ -117,18 +129,18 @@
 
       <ion-item>
         <ion-label> Notifications</ion-label>
-        <ion-toggle checked="true"></ion-toggle>
+        <ion-toggle checked="true" [(ngModel)]="notificationsToggle"></ion-toggle>
       </ion-item>
 
       <ion-item>
         <ion-label>Advanced options</ion-label>
-        <ion-toggle checked="true"></ion-toggle>
+        <ion-toggle checked="false" [(ngModel)]="advancedToggle"></ion-toggle>
       </ion-item>
 
     </ion-list>
 
 
-    <div style="background-color:white; margin-bottom: 40%">
+    <div style="background-color:white; margin-bottom: 40%" *ngIf="advancedToggle">
 
       <ion-label stacked>Files</ion-label>
       <div style="float:left;width:50%; border-right:1px solid #8B3A3A;height:20vh; background-color:white">
@@ -170,7 +182,7 @@
     </div>
 
 
-    <ion-list>
+    <ion-list *ngIf="advancedToggle">
       <ion-item>
         <ion-label stacked>Comments</ion-label>
         <ion-textarea [(ngModel)]="newComment" type="text" placeholder="Write a commentary"></ion-textarea>
@@ -179,19 +191,19 @@
     </ion-list>
 
 
-    <div style="background-color:white">
+    <div style="background-color:white" *ngIf="advancedToggle">
       <ion-label stacked>User Permissons</ion-label>
       <div style="float:left;width:30%; border-right:1px solid #8B3A3A">
 
 
         <ion-item style="padding-right:10px">
-          <button ion-button item-right icon-only icon-right clear (click)="addUser()">
+          <button ion-button item-right icon-only icon-right clear (click)="addUserPermissons()">
             <ion-icon name="add-circle"></ion-icon>     
           </button>
         </ion-item>
 
         <ion-item style="padding-top:27%;padding-right:10px">
-          <button ion-button item-right icon-only icon-right clear (click)="newUser()">
+          <button ion-button item-right icon-only icon-right clear (click)="newUserPermissons()">
             <ion-icon name="person-add"></ion-icon>     
           </button>
         </ion-item>
@@ -201,21 +213,9 @@
         <ion-scroll scrollY="true" style="height:20vh" id="scroll-user">
 
           <ion-list>
-            <ion-item>
-              <ion-label>User1</ion-label>
-              <button ion-button item-right icon-only icon-right clear (click)="quitUser()">
-            <ion-icon name="md-close"></ion-icon>     
-          </button>
-            </ion-item>
-            <ion-item>
-              <ion-label>User2</ion-label>
-              <button ion-button item-right icon-only icon-right clear (click)="quitUser()">
-            <ion-icon name="md-close"></ion-icon>     
-          </button>
-            </ion-item>
-            <ion-item>
-              <ion-label>User3</ion-label>
-              <button ion-button item-right icon-only icon-right clear (click)="quitUser()">
+            <ion-item *ngFor="let permisson of permissons; let i=index">
+              <ion-label>{{permisson}}</ion-label>
+              <button ion-button item-right icon-only icon-right clear (click)="quitUserPermissons(i)">
             <ion-icon name="md-close"></ion-icon>     
           </button>
             </ion-item>
