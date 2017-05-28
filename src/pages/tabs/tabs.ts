@@ -14,6 +14,8 @@ import { AdminPage } from '../admin/admin';
 })
 export class TabsPage {
 
+  public indNavs = 0;
+
   tab1Root = HomePage;
   tab2Root = AdminPage;
   tab3Root = ContactPage;

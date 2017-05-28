@@ -18,6 +18,7 @@ import {InAppBrowser} from '@ionic-native/in-app-browser'
 import {File} from '@ionic-native/file'
 import { Facebook } from '@ionic-native/facebook';
 import firebase from 'firebase';
+// import { LocalNotifications } from '@ionic-native/local-notifications';
 ////////////////////////////////////////////////////
 import { Push } from '@ionic-native/push';
 import { GooglePlus } from '@ionic-native/google-plus';

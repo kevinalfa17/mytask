@@ -1,5 +1,5 @@
 {
-    "PROJECTNAME": "Project Home Page",
+    "PROJECTNAME": "MyTask",
     "HELLOHOMEPAGE": "Welcome to the home page of the project!!",
     "INFOHOMEPAGE": "This is the main window of the Project.",
     "WORDTAB1": "Home",
@@ -40,5 +40,12 @@
     "WORDINTERAC": "Interactions",
     "WORDDESCRIPTION": "Description",
     "WORDACCEPT": "Acepted",
-    "WORDREJECT": "Rejected"
+    "WORDREJECT": "Rejected",
+    "NONEWNOTIF": "You don't have new notifications",
+    "TEXTDS": "Delivery date",
+    "TEXTHS": "Delivery time",
+    "WORDCONDITION": "Condicion",
+    "TEXTOFDE": "From the usuer",
+    "WORDREFRESH": "Refreshing",
+    "TEXTREFRESH": "Pull to refresh"
 }

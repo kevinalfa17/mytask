@@ -1,6 +1,10 @@
 import { Platform } from 'ionic-angular';
 import { Component, NgZone } from '@angular/core';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { ProfilePage } from '../profile/profile'
+import { ProfileData } from '../../providers/profile-data';
+import firebase from 'firebase'
+import { GooglePlus } from '@ionic-native/google-plus';
 
 declare const gapi: any;
 
@@ -19,13 +23,18 @@ export class GoogleCalendar {
 
   validation: any = {};
 
+  tok: string;
+
+  //<script src="https://apis.google.com/js/client.js?onload=init"></script>
+  googleAuth = 'https://accounts.google.com/o/oauth2/device/code';
+
   CLIENT_ID = '919226115038-i4pn4k2avmqfkt4kkecm30oq54b0rbfp.apps.googleusercontent.com';
   CLIENT_ID_AN = '919226115038-f93ctscn6nfr50b1b58ad4e34lbsfcsm.apps.googleusercontent.com';
   SCOPES = ["https://www.googleapis.com/auth/calendar"];
   APIKEY = "AIzaSyBJhYl15v4K2fy99k-m9Q-kQbxjx4bsIxU";
   REDIRECTURL = "https://project-10af2.firebaseapp.com/__/auth/handler";
 
-  constructor(public browser: InAppBrowser, public platform: Platform) { }
+  constructor(public browser: InAppBrowser, public platform: Platform, public profileData: ProfileData, public google: GooglePlus) { }
 
 
   sendInvite() {
@@ -44,6 +53,7 @@ export class GoogleCalendar {
       var browserRef = window.open('https://accounts.google.com/o/oauth2/auth?client_id=' + this.CLIENT_ID + '&redirect_uri=' + this.REDIRECTURL + '&scope=https://www.googleapis.com/auth/calendar&approval_prompt=force&response_type=token', '_blank', 'location=no');
     }
     alert('ggggggggg');
+
     browserRef.addEventListener("loadstart", (event) => {
       if ((event["url"]).indexOf(this.REDIRECTURL) === 0) {
         var url = event["url"];
@@ -58,7 +68,7 @@ export class GoogleCalendar {
           'path': '/calendar/v3/calendars/primary/events?alt=json',
           'method': 'POST',
           'headers': {
-            'Authorization': 'Gabriel ' + token
+            'Authorization': 'Bearer' + token
           },
           'body': JSON.stringify({
             "summary": this.calendarEvent.name,
@@ -105,14 +115,21 @@ export class GoogleCalendar {
   }
 
   temp() {
-    var browserRef = window.open('https://accounts.google.com/o/oauth2/auth?client_id=' + this.CLIENT_ID + '&redirect_uri=' + this.REDIRECTURL + '&scope=https://www.googleapis.com/auth/calendar&approval_prompt=force&response_type=token', '_blank', 'location=no');
+    // var browserRef = window.open('https://accounts.google.com/o/oauth2/auth?client_id=' + this.CLIENT_ID + '&redirect_uri=' + this.REDIRECTURL + '&scope=https://www.googleapis.com/auth/calendar&approval_prompt=force&response_type=token', '_blank', 'location=no');
     gapi.client.setApiKey(this.APIKEY);
+
+     var provider = new firebase.auth.GoogleAuthProvider();
+   firebase.auth().signInWithPopup(provider).then((newUser) => {
+      this.tok = newUser.displayName;
+       });
+   alert(this.tok);
 
 
 
     gapi.client.load('calendar', 'v3', function () {
       var request = gapi.client.calendar.events.insert({
         "calendarId": "primary",
+        'Authorization': 'Bearer ' + this.tok,
         resource: {
           "summary": "Appointment",
           "location": "Somewhere",

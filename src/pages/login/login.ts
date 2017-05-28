@@ -9,7 +9,7 @@ import { AuthData } from '../../providers/auth-data';
 import { SignupPage } from '../signup/signup';
 import { ResetPasswordPage } from '../reset-password/reset-password';
 import { EmailValidator } from '../../validators/email';
-
+import { ProfileData } from '../../providers/profile-data';
 import { TabsPage } from '../tabs/tabs';
 import { AboutPage } from '../about/about';
 import { TranslateService } from 'ng2-translate';
@@ -36,7 +36,7 @@ export class LoginPage {
   loading: any;
 
   constructor(public platform: Platform, public nav: NavController, public translate: TranslateService, public googlePlus: GooglePlus, private facebook: Facebook,
-    public angfire: AngularFire, public authData: AuthData, public formBuilder: FormBuilder, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
+    public angfire: AngularFire, public authData: AuthData, public profileData: ProfileData, public formBuilder: FormBuilder, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
     this.translate.setDefaultLang('es');
 
     /**

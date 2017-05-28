@@ -14,8 +14,14 @@
       {{ "INFOHOMEPAGE"| translate}}
     </p>
   </div>
-  <button ion-button (click)="goToHomePage2()">HP2</button>
+  <ion-refresher (ionRefresh)="doRefresh($event)" (closeDuration)="2000" (snapbackDuration)="2000">
+    <ion-refresher-content pullingIcon="circles" pullingText=" {{ 'TEXTREFRESH'| translate}}" refreshingSpinner="circles" refreshingText=" {{ 'WORDREFRESH'| translate}}...">
+    </ion-refresher-content>
+  </ion-refresher>
 
+  <button ion-button icon-only (click)="goToNotifications()">
+        <ion-icon name="{{Noti}}"></ion-icon>
+    </button>
   <ion-list>
     <ion-item>
       <ion-thumbnail item-left>
@@ -29,10 +35,10 @@
   </ion-list>
 
   <ion-fab right bottom edge>
-    <button ion-fab color="danger" (click)="call(+50687362890)" >
+    <button ion-fab color="danger" (click)="call(+50687362890)">
       <ion-icon name="add"></ion-icon>
     </button>
-    <button ion-fab color="primary" (click)="goToNot()" >
+    <button ion-fab color="primary" (click)="goToNot()">
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>

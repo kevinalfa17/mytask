@@ -1,5 +1,5 @@
 {
-    "PROJECTNAME": "Pagina principal del projecto",
+    "PROJECTNAME": "MyTask",
     "HELLOHOMEPAGE": "Bienvenido a la pagina principal del proyecto!!",
     "INFOHOMEPAGE": "Esta es la ventana principal del Proyecto.",
     "WORDTAB1": "Inicio",
@@ -40,5 +40,12 @@
     "WORDINTERAC": "Interacciones",
     "WORDDESCRIPTION": "Descripcion",
     "WORDACCEPT": "Aceptadas",
-    "WORDREJECT": "Rechazadas"
+    "WORDREJECT": "Rechazadas",
+    "NONEWNOTIF": "Usted no tiene nuevas notificaciones",
+    "TEXTDS": "Fecha de envio",
+    "TEXTHS": "Hora de envio",
+    "WORDCONDITION": "Condicion",
+    "TEXTOFDE": "Usuario que envia",
+    "WORDREFRESH": "Refrescando",
+    "TEXTREFRESH": "Hale para refrescar"
 }

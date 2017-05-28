@@ -8,6 +8,8 @@ import { Component, NgZone } from '@angular/core';
 import firebase from 'firebase';
 import { LoginPage } from '../pages/login/login';
 
+import {Notifications} from '../pages/notifications/notifications'
+
 ///////////////////////////////
 import { Push, PushObject, PushOptions } from '@ionic-native/push';
 
@@ -17,7 +19,7 @@ import { Push, PushObject, PushOptions } from '@ionic-native/push';
 })
 export class MyApp {
   rootPage: any = LoginPage;
-  public pNoti: string;
+  public alert: any;
 
   constructor(public platform: Platform, public zone: NgZone, public push: Push, public nav: NavController,
     public translate: TranslateService, statusBar: StatusBar, splashScreen: SplashScreen, public alertCtrl: AlertController) {
@@ -54,6 +56,13 @@ export class MyApp {
       splashScreen.hide();
       //////////////////////////////////////////////////////////////////////////////////////
 
+      platform.registerBackButtonAction(() => {
+        if (this.nav.canGoBack()) {
+          this.nav.pop();
+        } else {
+          this.showAlert();
+        }
+      });
 
       const options: PushOptions = {
         android: {
@@ -84,12 +93,38 @@ export class MyApp {
 
         //console.log('Device registered', registration)
         alert(registration.registrationId);
+
+
       });
 
       pushObject.on('error').subscribe(error => console.error('Error with Push plugin', error));
       //////////////////////////////////////////////////////////////////////////////////////
     });
   }
+  showAlert() {
+    this.alert = this.alertCtrl.create({
+      title: 'Exit?',
+      message: 'Do you want to exit the app?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            this.alert = null;
+          }
+        },
+        {
+          text: 'Exit',
+          handler: () => {
+            this.platform.exitApp();
+          }
+        }
+      ]
+    });
+    this.alert.present();
+  }
+
+
 
 
   translateToSpanish() {

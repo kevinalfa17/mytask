@@ -5,6 +5,7 @@ import { EventData } from '../../providers/event-data';
 import firebase from 'firebase'
 import moment from 'moment';
 import { ProfileData } from '../../providers/profile-data';
+//import { LocalNotifications } from '@ionic-native/local-notifications';
 
 @Component({
     selector: 'notifications',
@@ -16,30 +17,15 @@ export class Notifications {
     public currentUser: firebase.User;
     public currenUserUid: string;
     destineUser: any;
-
+    public varNew = 0;
 
 
     constructor(public navCtrl: NavController, public profilData: ProfileData) { }
-
+//, public localNotifications: LocalNotifications
     ionViewDidEnter() {
-
-        this.currentUser = this.profilData.currentUser;
-        this.notificationsReference = firebase.database().ref(`userProfile/${this.currentUser.uid}/notifications`);
-
-        this.notificationsReference.orderByChild('Type').on('value', snapshot => {
-
-            let rawList = [];
-            snapshot.forEach(snap => {
-                rawList.push({
-                    id: snap.key,
-                    Name: snap.val().Name,
-                    Description: snap.val().Description,
-                    Type: snap.val().Type,
-                });
-                return false
-            })
-            this.notificationsList = rawList;
-        });
+        this.profilData.getNotifications();
+        this.notificationsList = this.profilData.ListNotifications;
+        this.varNew = this.profilData.numberNewNotifications;
     }
 
     goToNotificationDetail(eventId) {
@@ -63,4 +49,16 @@ export class Notifications {
             Read: 'false',
         });
     }
+
+    localnoti() {
+        // this.localNotifications.schedule({
+        //     id: 1,
+        //     text: 'Single ILocalNotification',
+        //     sound: "'file://sound.mp3' : 'file://beep.caf'",
+        //     at: moment().format('D/M/YYYY') + " " + moment().format('h:m:s a'),
+        //     every: "minute",
+        //     smallIcon:"http://static.tumblr.com/5c90a92aa8597626a00a0845eea82ca3/e5nd402/pEdn4g1vc/tumblr_static_kvycde7padscokkwgs8k88oc.png"
+        // });
+    }
+
 }
