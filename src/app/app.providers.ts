@@ -5,6 +5,8 @@ import { ProfileData } from '../providers/profile-data';
 import { ChatProvider } from '../providers/chat-provider';
 import { UtilsProvider } from '../providers/utils-provider';
 import { TypesProvider } from '../providers/types-provider';
+import { ContactsProvider } from '../providers/contacts-provider';
+import { TaskProvider } from '../providers/task-provider';
 
 
 //Others
@@ -57,7 +59,9 @@ export function GetProviders() {
       TypesProvider,
       InAppBrowser,
       File,
-      LocalNotifications
+      LocalNotifications,
+      ContactsProvider,
+      TaskProvider
     ];
   } else {
     // Use device providers
@@ -78,7 +82,9 @@ export function GetProviders() {
       TypesProvider,
       InAppBrowser,
       File,
-      LocalNotifications
+      LocalNotifications,
+      ContactsProvider,
+      TaskProvider
     ];  
   }
   return providers;

@@ -96,7 +96,6 @@ export class ProfileData {
     this.currentUser.reload();
   }
 
-
   getNotifications() {
     this.notificationsReference = firebase.database().ref(`userProfile/${this.currentUser.uid}/notifications`);
     this.notificationsReference.orderByChild('Type').on('value', snapshot => {
@@ -121,5 +120,17 @@ export class ProfileData {
       this.ListNotifications = rawList;
       return this.ListNotifications;
     });
+
+}
+
+getUserbyEmail(email) {
+     
+    return this.af.database.list('userProfile', {
+      query: {
+        orderByChild: 'email',
+        equalTo: email
+      }
+    });
+
   }
 }
