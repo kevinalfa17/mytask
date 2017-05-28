@@ -1,0 +1,244 @@
+<!--
+  Generated template for the CreateTask page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>CreateTask</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <div>
+    <ion-list>
+
+      <ion-item>
+        <ion-label stacked>Tarea</ion-label>
+        <ion-input [(ngModel)]="taskName" type="text" placeholder="Nombre de la tarea"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Tipo</ion-label>
+        <ion-select (ionChange)="loadSubtypes($event)">
+          <ion-option *ngFor="let type of types | async" value="{{type.typeName}}">
+            {{type.typeName}}
+          </ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Subtipo</ion-label>
+        <ion-select>
+          <ion-option *ngFor="let subtype of subtypes | async" value="{{subtype.subtypeName}}">
+            {{ subtype.subtypeName }}
+          </ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+
+  </div>
+
+  <div style="background-color:white">
+
+    <ion-label stacked>Users</ion-label>
+    <div style="float:left;width:30%; border-right:1px solid #8B3A3A">
+
+      <ion-item style="padding-right:10px">
+        <button ion-button item-right icon-only icon-right clear (click)="addUser()">
+            <ion-icon name="add-circle"></ion-icon>     
+          </button>
+      </ion-item>
+
+      <ion-item style="padding-top:27%; padding-right:10px">
+        <button ion-button item-right icon-only icon-right clear (click)="newUser()">
+            <ion-icon name="person-add"></ion-icon>     
+          </button>
+      </ion-item>
+    </div>
+    <div style="float:right;width:70%; background-color:white">
+
+      <ion-scroll scrollY="true" style="height:20vh" id="scroll-user">
+
+        <ion-list>
+          <ion-item>
+            <ion-label>User1</ion-label>
+            <button ion-button item-right icon-only icon-right clear (click)="quitUser()">
+            <ion-icon name="md-close"></ion-icon>     
+          </button>
+          </ion-item>
+          <ion-item>
+            <ion-label>User2</ion-label>
+            <button ion-button item-right icon-only icon-right clear (click)="quitUser()">
+            <ion-icon name="md-close"></ion-icon>     
+          </button>
+          </ion-item>
+          <ion-item>
+            <ion-label>User3</ion-label>
+            <button ion-button item-right icon-only icon-right clear (click)="quitUser()">
+            <ion-icon name="md-close"></ion-icon>     
+          </button>
+          </ion-item>
+        </ion-list>
+      </ion-scroll>
+
+    </div>
+  </div>
+
+  <div style="margin-top:147px">
+    <ion-list>
+      <ion-item>
+        <ion-label>Start Date</ion-label>
+        <ion-datetime displayFormat="MMM DD YYYY"></ion-datetime>
+      </ion-item>
+
+
+      <ion-item>
+        <ion-label>Start Time</ion-label>
+        <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A"></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label> Repeat</ion-label>
+        <ion-toggle checked="true"></ion-toggle>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Ends</ion-label>
+        <ion-datetime displayFormat="MMM DD YYYY"></ion-datetime>
+      </ion-item>
+
+    </ion-list>
+  </div>
+
+
+  <div>
+    <ion-list>
+      <ion-item>
+        <ion-label stacked> Priority</ion-label>
+        <ion-range min="1" max="5" step="1" snaps="true" [(ngModel)]="warmth" color="danger">
+          <ion-icon range-left small color="danger" name="alert"></ion-icon>
+          <ion-icon range-right color="danger" name="alert"></ion-icon>
+        </ion-range>
+      </ion-item>
+
+      <ion-item>
+        <ion-label> Notifications</ion-label>
+        <ion-toggle checked="true"></ion-toggle>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Advanced options</ion-label>
+        <ion-toggle checked="true"></ion-toggle>
+      </ion-item>
+
+    </ion-list>
+
+
+    <div style="background-color:white; margin-bottom: 40%">
+
+      <ion-label stacked>Files</ion-label>
+      <div style="float:left;width:50%; border-right:1px solid #8B3A3A;height:20vh; background-color:white">
+
+        <button ion-item (click)="showFilesOptionsSheet()">
+        <ion-icon item-left name="add"></ion-icon>
+        Add Files
+      </button>
+
+      </div>
+
+      <div style="float:right;width:50%; background-color:white">
+
+        <ion-scroll scrollY="true" style="height:20vh" id="scroll-user">
+
+          <ion-list>
+            <ion-item>
+              <ion-label>Item1</ion-label>
+              <button ion-button item-right icon-only icon-right clear (click)="quitUser()">
+            <ion-icon name="md-close"></ion-icon>     
+          </button>
+            </ion-item>
+            <ion-item>
+              <ion-label>Item2</ion-label>
+              <button ion-button item-right icon-only icon-right clear (click)="quitUser()">
+            <ion-icon name="md-close"></ion-icon>     
+          </button>
+            </ion-item>
+            <ion-item>
+              <ion-label>Item3</ion-label>
+              <button ion-button item-right icon-only icon-right clear (click)="quitUser()">
+            <ion-icon name="md-close"></ion-icon>     
+          </button>
+            </ion-item>
+          </ion-list>
+        </ion-scroll>
+
+      </div>
+    </div>
+
+
+    <ion-list>
+      <ion-item>
+        <ion-label stacked>Comments</ion-label>
+        <ion-textarea [(ngModel)]="newComment" type="text" placeholder="Write a commentary"></ion-textarea>
+      </ion-item>
+
+    </ion-list>
+
+
+    <div style="background-color:white">
+      <ion-label stacked>User Permissons</ion-label>
+      <div style="float:left;width:30%; border-right:1px solid #8B3A3A">
+
+
+        <ion-item style="padding-right:10px">
+          <button ion-button item-right icon-only icon-right clear (click)="addUser()">
+            <ion-icon name="add-circle"></ion-icon>     
+          </button>
+        </ion-item>
+
+        <ion-item style="padding-top:27%;padding-right:10px">
+          <button ion-button item-right icon-only icon-right clear (click)="newUser()">
+            <ion-icon name="person-add"></ion-icon>     
+          </button>
+        </ion-item>
+      </div>
+      <div style="float:right;width:70%; background-color:white">
+
+        <ion-scroll scrollY="true" style="height:20vh" id="scroll-user">
+
+          <ion-list>
+            <ion-item>
+              <ion-label>User1</ion-label>
+              <button ion-button item-right icon-only icon-right clear (click)="quitUser()">
+            <ion-icon name="md-close"></ion-icon>     
+          </button>
+            </ion-item>
+            <ion-item>
+              <ion-label>User2</ion-label>
+              <button ion-button item-right icon-only icon-right clear (click)="quitUser()">
+            <ion-icon name="md-close"></ion-icon>     
+          </button>
+            </ion-item>
+            <ion-item>
+              <ion-label>User3</ion-label>
+              <button ion-button item-right icon-only icon-right clear (click)="quitUser()">
+            <ion-icon name="md-close"></ion-icon>     
+          </button>
+            </ion-item>
+          </ion-list>
+        </ion-scroll>
+
+      </div>
+    </div>
+
+
+
+
+  </div>
+</ion-content>

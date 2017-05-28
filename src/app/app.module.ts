@@ -19,6 +19,7 @@ import { CreateTypePage } from '../pages/create-type/create-type';
 import { EditTypePage } from '../pages/edit-type/edit-type';
 import { Notifications } from '../pages/notifications/notifications';
 import { Tasksinteractions } from '../pages/tasksinterations/tasksinteractions';
+import {CreateTaskPage} from '../pages/create-task/create-task';
 
 
 //Providers
@@ -71,7 +72,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     CreateTypePage,
     EditTypePage,
     Notifications,
-    Tasksinteractions    
+    Tasksinteractions,
+    CreateTaskPage 
   ],
   imports: [
     BrowserModule,
@@ -115,7 +117,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     CreateTypePage,
     EditTypePage,
     Notifications,
-    Tasksinteractions
+    Tasksinteractions,
+    CreateTaskPage
   ],
   providers: GetProviders()
 })

@@ -1,25 +1,115 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <button ion-button menuToggle item-right>
-      <ion-icon name="apps"></ion-icon>
-    </button>
+    <div>
+      <div style="position:relative;float:left">
+        <button ion-button menuToggle *ngIf="firstSlide">
+          <ion-icon name="apps"></ion-icon>
+        </button>
 
-    <ion-title *ngIf="!enableSearch">
-      {{"PROJECTNAME" | translate }}
-    </ion-title>
-    <ion-searchbar *ngIf="enableSearch" (ionCancel)="toggleSearchBar()" [showCancelButton]="true"></ion-searchbar>
+        <ion-buttons>
+          <button (click)="previousDay()" ion-button icon-only *ngIf="!firstSlide">
+        <ion-icon name="arrow-back"></ion-icon>
+    </button>
+        </ion-buttons>
+      </div>
+      <div style="position:absolute;left:50px;top:5px;width:80%">
+        <div >
+          <ion-title *ngIf="!enableSearch" style="padding-top:15px">
+            {{"PROJECTNAME" | translate }}
+          </ion-title>
+        </div>
+        <ion-searchbar style="width:80%" *ngIf="enableSearch" (ionCancel)="toggleSearchBar()" [showCancelButton]="true"></ion-searchbar>
+      </div>
+
+    </div>
 
     <ion-buttons end>
       <button (click)="toggleSearchBar()" ion-button icon-only>
         <ion-icon name="search"></ion-icon>
+      </button>
+      <button (click)="nextDay()" ion-button icon-only *ngIf="!lastSlide">
+        <ion-icon name="arrow-forward"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
-<ion-content padding text-center>
+<ion-content>
+
+  <ion-toolbar no-border-top>
+    <ion-segment [(ngModel)]="taskOwner">
+      <ion-segment-button value="me">
+        Yo
+      </ion-segment-button>
+      <ion-segment-button value="Others">
+        Otros
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+  <ion-slides (ionSlideDidChange)="slideChanged()">
+    <ion-slide>
+      <ion-list>
+        <ion-item-sliding>
+          <ion-item>
+            <ion-avatar item-left>
+              <img src="assets/img/jira.jpg">
+            </ion-avatar>
+            <h2>Task</h2>
+            <p>Type</p>
+            <ion-note item-right>
+              Time
+            </ion-note>
+          </ion-item>
+
+          <ion-item-options>
+            <button ion-button color="button1" (click)="more(item)">
+          <ion-icon name="create"></ion-icon>
+          Edit
+        </button>
+            <button ion-button color="button2" (click)="mute(item)">
+          <ion-icon name="chatbubbles"></ion-icon>
+          Chat
+        </button>
+            <button ion-button color="button3" (click)="delete(item)">
+          <ion-icon name="trash"></ion-icon>
+          Other
+        </button>
+          </ion-item-options>
+
+          <ion-item-options side="left" (ionSwipe)="complete()">
+            <button ion-button color="completeButton" expandable (click)="complete()">
+          <ion-icon name="checkmark-circle"></ion-icon>
+          <div>Completed</div>
+          <ion-spinner id="archive-spinner"></ion-spinner>
+        </button>
+          </ion-item-options>
+        </ion-item-sliding>
+
+        <!--DELETE UP AND ADD NGFOR-->
+      </ion-list>
+    </ion-slide>
+
+    <ion-slide>
+      2
+    </ion-slide>
+    <ion-slide>
+      3
+    </ion-slide>
+  </ion-slides>
+
+  <ion-fab right bottom edge>
+    <button ion-fab color="danger" (click)="newTaskActionSheet()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
+
+
+
+
+
 
   <!--<div color="danger">
     <h2>{{ "HELLOHOMEPAGE" | translate }}</h2>
@@ -28,60 +118,5 @@
     </p>
   </div>
   <button ion-button (click)="goToHomePage2()">HP2</button>-->
-
-  <ion-list>
-
-    <ion-item-sliding>
-      <ion-item>
-        <!--<ion-avatar item-left>
-          <img [src]="chat.img">
-        </ion-avatar>-->
-        <h2>name</h2>
-        <p>message</p>
-        <ion-note item-right>
-          time
-        </ion-note>
-      </ion-item>
-
-      <ion-item-options>
-        <button ion-button color="secondary" (click)="more(item)">
-          <ion-icon name="menu"></ion-icon>
-          More
-        </button>
-        <button ion-button color="dark" (click)="mute(item)">
-          <ion-icon name="volume-off"></ion-icon>
-          Mute
-        </button>
-        <button ion-button color="danger" (click)="delete(item)">
-          <ion-icon name="trash"></ion-icon>
-          Delete
-        </button>
-      </ion-item-options>
-
-      <ion-item-options side="left" (ionSwipe)="archive(item)">
-        <button ion-button color="primary" expandable (click)="archive(item)">
-          <ion-icon name="archive" class="expand-hide"></ion-icon>
-          <div class="expand-hide">Archive</div>
-          <ion-spinner id="archive-spinner"></ion-spinner>
-        </button>
-      </ion-item-options>
-    </ion-item-sliding>
-
-    <!--<ion-item>
-      <ion-thumbnail item-left>
-        <img src="assets/img/logo2.jpg">
-      </ion-thumbnail>
-      <h2>Task name 1</h2>
-      <p>Other task information 1</p>
-      <button ion-button clear item-right (click)="goToHomePage2()">View</button>
-    </ion-item>-->
-    <!--DELETE UP AND ADD NGFOR-->
-  </ion-list>
-
-  <ion-fab right bottom edge>
-    <button ion-fab color="danger" (click)="goToNot()">
-      <ion-icon name="add"></ion-icon>
-    </button>
-  </ion-fab>
 
 </ion-content>

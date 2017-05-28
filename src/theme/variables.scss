@@ -39,7 +39,12 @@ $colors: (
 
   Date:blue,
   Homework:red,
-  call: green
+  call: green,
+
+  completeButton: #32db64,
+  button1: #387ef5,
+  button2: #222,
+  button3: #f53d3d
 
 );
 
@@ -51,7 +56,6 @@ $colors: (
       background-color: color($colors, secondary);
   }
   
-
 
 .Menubackground{
   background-color: yellow;
@@ -187,6 +191,10 @@ form {
   .no-profit {
     color: #FF0000;
   }
+
+  .slide-zoom {
+height: 100%;
+}
 
 /////////
 
