@@ -39,14 +39,11 @@
 <ion-content>
 
 
-<!--  <ion-refresher (ionRefresh)="doRefresh($event)" (closeDuration)="2000" (snapbackDuration)="2000">
+<ion-refresher (ionRefresh)="doRefresh($event)" (closeDuration)="2000" (snapbackDuration)="2000">
     <ion-refresher-content pullingIcon="circles" pullingText=" {{ 'TEXTREFRESH'| translate}}" refreshingSpinner="circles" refreshingText=" {{ 'WORDREFRESH'| translate}}...">
     </ion-refresher-content>
   </ion-refresher>
 
-<button ion-button icon-only (click)="goToNotifications()">
-        <ion-icon name="{{Noti}}"></ion-icon>
-    </button>-->
 
   <ion-toolbar no-border-top>
     <ion-segment [(ngModel)]="taskOwner">
@@ -115,5 +112,11 @@
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>
+
+ <ion-fab left bottom edge>
+  <button ion-fab (click)="goToNotifications()">
+        <ion-icon name="{{Noti}}"></ion-icon>
+    </button>
+    </ion-fab>
 
 </ion-content>
