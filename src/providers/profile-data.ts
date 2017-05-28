@@ -90,4 +90,16 @@ export class ProfileData {
   gooutuser() {
     this.currentUser.reload();
   }
+
+
+   getUserbyEmail(email) {
+     
+    return this.af.database.list('userProfile', {
+      query: {
+        orderByChild: 'email',
+        equalTo: email
+      }
+    });
+
+  }
 }

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate';
 import { TypesProvider } from '../../providers/types-provider';
+import { TaskProvider } from '../../providers/task-provider';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { NewContactPage } from '../new-contact/new-contact';
 import { ModalController } from 'ionic-angular';
@@ -29,17 +30,29 @@ export class CreateTaskPage {
   repeatToggle: boolean;
   notificationsToggle: boolean;
   advanced: boolean;
+  startDate:string;
+  startTime:string;
+  endTime:string;
 
 
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public typesProvider: TypesProvider,
-    public af: AngularFire, public translate: TranslateService, public modalCtrl: ModalController) {
+    public af: AngularFire, public translate: TranslateService, public modalCtrl: ModalController,
+     public taskProvider: TaskProvider) {
 
     this.types = typesProvider.getTypesRef();
     this.translate.setDefaultLang('es');
     this.users = [];
     this.permissons = [];
+    this.data = "";
+    this.type = "";
+    this.subtype = "";
+    this.recurrence = "";
+    this.newComment = "";
+    this.startDate = "";
+    this.endTime = "";
+    this.startTime = "";
   }
 
   loadSubtypes(selectedType) {
@@ -130,6 +143,13 @@ export class CreateTaskPage {
 
   addPermissonsToList(name) {
     this.permissons.push(name);
+  }
+
+
+  addTask(){
+
+    this.taskProvider.addNewTask(this.users, this.taskName, this.type, this.subtype, this.startDate, this.startTime, this.repeatToggle,
+    this.recurrence, this.endTime, this.priority, this.notificationsToggle, [], this.newComment, this.permissons)
   }
 
 

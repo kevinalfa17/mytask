@@ -18,8 +18,8 @@ export class ContactListPage {
     this.users = this.contactsProvider.getContactsRef();
   }
 
-  userSelected(username) {
-    this.viewCtrl.dismiss(username);
+  userSelected(user) {
+    this.viewCtrl.dismiss(user);
   }
   
   ionViewDidLoad() {

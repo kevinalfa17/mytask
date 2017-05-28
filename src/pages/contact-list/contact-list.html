@@ -18,7 +18,7 @@
 
   <ion-list>
 
-    <button ion-item *ngFor="let user of users | async" (click)="userSelected(user.name)">
+    <button ion-item *ngFor="let user of users | async" (click)="userSelected(user.email)">
     {{user.name}}
   </button>  
 

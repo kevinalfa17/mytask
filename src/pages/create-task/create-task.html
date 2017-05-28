@@ -98,11 +98,14 @@
 
       <ion-item>
         <ion-label>Recurrence</ion-label>
-        <ion-select (ionChange)="selectRecurrence($event)" [disabled]="!repeatToggle">
-          <ion-option>
+        <ion-select (ionChange)="selectRecurrence($event)" [disabled]="!repeatToggle" [(ngModel)]="recurrence">
+          <ion-option value="daily">
+            Daily
+          </ion-option>
+          <ion-option value="weekly">
             Weekly
           </ion-option>
-          <ion-option>
+          <ion-option value="monthly">
             Monthly
           </ion-option>
         </ion-select>
@@ -225,8 +228,9 @@
       </div>
     </div>
 
-
-
-
   </div>
+
+    <button ion-button block (click)="addTask()" >
+    Create new Task
+  </button>
 </ion-content>

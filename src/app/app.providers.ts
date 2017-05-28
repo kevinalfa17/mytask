@@ -6,6 +6,8 @@ import { ChatProvider } from '../providers/chat-provider';
 import { UtilsProvider } from '../providers/utils-provider';
 import { TypesProvider } from '../providers/types-provider';
 import { ContactsProvider } from '../providers/contacts-provider';
+import { TaskProvider } from '../providers/task-provider';
+
 
 //Others
 import { ErrorHandler } from '@angular/core';
@@ -46,7 +48,8 @@ export function GetProviders() {
       ChatProvider,
       UtilsProvider,
       TypesProvider,
-      ContactsProvider
+      ContactsProvider,
+      TaskProvider
     ];
   } else {
     // Use device providers
@@ -65,7 +68,8 @@ export function GetProviders() {
       ChatProvider,
       UtilsProvider,
       TypesProvider,
-      ContactsProvider
+      ContactsProvider,
+      TaskProvider
     ];  
   }
   return providers;

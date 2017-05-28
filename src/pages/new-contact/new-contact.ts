@@ -24,7 +24,12 @@ export class NewContactPage {
 
   addContact(){
     this.contactsProvider.addNewContact(this.contactName,this.contactEmail,this.contactPhone);
-    this.callback(this.contactName).then(()=>{ this.navCtrl.pop() });
+    /* let contact = {
+          name: this.contactName,
+          email:this.contactEmail,
+          phone:this.contactPhone
+    };*/
+    this.callback(this.contactEmail).then(()=>{ this.navCtrl.pop() });
   }
 
   ionViewDidLoad() {
