@@ -121,16 +121,26 @@ export class ProfileData {
       return this.ListNotifications;
     });
 
-}
+  }
 
-getUserbyEmail(email) {
-     
-    return this.af.database.list('userProfile', {
+  getUserbyEmail(email, key ,subnode) {
+
+    var userkey;
+    this.af.database.list('/userProfile', {
       query: {
         orderByChild: 'email',
         equalTo: email
-      }
-    });
+      },
+      preserveSnapshot: true
+    }).subscribe(snapshots => {
+      snapshots.forEach(snapshot => {
 
+        if (snapshot.key !== null) {
+          let endpoint = this.af.database.object(`/userProfile/${snapshot.key}/${subnode}/${key}`);
+          endpoint.set(true);
+        }
+
+      });
+    })
   }
 }

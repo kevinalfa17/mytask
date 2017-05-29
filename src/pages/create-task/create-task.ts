@@ -50,9 +50,13 @@ export class CreateTaskPage {
     this.subtype = "";
     this.recurrence = "";
     this.newComment = "";
+    this.priority = "1";
     this.startDate = "";
     this.endTime = "";
     this.startTime = "";
+    this.taskName ="";
+    this.repeatToggle = false;
+    this.notificationsToggle = false;
   }
 
   loadSubtypes(selectedType) {
