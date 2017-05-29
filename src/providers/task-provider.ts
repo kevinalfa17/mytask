@@ -14,16 +14,19 @@ export class TaskProvider {
   }
 
 
+  getTaskRef() {
 
-  /*getTaskRef() {
-    return this.af.database.list('contacts', {
-      query: {
-        orderByChild: 'responsable',
-        equalTo: this.up.currentUser.uid
-      }
-    });
+     let tasksId = this.af.database.list(`/userProfile/${this.up.currentUser.uid}/tasks`);
+     //Get task for each id
+      return tasksId;
+  }
 
-  }*/
+  getDelegatedTaskRef() {
+
+     let delegatedTasksId = this.af.database.list(`/userProfile/${this.up.currentUser.uid}/delegatedTasks`);
+      //Get task for each id
+      return delegatedTasksId;
+  }
 
 
 
@@ -32,7 +35,7 @@ export class TaskProvider {
 
     let task = {
       creatorid: this.up.currentUser.uid,
-      responsable: [responsable],
+      responsable: responsable,
       taskName: taskname,
       type: type,
       subtype: subtype,
@@ -43,12 +46,23 @@ export class TaskProvider {
       endTime: endTime,
       priority: priority,
       notifications: notifications,
-      files: [files],
+      files: files,
       comments: comments,
-      permissons: permissons
+      permissons: permissons,
+      state: 0
 
     };
-    this.af.database.list(`/tasks`).push(task);
+    var key = this.af.database.list(`/tasks`).push(task).key;
+
+    responsable.forEach((user) => {
+      this.up.getUserbyEmail(user,key,"tasks");
+    });
+
+    permissons.forEach((user) => {
+      this.up.getUserbyEmail(user,key,"delegatedTasks");
+    });
+
+
   };
 
 
