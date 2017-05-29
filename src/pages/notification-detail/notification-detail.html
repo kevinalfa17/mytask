@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title><strong>{{"WORDNAME" | translate}}:</strong> {{currentNotification?.Name}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card>
+    <ion-card-header>
+      <strong>{{"WORDDETAIL" | translate}}:</strong>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>{{"WORDCONDITION" | translate}}: </strong>{{currentNotification?.Condition}}</p>
+      <p><strong>{{"WORDDESCRIPTION" | translate}}:</strong> {{currentNotification?.Description}}</p>
+
+      <p><strong>{{"WORDTYPE" | translate}}: </strong>{{currentNotification?.Type}}</p>
+      <p><strong>{{"TEXTOFDE" | translate}}: </strong>{{currentNotification?.From}}</p>
+      <p><strong>{{"TEXTDS" | translate}}: </strong>{{currentNotification?.DateSended}}</p>
+      <p><strong>{{"TEXTHS" | translate}}: </strong>{{currentNotification?.HourSended}}</p>
+    </ion-card-content>
+    <button ion-button icon-only (click)="accept()">
+        <ion-icon name="checkmark"></ion-icon>
+    </button>
+    <button ion-button icon-only (click)="reject()">
+        <ion-icon name="close"></ion-icon>
+    </button>
+
+  </ion-card>
+
+</ion-content>

@@ -6,10 +6,6 @@ import { AngularFire } from 'angularfire2';
 export class ProfileData {
   public userProfile: firebase.database.Reference;
   public currentUser: firebase.User;
-  public notificationsReference: firebase.database.Reference;
-  public ListNotifications: any;
-  public numberNewNotifications = 0;
-
 
   constructor(public af: AngularFire) {
 
@@ -91,46 +87,16 @@ export class ProfileData {
   }
 
   gooutuser() {
-    this.numberNewNotifications = 0;
-    this.ListNotifications = null;
     this.currentUser.reload();
   }
 
-  getNotifications() {
-    this.notificationsReference = firebase.database().ref(`userProfile/${this.currentUser.uid}/notifications`);
-    this.notificationsReference.orderByChild('Type').on('value', snapshot => {
-      let rawList = [];
-      this.numberNewNotifications = 0;
-      snapshot.forEach(snap => {
-        if (snap.val().Read == 'false') {
-          this.numberNewNotifications = this.numberNewNotifications + 1;
-        }
-        rawList.push({
-          id: snap.key,
-          Name: snap.val().Name,
-          Description: snap.val().Description,
-          Type: snap.val().Type,
-          From: snap.val().From,
-          Condition: snap.val().Condition,
-          DateSended: snap.val().DateSended,
-          HourSended: snap.val().HourSended
-        });
-        return false
-      })
-      this.ListNotifications = rawList;
-      return this.ListNotifications;
-    });
+  getUserbyEmail(email) {
 
-}
-
-getUserbyEmail(email) {
-     
     return this.af.database.list('userProfile', {
       query: {
         orderByChild: 'email',
         equalTo: email
       }
     });
-
   }
 }

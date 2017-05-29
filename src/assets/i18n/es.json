@@ -47,5 +47,7 @@
     "WORDCONDITION": "Condicion",
     "TEXTOFDE": "Usuario que envia",
     "WORDREFRESH": "Refrescando",
-    "TEXTREFRESH": "Hale para refrescar"
+    "TEXTREFRESH": "Hale para refrescar",
+    "WORDDETAIL": "Detalles",
+    "WORDTYPE":"Tipo"
 }

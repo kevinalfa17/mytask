@@ -7,6 +7,7 @@ import { UtilsProvider } from '../providers/utils-provider';
 import { TypesProvider } from '../providers/types-provider';
 import { ContactsProvider } from '../providers/contacts-provider';
 import { TaskProvider } from '../providers/task-provider';
+import { NotificationData } from '../providers/notification-provider';
 
 
 //Others
@@ -61,7 +62,8 @@ export function GetProviders() {
       File,
       LocalNotifications,
       ContactsProvider,
-      TaskProvider
+      TaskProvider,
+      NotificationData
     ];
   } else {
     // Use device providers
@@ -84,7 +86,8 @@ export function GetProviders() {
       File,
       LocalNotifications,
       ContactsProvider,
-      TaskProvider
+      TaskProvider,
+      NotificationData
     ];  
   }
   return providers;

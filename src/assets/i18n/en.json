@@ -44,8 +44,10 @@
     "NONEWNOTIF": "You don't have new notifications",
     "TEXTDS": "Delivery date",
     "TEXTHS": "Delivery time",
-    "WORDCONDITION": "Condicion",
+    "WORDCONDITION": "Condition",
     "TEXTOFDE": "From the usuer",
     "WORDREFRESH": "Refreshing",
-    "TEXTREFRESH": "Pull to refresh"
+    "TEXTREFRESH": "Pull to refresh",
+    "WORDDETAIL": "Details",
+    "WORDTYPE":"Type"
 }

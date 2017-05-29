@@ -22,8 +22,7 @@ export class EventData {
     return this.eventList.child(eventId);
   }
 
-  createEvent(eventName: string, eventDate: string, eventPrice: number, 
-    eventCost: number): firebase.Promise<any> {
+  createEvent(eventName: string, eventDate: string, eventPrice: number, eventCost: number): firebase.Promise<any> {
     return this.eventList.push({
       name: eventName,
       date: eventDate,

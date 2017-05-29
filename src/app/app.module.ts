@@ -18,6 +18,7 @@ import { ChatViewPage } from '../pages/chat-view/chat-view';
 import { CreateTypePage } from '../pages/create-type/create-type';
 import { EditTypePage } from '../pages/edit-type/edit-type';
 import { Notifications } from '../pages/notifications/notifications';
+import { NotificationDetailPage } from '../pages/notification-detail/notification-detail';
 import { Tasksinteractions } from '../pages/tasksinterations/tasksinteractions';
 import { GoogleCalendar } from '../pages/googleCalendar/googleCalendar';
 import {CreateTaskPage} from '../pages/create-task/create-task';
@@ -79,7 +80,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     GoogleCalendar,
     CreateTaskPage,
     NewContactPage,
-    ContactListPage
+    ContactListPage,
+    NotificationDetailPage
   ],
   imports: [
     BrowserModule,
@@ -127,7 +129,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     GoogleCalendar,
     CreateTaskPage,
     NewContactPage,
-    ContactListPage
+    ContactListPage,
+    NotificationDetailPage
   ],
   providers: GetProviders()
 })

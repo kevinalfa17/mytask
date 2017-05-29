@@ -3,7 +3,7 @@ import { NavController, AlertController } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate';
 import { HomePage2 } from '../home2/home';
 import { Notifications } from '../notifications/notifications';
-import { ProfileData } from '../../providers/profile-data';
+import { NotificationData } from '../../providers/notification-provider';
 ///////////////////////////////////////////////
 declare var window;
 import { GoogleCalendar } from '../googleCalendar/googleCalendar';
@@ -21,8 +21,6 @@ import { CreateTaskPage } from '../create-task/create-task';
 export class HomePage {
 
   @ViewChild(Slides) slides: Slides;
-
-
   taskOwner: string;
   days: number;
   currentIndex: number;
@@ -33,10 +31,10 @@ export class HomePage {
   public Noti = "notifications-off";
   public notiInChange = false;
 
-  constructor(public nav: NavController, public translate: TranslateService, public actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController, public profileData: ProfileData) {
+  constructor(public nav: NavController, public translate: TranslateService, public actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController, public notificationData: NotificationData) {
 
     this.translate.setDefaultLang('es');
-    this.profileData.getNotifications();
+    this.notificationData.getNotifications();
     this.enableSearch = false;
     this.taskOwner = "me";
 
@@ -125,8 +123,8 @@ export class HomePage {
   //Gabo functions
 
   ionViewDidLoad() {
-    this.profileData.getNotifications();
-    if ((this.profileData.numberNewNotifications != 0)) {
+    this.notificationData.getNotifications();
+    if ((this.notificationData.numberNewNotifications != 0)) {
       this.Noti = "notifications";
     } else {
       this.Noti = "notifications-off";
@@ -141,8 +139,8 @@ export class HomePage {
     window.location = "tel:" + passedNumber;
   }
   goToNotifications() {
-    this.profileData.getNotifications();
-    if (this.profileData.numberNewNotifications != 0) {
+    this.notificationData.getNotifications();
+    if (this.notificationData.numberNewNotifications != 0) {
       this.nav.push(Notifications);
     } else {
       this.translate.get('NONEWNOTIF').subscribe((text: string) => {
