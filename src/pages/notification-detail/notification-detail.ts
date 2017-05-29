@@ -14,14 +14,10 @@ export class NotificationDetailPage {
     public notificationData: NotificationData, public cameraPlugin: Camera) { }
 
   ionViewDidEnter() {
-    if (this.navParams.get('notificationId') == null){
-
-    } else {
       this.notificationData.getNotificationDetail(this.navParams.get('notificationId')).on('value', snapshot => {
         this.currentNotification = snapshot.val();
         this.currentNotification.id = snapshot.key;
       });
-    }
   }
 
   accept() {

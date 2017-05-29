@@ -15,7 +15,6 @@ export class NotificationData {
     constructor(public af: AngularFire) {
         this.userProfile = firebase.database().ref('userProfile').child(firebase.auth().currentUser.uid);
         this.notificationListOf = this.userProfile.child('notifications');
-        //this.notificationsReference = this.userProfile.child(firebase.auth().currentUser.uid).child('notifications');
     }
 
     getNotificationList(): firebase.database.Reference {
@@ -43,13 +42,19 @@ export class NotificationData {
         });
     }
     deleteNotification(notificationtId) {
-        this.notificationListOf.child(notificationtId).remove(function (error) {
-            if (error) {
-                return ('Error al eliminar al registro');
-            } else {
-                return ('se elimino el registro');
-            }
+        // this.notificationListOf.child(notificationtId).remove(function (error) {
+        //     if (error) {
+        //         return ('Error al eliminar al registro');
+        //     } else {
+        //         return ('se elimino el registro');
+        //     }
+        // });
+
+        this.notificationListOf.child(notificationtId).set({
+            Name: "null"
         });
+
+
     }
     getNotifications() {
         this.notificationListOf.orderByChild('Type').on('value', snapshot => {
@@ -59,6 +64,8 @@ export class NotificationData {
                 if (snap.val().Read == 'false') {
                     this.numberNewNotifications = this.numberNewNotifications + 1;
                 }
+
+                if (snap.val().Name != 'null') {
                 rawList.push({
                     id: snap.key,
                     Name: snap.val().Name,
@@ -69,6 +76,8 @@ export class NotificationData {
                     DateSended: snap.val().DateSended,
                     HourSended: snap.val().HourSended
                 });
+            }
+
                 return false
             })
             this.ListNotifications = rawList;
