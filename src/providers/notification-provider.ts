@@ -14,7 +14,7 @@ export class NotificationData {
     public notinull: any;
     public ListNotificationsForDelete = [];
     currentUseruid: any;
-    constructor() {
+    constructor(af: AngularFire) {
        // this.currentUseruid = this.profilData.currentUser.uid;
         this.userProfile = firebase.database().ref('/userProfile').child(firebase.auth().currentUser.uid);
         this.notificationListOf = this.userProfile.child('notifications');
@@ -44,7 +44,7 @@ export class NotificationData {
         }
     }
 
-    createNotification(destinatario: string, descriptionNoti: string, nameNoti: string, typeNoti: string, FromNoti: String): firebase.Promise<any> {
+    createNotification(destinatario: string, descriptionNoti: string, nameNoti: string, typeNoti: string, FromNoti: String, KeyNti:string): firebase.Promise<any> {
         this.notificationListFor = firebase.database().ref(`userProfile/${destinatario}/notifications`);
         return this.notificationListFor.push({
             Name: nameNoti,
@@ -55,6 +55,7 @@ export class NotificationData {
             HourSended: moment().format('h:mm:s a'),
             Condition: 'Pending',
             Read: 'false',
+            k: KeyNti,
         });
     }
     deleteNotificationTemp(notificationtId) {

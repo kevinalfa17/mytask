@@ -36,7 +36,7 @@ export class Notifications {
     }
 
     sendNotification(destinatario: string, notiID: string, descriptionNoti: string, nameNoti: string, typeNoti: string) {
-        this.notificationData.createNotification("2EGLQk5MerSIIcfVLigyGrhFSxO2", "gggg iziziz", "SIRVE", "cita", "2EGLQk5MerSIIcfVLigyGrhFSxO2");
+        this.notificationData.createNotification("2EGLQk5MerSIIcfVLigyGrhFSxO2", "gggg iziziz", "SIRVE", "cita", "2EGLQk5MerSIIcfVLigyGrhFSxO2", '1?');
     }
 
     addLocalnoti() {
