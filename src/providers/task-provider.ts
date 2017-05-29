@@ -55,11 +55,12 @@ export class TaskProvider {
     var key = this.af.database.list(`/tasks`).push(task).key;
 
     responsable.forEach((user) => {
-      this.up.getUserbyEmail(user,key,"tasks");
+      this.up.insertTask(user,key,"tasks");
+      this.up.insertNotification(user,comments,taskname,type,this.up.currentUser.uid,key)
     });
 
     permissons.forEach((user) => {
-      this.up.getUserbyEmail(user,key,"delegatedTasks");
+      this.up.insertTask(user,key,"delegatedTasks");
     });
 
 
