@@ -5,6 +5,7 @@ import { EventData } from '../../providers/event-data';
 import firebase from 'firebase'
 import moment from 'moment';
 import { NotificationData } from '../../providers/notification-provider';
+import { ProfileData } from '../../providers/profile-data';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 
 @Component({
@@ -15,13 +16,12 @@ export class Notifications {
     public notificationsList: any;
     public notificationsReference: firebase.database.Reference;
     public currentUser: firebase.User;
-    public currenUserUid: string;
     public localNotificationsList = [];
 
 
-    constructor(public navCtrl: NavController, public notificationData: NotificationData, public localNotifications: LocalNotifications) { }
-    //, public localNotifications: LocalNotifications
-    ionViewDidEnter() {
+    constructor(public navCtrl: NavController,public profiledata: ProfileData, public notificationData: NotificationData, public localNotifications: LocalNotifications) { }
+    ionViewDidLoad() {
+        this.currentUser = this.profiledata.currentUser;
         this.notificationData.getNotifications();
         this.notificationsList = this.notificationData.ListNotifications;
     }
@@ -63,6 +63,6 @@ export class Notifications {
     }
 
     delete(notiID) {
-        this.notificationData.deleteNotification(notiID);
+        this.notificationData.deleteNotificationTemp(notiID);
     }
 }

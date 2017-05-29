@@ -1,11 +1,11 @@
 import { NavController, AlertController } from 'ionic-angular';
 import { Component, OnInit, NgZone } from '@angular/core';
 import { ProfileData } from '../../providers/profile-data';
+import { NotificationData } from '../../providers/notification-provider';
 import { AuthData } from '../../providers/auth-data';
 import { LoginPage } from '../login/login';
 import { TabsPage } from '../tabs/tabs';
-
-
+import { NotificationDetailPage } from '../notification-detail/notification-detail'
 
 @Component({
   selector: 'page-profile',
@@ -16,7 +16,7 @@ export class ProfilePage {
   profilePicture: string;
   public birthDate: string;
 
-  constructor(public navCtrl: NavController, public profileData: ProfileData, public authData: AuthData, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public notificationData: NotificationData, public profileData: ProfileData, public authData: AuthData, public alertCtrl: AlertController) {
 
   }
 
@@ -32,7 +32,6 @@ export class ProfilePage {
     this.authData.logoutUser().then(() => {
       this.profileData.gooutuser();
       this.navCtrl.setRoot(LoginPage);
-
     });
   }
 
@@ -151,7 +150,7 @@ export class ProfilePage {
     });
     alert.present();
   }
-updatephone() {
+  updatephone() {
     let alert = this.alertCtrl.create({
       message: "Your phone",
       inputs: [
@@ -176,7 +175,7 @@ updatephone() {
     alert.present();
   }
 
-  
+
 
   goToHome(): void {
     this.navCtrl.setRoot(TabsPage);
