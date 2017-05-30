@@ -34,7 +34,7 @@ export class TaskProvider {
     recurrence, endTime, priority, notifications, files, comments, permissons) {
 
     let task = {
-      creatorid: this.up.currentUser.uid,
+      Creatorid: this.up.currentUser.uid,
       responsable: responsable,
       taskName: taskname,
       type: type,

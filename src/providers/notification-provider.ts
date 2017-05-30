@@ -22,7 +22,7 @@ export class NotificationData {
         this.notificationListOf = this.userProfile.child('notifications');
         this.taskListOf = this.userProfile.child('task');
         this.notificationListNode = firebase.database().ref('notifications');
-        this.notinull = this.notificationListOf.child('0');
+        this.notinull = this.notificationListNode.child('0');
         this.notificationListFor = firebase.database().ref('/userProfile');
     }
 
@@ -31,7 +31,6 @@ export class NotificationData {
     }
 
     getNotificationDetail(notificationtId): firebase.database.Reference {
-        this.notinull = this.notificationListOf.child('0');
         var tempname: string;
 
         this.notificationListOf.child(notificationtId).orderByChild('Type').on('value', snapshot => {
@@ -110,8 +109,7 @@ export class NotificationData {
             Condition: "Accepted"
         });
 
-        // this.pd.insertNotification([Noti.Creatoremail], "Acepted", Noti.Name, Noti.Type, this.currentUseruid, Noti.id);
-        alert(Noti.taskid);
+        this.pd.insertNotification(Noti.From, "Task Accepted", Noti.Name, Noti.Type, this.currentUseruid, Noti.id, Noti.taskid);
 
         this.userProfile.child('tasks').child(Noti.taskid).set({
             State: true,
@@ -121,6 +119,8 @@ export class NotificationData {
             Name: Noti.Name,
             HourSended: Noti.HourSended
         });
+
+        this.deleteNotificationTemp(Noti.id);
     }
     rejectNotification(Noti) {
         this.notificationListNode.child(Noti.id).update({
@@ -129,10 +129,16 @@ export class NotificationData {
         this.notificationListOf.child(Noti.id).update({
             Condition: "Rejected"
         });
+        this.pd.insertNotification(Noti.From, "Task Rejected", Noti.Name, Noti.Type, this.currentUseruid, Noti.id, Noti.taskid);
+
+        this.userProfile.child('tasks').child(Noti.taskid).set({
+            State: false,
+        });
 
         this.userProfile.child('taskManage').child('Rejected').push({
             Name: Noti.Name,
             HourSended: Noti.HourSended
         });
+        this.deleteNotificationTemp(Noti.id);
     }
 }

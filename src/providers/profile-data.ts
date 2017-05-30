@@ -115,6 +115,7 @@ export class ProfileData {
 
 
   insertNotification(email, description, name, type, creatorid, key, keyT) {
+    console.log(email);
     var userkey;
     this.af.database.list('/userProfile', {
       query: {
@@ -132,7 +133,6 @@ export class ProfileData {
             Description: description,
             Condition: "Pending",
             Read: "false",
-            Creatorid: creatorid,
             Creatoremail: this.currentUser.email,
             taskid: keyT,
           });
