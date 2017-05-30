@@ -9,6 +9,7 @@ export class NotificationData {
     public userProfile: firebase.database.Reference;
     public notificationListOf: firebase.database.Reference;
     public notificationListFor: firebase.database.Reference;
+    public notificationListNode: firebase.database.Reference;
     public ListNotifications: any;
     public numberNewNotifications = 0;
     public notinull: any;
@@ -18,6 +19,7 @@ export class NotificationData {
        // this.currentUseruid = this.profilData.currentUser.uid;
         this.userProfile = firebase.database().ref('/userProfile').child(firebase.auth().currentUser.uid);
         this.notificationListOf = this.userProfile.child('notifications');
+        this.notificationListNode = firebase.database().ref('notifications');
         this.notinull = this.notificationListOf.child('0');
     }
 
@@ -37,10 +39,10 @@ export class NotificationData {
             alert("yyeeeaahhh");
             return this.notinull;
         } else {
-            this.notificationListOf.child(notificationtId).update({
+            this.notificationListNode.child(notificationtId).update({
                 Read: "true"
             });
-            return this.notificationListOf.child(notificationtId);
+            return this.notificationListNode.child(notificationtId);
         }
     }
 

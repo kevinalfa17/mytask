@@ -14,12 +14,13 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
 })
 export class Notifications {
     public notificationsList: any;
+    public notificationlistview: any;
     public notificationsReference: firebase.database.Reference;
     public currentUser: firebase.User;
     public localNotificationsList = [];
 
 
-    constructor(public navCtrl: NavController,public profiledata: ProfileData, public notificationData: NotificationData, public localNotifications: LocalNotifications) { }
+    constructor(public navCtrl: NavController, public profiledata: ProfileData, public notificationData: NotificationData, public localNotifications: LocalNotifications) { }
     ionViewDidLoad() {
         this.currentUser = this.profiledata.currentUser;
         this.notificationData.getNotifications();
@@ -50,9 +51,6 @@ export class Notifications {
             smallIcon: "http://static.tumblr.com/5c90a92aa8597626a00a0845eea82ca3/e5nd402/pEdn4g1vc/tumblr_static_kvycde7padscokkwgs8k88oc.png",
             led: 'FF0000'
         };
-
-        alert(moment.now().toString() + "gjhm");
-
         this.localNotificationsList.push(localNoti);
         this.localNotifications.schedule(localNoti);
 

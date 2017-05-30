@@ -15,6 +15,7 @@ export class NotificationDetailPage {
 
   ionViewDidLoad() {
     alert(this.navParams.get('notificationId'));
+    
     this.notificationData.getNotificationDetail(this.navParams.get('notificationId')).on('value', snapshot => {
       this.currentNotification = snapshot.val();
       this.currentNotification.id = snapshot.key;
