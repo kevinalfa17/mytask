@@ -114,8 +114,7 @@ export class ProfileData {
   }
 
 
-  insertNotification(email, description, name, type, creatorid, key) {
-
+  insertNotification(email, description, name, type, creatorid, key, keyT) {
     var userkey;
     this.af.database.list('/userProfile', {
       query: {
@@ -127,12 +126,17 @@ export class ProfileData {
       snapshots.forEach(snapshot => {
 
         if (snapshot.key !== null) {
-
           let endpoint = this.af.database.object(`/userProfile/${snapshot.key}/notifications/${key}`);
-          endpoint.set(true);
-
+          endpoint.set({
+            Name: name,
+            Description: description,
+            Condition: "Pending",
+            Read: "false",
+            Creatorid: creatorid,
+            Creatoremail: this.currentUser.email,
+            taskid: keyT,
+          });
         }
-
       });
     })
 

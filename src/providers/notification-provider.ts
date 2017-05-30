@@ -2,25 +2,28 @@ import { Injectable } from '@angular/core';
 import firebase from 'firebase';
 import moment from 'moment';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
-import {ProfileData} from '../providers/profile-data'
+import { ProfileData } from '../providers/profile-data'
 
 @Injectable()
 export class NotificationData {
     public userProfile: firebase.database.Reference;
     public notificationListOf: firebase.database.Reference;
+    public taskListOf: firebase.database.Reference;
     public notificationListFor: firebase.database.Reference;
     public notificationListNode: firebase.database.Reference;
+
     public ListNotifications: any;
     public numberNewNotifications = 0;
     public notinull: any;
     public ListNotificationsForDelete = [];
     currentUseruid: any;
-    constructor(af: AngularFire) {
-       // this.currentUseruid = this.profilData.currentUser.uid;
+    constructor(af: AngularFire, public pd: ProfileData) {
         this.userProfile = firebase.database().ref('/userProfile').child(firebase.auth().currentUser.uid);
         this.notificationListOf = this.userProfile.child('notifications');
+        this.taskListOf = this.userProfile.child('task');
         this.notificationListNode = firebase.database().ref('notifications');
         this.notinull = this.notificationListOf.child('0');
+        this.notificationListFor = firebase.database().ref('/userProfile');
     }
 
     getNotificationList(): firebase.database.Reference {
@@ -39,6 +42,9 @@ export class NotificationData {
             alert("yyeeeaahhh");
             return this.notinull;
         } else {
+            this.notificationListOf.child(notificationtId).update({
+                Read: "true"
+            });
             this.notificationListNode.child(notificationtId).update({
                 Read: "true"
             });
@@ -46,20 +52,6 @@ export class NotificationData {
         }
     }
 
-    createNotification(destinatario: string, descriptionNoti: string, nameNoti: string, typeNoti: string, FromNoti: String, KeyNti:string): firebase.Promise<any> {
-        this.notificationListFor = firebase.database().ref(`userProfile/${destinatario}/notifications`);
-        return this.notificationListFor.push({
-            Name: nameNoti,
-            Description: descriptionNoti,
-            Type: typeNoti,
-            From: FromNoti,
-            DateSended: moment().format('D/M/YYYY'),
-            HourSended: moment().format('h:mm:s a'),
-            Condition: 'Pending',
-            Read: 'false',
-            k: KeyNti,
-        });
-    }
     deleteNotificationTemp(notificationtId) {
         this.notificationListOf.child(notificationtId).set({
             Name: "null"
@@ -110,8 +102,19 @@ export class NotificationData {
     }
 
     acceptNotification(Noti) {
+        this.notificationListNode.child(Noti.id).update({
+            Condition: "Accepted"
+        });
+
         this.notificationListOf.child(Noti.id).update({
             Condition: "Accepted"
+        });
+
+        // this.pd.insertNotification([Noti.Creatoremail], "Acepted", Noti.Name, Noti.Type, this.currentUseruid, Noti.id);
+        alert(Noti.taskid);
+
+        this.userProfile.child('tasks').child(Noti.taskid).set({
+            State: true,
         });
 
         this.userProfile.child('taskManage').child('Accept').push({
@@ -120,6 +123,9 @@ export class NotificationData {
         });
     }
     rejectNotification(Noti) {
+        this.notificationListNode.child(Noti.id).update({
+            Condition: "Rejected"
+        });
         this.notificationListOf.child(Noti.id).update({
             Condition: "Rejected"
         });

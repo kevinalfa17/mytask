@@ -11,20 +11,12 @@
         <ion-icon name="logo-facebook"></ion-icon>
     </button>
 
-    <button ion-button icon-only (click)="sendNotification('2EGLQk5MerSIIcfVLigyGrhFSxO2', '1', 'izi', 'no se', 'Play', '2?')">
-        <ion-icon name="close"></ion-icon>
-    </button>
-
-
   <ion-list>
     <ion-item *ngFor="let noti of notificationsList" color="{{noti?.Type}}" (click)="goToNotificationDetail(noti.id)">
       <h2>{{noti?.name}}</h2>
       <p><strong>{{"WORDNAME" | translate}}:</strong> {{noti?.Name}}</p>
       <p><strong>{{"WORDDESCRIPTION" | translate}}:</strong> {{noti?.Description}}</p>
       <p><strong>{{"WORDCONDITION" | translate}}: </strong>{{noti?.Condition}}</p>
-      <button ion-button icon-only (click)="delete(noti.id)">
-        <ion-icon name="trash"></ion-icon>
-    </button>
     </ion-item>
   </ion-list>
 

@@ -14,7 +14,7 @@ export class NotificationDetailPage {
     public notificationData: NotificationData, public cameraPlugin: Camera) { }
 
   ionViewDidLoad() {
-    alert(this.navParams.get('notificationId'));
+    //alert(this.navParams.get('notificationId'));
     
     this.notificationData.getNotificationDetail(this.navParams.get('notificationId')).on('value', snapshot => {
       this.currentNotification = snapshot.val();
@@ -31,6 +31,7 @@ export class NotificationDetailPage {
     if (this.currentNotification.Name == "null") {
 
     } else {
+      
       this.notificationData.acceptNotification(this.currentNotification);
       this.nav.pop();
     }
