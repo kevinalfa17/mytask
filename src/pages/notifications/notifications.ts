@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { NotificationDetailPage } from '../notification-detail/notification-detail';
 import { EventData } from '../../providers/event-data';
 import firebase from 'firebase'
@@ -16,25 +16,24 @@ export class Notifications {
     public notificationsList: any;
     public notificationlistview: any;
     public notificationsReference: firebase.database.Reference;
-    public currentUser: firebase.User;
+    public currentUser: any;
     public localNotificationsList = [];
 
 
-    constructor(public navCtrl: NavController, public profiledata: ProfileData, public notificationData: NotificationData, public localNotifications: LocalNotifications) { }
+    constructor(public navCtrl: NavController, public profiledata: ProfileData, public notificationData: NotificationData, public localNotifications: LocalNotifications) {
+        this.notificationsList = [];
+    }
     ionViewWillEnter() {
-        this.currentUser = this.profiledata.currentUser;
-        this.notificationData.getNotifications(this.currentUser);
-        this.notificationsList = this.notificationData.ListNotifications;
+        this.currentUser = this.profiledata.currentUser.uid;
+        //this.notificationData.getNotifications(this.currentUser);
+        console.log('aqui');
+        console.log(this.currentUser);
+        this.notificationsList = this.notificationData.getNotificationsList(this.currentUser);
     }
 
     goToNotificationDetail(notificationId) {
-        this.navCtrl.push(NotificationDetailPage, { notificationId: notificationId });
+        this.navCtrl.push(NotificationDetailPage, { notificationId: notificationId, currentUser: this.currentUser });
     }
-    // sendPushnoti(id: string, text: string) {
-    //     firebase.database().ref(`userProfile/${this.currentUser.uid}/notifications`).child(id).update({
-    //         Description: text,
-    //     });
-    // }
 
     addLocalnoti() {
         var localNoti = {

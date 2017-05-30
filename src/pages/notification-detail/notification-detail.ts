@@ -15,9 +15,9 @@ export class NotificationDetailPage {
   constructor(public nav: NavController, public navParams: NavParams,
     public notificationData: NotificationData, public cameraPlugin: Camera, public profileData: ProfileData) { }
 
-  ionViewDidLoad() {
+  ionViewDidEnter() {
     //alert(this.navParams.get('notificationId'));
-    this.currentUser = this.profileData.currentUser;
+    this.currentUser = this.navParams.get('currentUser');
     
     this.notificationData.getNotificationDetail(this.navParams.get('notificationId'), this.currentUser).on('value', snapshot => {
       this.currentNotification = snapshot.val();
