@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { ProfileData } from "./profile-data";
 import 'rxjs/add/operator/map';
-
+import moment from 'moment';
 
 @Injectable()
 export class TaskProvider {
@@ -16,16 +16,16 @@ export class TaskProvider {
 
   getTaskRef() {
 
-     let tasksId = this.af.database.list(`/userProfile/${this.up.currentUser.uid}/tasks`);
-     //Get task for each id
-      return tasksId;
+    let tasksId = this.af.database.list(`/userProfile/${this.up.currentUser.uid}/tasks`);
+    //Get task for each id
+    return tasksId;
   }
 
   getDelegatedTaskRef() {
 
-     let delegatedTasksId = this.af.database.list(`/userProfile/${this.up.currentUser.uid}/delegatedTasks`);
-      //Get task for each id
-      return delegatedTasksId;
+    let delegatedTasksId = this.af.database.list(`/userProfile/${this.up.currentUser.uid}/delegatedTasks`);
+    //Get task for each id
+    return delegatedTasksId;
   }
 
 
@@ -53,14 +53,27 @@ export class TaskProvider {
 
     };
     var key = this.af.database.list(`/tasks`).push(task).key;
+    let noti = {
+      Name: taskname,
+      Condition: 'Pending',
+      From: this.up.currentUser.email,
+
+      Creatorid: this.up.currentUser.uid,
+      responsable: responsable,
+      Type: type,
+      DateSended: moment().format('D/M/YYYY'),
+      HourSended: moment().format('h:mm:s a'),
+      Read: 'false',
+    };
+    var key2 = this.af.database.list(`/notifications`).push(noti).key;
 
     responsable.forEach((user) => {
-      this.up.insertTask(user,key,"tasks");
-      this.up.insertNotification(user,comments,taskname,type,this.up.currentUser.uid,key)
+      this.up.insertTask(user, key, "tasks");
+      this.up.insertNotification(user, comments, taskname, type, this.up.currentUser.uid, key2)
     });
 
     permissons.forEach((user) => {
-      this.up.insertTask(user,key,"delegatedTasks");
+      this.up.insertTask(user, key, "delegatedTasks");
     });
 
 

@@ -91,7 +91,7 @@ export class ProfileData {
   }
 
 
-  insertTask(email, key ,subnode) {
+  insertTask(email, key, subnode) {
 
     var userkey;
     this.af.database.list('/userProfile', {
@@ -114,7 +114,7 @@ export class ProfileData {
   }
 
 
-    insertNotification(email, description ,name, type, creatorid,key) {
+  insertNotification(email, description, name, type, creatorid, key) {
 
     var userkey;
     this.af.database.list('/userProfile', {
@@ -128,7 +128,9 @@ export class ProfileData {
 
         if (snapshot.key !== null) {
 
-          //Create notif. PD: snapshot.key es el id del destinatario
+          let endpoint = this.af.database.object(`/userProfile/${snapshot.key}/notifications/${key}`);
+          endpoint.set(true);
+
         }
 
       });
