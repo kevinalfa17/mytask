@@ -6,34 +6,36 @@ import { ProfileData } from '../providers/profile-data'
 
 @Injectable()
 export class NotificationData {
+    public currentUser: firebase.User;
     public userProfile: firebase.database.Reference;
-    public notificationListOf: firebase.database.Reference;
-    public taskListOf: firebase.database.Reference;
-    public notificationListFor: firebase.database.Reference;
+    //public notificationListOf: firebase.database.Reference;
+    //public taskListOf: firebase.database.Reference;
+    //public notificationListFor: firebase.database.Reference;
     public notificationListNode: firebase.database.Reference;
 
     public ListNotifications: any;
     public numberNewNotifications = 0;
     public notinull: any;
     public ListNotificationsForDelete = [];
-    currentUseruid: any;
-    constructor(af: AngularFire, public pd: ProfileData) {
-        this.userProfile = firebase.database().ref('/userProfile').child(firebase.auth().currentUser.uid);
-        this.notificationListOf = this.userProfile.child('notifications');
-        this.taskListOf = this.userProfile.child('task');
+    // currentUseruid: any;
+    constructor(public pd: ProfileData) {
+
+        //this.userProfile = firebase.database().ref('/userProfile').child(firebase.auth().currentUser.uid);
+        this.userProfile = firebase.database().ref('/userProfile');
         this.notificationListNode = firebase.database().ref('notifications');
         this.notinull = this.notificationListNode.child('0');
-        this.notificationListFor = firebase.database().ref('/userProfile');
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // this.notificationListOf = this.userProfile.child(this.pd.currentUser.uid).child('notifications');
+        // this.taskListOf = this.userProfile.child('task');
+        // this.notificationListFor = firebase.database().ref('/userProfile');
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
-    getNotificationList(): firebase.database.Reference {
-        return this.notificationListOf;
-    }
-
-    getNotificationDetail(notificationtId): firebase.database.Reference {
+    getNotificationDetail(notificationtId, currentUser): firebase.database.Reference {
         var tempname: string;
+        var tem = this.userProfile.child(currentUser).child('notifications');
 
-        this.notificationListOf.child(notificationtId).orderByChild('Type').on('value', snapshot => {
+        tem.child(notificationtId).orderByChild('Type').on('value', snapshot => {
             tempname = snapshot.val().Name;
         });
 
@@ -41,7 +43,7 @@ export class NotificationData {
             alert("yyeeeaahhh");
             return this.notinull;
         } else {
-            this.notificationListOf.child(notificationtId).update({
+            tem.child(notificationtId).update({
                 Read: "true"
             });
             this.notificationListNode.child(notificationtId).update({
@@ -51,18 +53,20 @@ export class NotificationData {
         }
     }
 
-    deleteNotificationTemp(notificationtId) {
-        this.notificationListOf.child(notificationtId).set({
+    deleteNotificationTemp(notificationtId, currentUser) {
+        var tem = this.userProfile.child(currentUser).child('notifications');
+        tem.child(notificationtId).set({
             Name: "null"
         });
         this.ListNotificationsForDelete.push(notificationtId);
     }
 
-    deleteNotifications() {
+    deleteNotifications(currentUser) {
+        var tem = this.userProfile.child(currentUser).child('notifications');
         var i = 0;
         while (i < this.ListNotificationsForDelete.length) {
 
-            this.notificationListOf.child(this.ListNotificationsForDelete[i]).remove().then(function (ref) {
+            tem.child(this.ListNotificationsForDelete[i]).remove().then(function (ref) {
                 console.log("Se elimino");
             }, function (error) {
                 console.log("Error:", error);
@@ -70,8 +74,9 @@ export class NotificationData {
             i = i + 1;
         }
     }
-    getNotifications() {
-        this.notificationListOf.orderByChild('Type').on('value', snapshot => {
+    getNotifications(currentUser) {
+        var tem = this.userProfile.child(currentUser).child('notifications');
+        tem.orderByChild('Type').on('value', snapshot => {
             let rawList = [];
             this.numberNewNotifications = 0;
             snapshot.forEach(snap => {
@@ -100,16 +105,18 @@ export class NotificationData {
 
     }
 
-    acceptNotification(Noti) {
+    acceptNotification(Noti, currentUser) {
+        var tem = this.userProfile.child(currentUser).child('notifications');
+
         this.notificationListNode.child(Noti.id).update({
             Condition: "Accepted"
         });
 
-        this.notificationListOf.child(Noti.id).update({
+        tem.child(Noti.id).update({
             Condition: "Accepted"
         });
 
-        this.pd.insertNotification(Noti.From, "Task Accepted", Noti.Name, Noti.Type, this.currentUseruid, Noti.id, Noti.taskid);
+        this.pd.insertNotification(Noti.From, "Task Accepted", Noti.Name, Noti.Type, currentUser.uid, Noti.id, Noti.taskid);
 
         this.userProfile.child('tasks').child(Noti.taskid).set({
             State: true,
@@ -120,16 +127,17 @@ export class NotificationData {
             HourSended: Noti.HourSended
         });
 
-        this.deleteNotificationTemp(Noti.id);
+        this.deleteNotificationTemp(Noti.id, currentUser);
     }
-    rejectNotification(Noti) {
+    rejectNotification(Noti, currentUser) {
+        var tem = this.userProfile.child(currentUser).child('notifications');
         this.notificationListNode.child(Noti.id).update({
             Condition: "Rejected"
         });
-        this.notificationListOf.child(Noti.id).update({
+        tem.child(Noti.id).update({
             Condition: "Rejected"
         });
-        this.pd.insertNotification(Noti.From, "Task Rejected", Noti.Name, Noti.Type, this.currentUseruid, Noti.id, Noti.taskid);
+        this.pd.insertNotification(Noti.From, "Task Rejected", Noti.Name, Noti.Type, currentUser.uid, Noti.id, Noti.taskid);
 
         this.userProfile.child('tasks').child(Noti.taskid).set({
             State: false,
@@ -139,6 +147,6 @@ export class NotificationData {
             Name: Noti.Name,
             HourSended: Noti.HourSended
         });
-        this.deleteNotificationTemp(Noti.id);
+        this.deleteNotificationTemp(Noti.id, currentUser);
     }
 }

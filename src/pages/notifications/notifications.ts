@@ -21,20 +21,20 @@ export class Notifications {
 
 
     constructor(public navCtrl: NavController, public profiledata: ProfileData, public notificationData: NotificationData, public localNotifications: LocalNotifications) { }
-    ionViewDidLoad() {
+    ionViewWillEnter() {
         this.currentUser = this.profiledata.currentUser;
-        this.notificationData.getNotifications();
+        this.notificationData.getNotifications(this.currentUser);
         this.notificationsList = this.notificationData.ListNotifications;
     }
 
     goToNotificationDetail(notificationId) {
         this.navCtrl.push(NotificationDetailPage, { notificationId: notificationId });
     }
-    sendPushnoti(id: string, text: string) {
-        firebase.database().ref(`userProfile/${this.currentUser.uid}/notifications`).child(id).update({
-            Description: text,
-        });
-    }
+    // sendPushnoti(id: string, text: string) {
+    //     firebase.database().ref(`userProfile/${this.currentUser.uid}/notifications`).child(id).update({
+    //         Description: text,
+    //     });
+    // }
 
     addLocalnoti() {
         var localNoti = {
@@ -57,6 +57,6 @@ export class Notifications {
     }
 
     delete(notiID) {
-        this.notificationData.deleteNotificationTemp(notiID);
+        this.notificationData.deleteNotificationTemp(notiID, this.currentUser);
     }
 }

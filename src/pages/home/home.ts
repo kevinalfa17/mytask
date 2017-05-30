@@ -4,6 +4,7 @@ import { TranslateService } from 'ng2-translate';
 import { HomePage2 } from '../home2/home';
 import { Notifications } from '../notifications/notifications';
 import { NotificationData } from '../../providers/notification-provider';
+import { ProfileData } from '../../providers/profile-data';
 ///////////////////////////////////////////////
 declare var window;
 import { GoogleCalendar } from '../googleCalendar/googleCalendar';
@@ -30,11 +31,12 @@ export class HomePage {
 
   public Noti = "notifications-off";
   public notiInChange = false;
+  public currentUser:any;
 
-  constructor(public nav: NavController, public translate: TranslateService, public actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController, public notificationData: NotificationData) {
+  constructor(public nav: NavController, public profileData: ProfileData, public translate: TranslateService, public actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController, public notificationData: NotificationData) {
 
     this.translate.setDefaultLang('es');
-    this.notificationData.getNotifications();
+    
     this.enableSearch = false;
     this.taskOwner = "me";
 
@@ -123,7 +125,8 @@ export class HomePage {
   //Gabo functions
 
   ionViewDidLoad() {
-    this.notificationData.getNotifications();
+    this.currentUser = this.profileData.currentUser;
+    this.notificationData.getNotifications(this.currentUser);
     if ((this.notificationData.numberNewNotifications != 0)) {
       this.Noti = "notifications";
     } else {
@@ -139,7 +142,7 @@ export class HomePage {
     window.location = "tel:" + passedNumber;
   }
   goToNotifications() {
-    this.notificationData.getNotifications();
+    this.notificationData.getNotifications(this.currentUser);
     if (this.notificationData.numberNewNotifications != 0) {
       this.nav.push(Notifications);
     } else {
