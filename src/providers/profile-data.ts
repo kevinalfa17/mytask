@@ -91,7 +91,7 @@ export class ProfileData {
   }
 
 
-  insertTask(email, key ,subnode) {
+  insertTask(email, key, subnode,task) {
 
     var userkey;
     this.af.database.list('/userProfile', {
@@ -104,8 +104,13 @@ export class ProfileData {
       snapshots.forEach(snapshot => {
 
         if (snapshot.key !== null) {
-          let endpoint = this.af.database.object(`/userProfile/${snapshot.key}/${subnode}/${key}`);
-          endpoint.set(true);
+
+          var yourRef = this.af.database.list(`/userProfile/${snapshot.key}/${subnode}`);
+
+          yourRef.update(key, task);
+
+          //let endpoint = this.af.database.object(`/userProfile/${snapshot.key}/${subnode}/${key}`);
+          //endpoint.set(true);
         }
 
       });
@@ -114,7 +119,7 @@ export class ProfileData {
   }
 
 
-    insertNotification(email, description ,name, type, creatorid,key) {
+  insertNotification(email, description, name, type, creatorid, key) {
 
     var userkey;
     this.af.database.list('/userProfile', {

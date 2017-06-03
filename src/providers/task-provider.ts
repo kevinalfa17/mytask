@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import { ProfileData } from "./profile-data";
 import 'rxjs/add/operator/map';
 
@@ -14,18 +14,18 @@ export class TaskProvider {
   }
 
 
-  getTaskRef() {
+  getTask() {
 
-     let tasksId = this.af.database.list(`/userProfile/${this.up.currentUser.uid}/tasks`);
-     //Get task for each id
-      return tasksId;
+    let tasks = this.af.database.list(`/userProfile/${this.up.currentUser.uid}/tasks`);
+    return tasks;
+
   }
 
   getDelegatedTaskRef() {
 
-     let delegatedTasksId = this.af.database.list(`/userProfile/${this.up.currentUser.uid}/delegatedTasks`);
-      //Get task for each id
-      return delegatedTasksId;
+    let delegatedTasksId = this.af.database.list(`/userProfile/${this.up.currentUser.uid}/delegatedTasks`);
+    //Get task for each id
+    return delegatedTasksId;
   }
 
 
@@ -55,12 +55,13 @@ export class TaskProvider {
     var key = this.af.database.list(`/tasks`).push(task).key;
 
     responsable.forEach((user) => {
-      this.up.insertTask(user,key,"tasks");
-      this.up.insertNotification(user,comments,taskname,type,this.up.currentUser.uid,key)
+
+      this.up.insertTask(user, key, "tasks", task);
+      this.up.insertNotification(user, comments, taskname, type, this.up.currentUser.uid, key)
     });
 
     permissons.forEach((user) => {
-      this.up.insertTask(user,key,"delegatedTasks");
+      this.up.insertTask(user, key, "delegatedTasks", task);
     });
 
 

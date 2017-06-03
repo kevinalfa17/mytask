@@ -78,7 +78,6 @@ export class CreateTaskPage {
     console.log('ionViewDidLoad CreateTask');
   }
 
-
   newUser() {
     this.navCtrl.push(NewContactPage,
       {
@@ -89,7 +88,11 @@ export class CreateTaskPage {
   addUser() {
     let chooseModal = this.modalCtrl.create(ContactListPage);
     chooseModal.onDidDismiss(data => {
-      this.addUserToList(data);
+      if(typeof data !== "undefined"){
+        this.addUserToList(data);
+
+      }
+      
     });
     chooseModal.present();
   }
@@ -154,6 +157,8 @@ export class CreateTaskPage {
 
     this.taskProvider.addNewTask(this.users, this.taskName, this.type, this.subtype, this.startDate, this.startTime, this.repeatToggle,
     this.recurrence, this.endTime, this.priority, this.notificationsToggle, [], this.newComment, this.permissons)
+
+    this.navCtrl.pop();
   }
 
 

@@ -14,9 +14,9 @@
         </ion-buttons>
       </div>
       <div style="position:absolute;left:50px;top:5px;width:80%">
-        <div >
+        <div>
           <ion-title *ngIf="!enableSearch" style="padding-top:15px">
-            {{"PROJECTNAME" | translate }}
+            {{title}}
           </ion-title>
         </div>
         <ion-searchbar style="width:80%" *ngIf="enableSearch" (ionCancel)="toggleSearchBar()" [showCancelButton]="true"></ion-searchbar>
@@ -39,7 +39,7 @@
 <ion-content>
 
 
-<ion-refresher (ionRefresh)="doRefresh($event)" (closeDuration)="2000" (snapbackDuration)="2000">
+  <ion-refresher (ionRefresh)="doRefresh($event)" (closeDuration)="2000" (snapbackDuration)="2000">
     <ion-refresher-content pullingIcon="circles" pullingText=" {{ 'TEXTREFRESH'| translate}}" refreshingSpinner="circles" refreshingText=" {{ 'WORDREFRESH'| translate}}...">
     </ion-refresher-content>
   </ion-refresher>
@@ -57,53 +57,62 @@
   </ion-toolbar>
 
   <ion-slides (ionSlideDidChange)="slideChanged()">
-    <ion-slide>
-      <ion-list>
-        <ion-item-sliding>
-          <ion-item>
-            <ion-avatar item-left>
-              <img src="assets/img/logo2.jpg">
-            </ion-avatar>
-            <h2>Task</h2>
-            <p>Type</p>
-            <ion-note item-right>
-              Time
-            </ion-note>
-          </ion-item>
+    <ion-slide *ngFor="let day of datesList">
 
-          <ion-item-options>
-            <button ion-button color="button1" (click)="more(item)">
+      <ion-list>
+
+       <!-- <div *ngFor="let task of taskList | async">
+          <ion-item *ngIf="validateDates(day,task.startDay,task.endTime)">
+            {{task.taskName}}
+          </ion-item>
+        </div>-->
+
+
+        <!--<ion-item *ngFor="let task of taskList; let i=index">
+          <h2>Task</h2>
+          <h2>{{ (task | async)?.key }}</h2>
+            
+        </ion-item>-->
+        <div *ngFor="let task of taskList | async">
+          <ion-item-sliding *ngIf="validateDates(day,task.startDay,task.endTime)">
+            <ion-item>
+              <ion-avatar item-left>
+                <img src="assets/img/logo2.jpg">
+              </ion-avatar>
+              <h2>{{task.taskName}}</h2>
+              <p>{{task.type}}</p>
+              <ion-note item-right>
+                {{task.endTime}}
+              </ion-note>
+            </ion-item>
+
+            <ion-item-options>
+              <button ion-button color="button1" (click)="edit(task.key)">
           <ion-icon name="create"></ion-icon>
           Edit
         </button>
-            <button ion-button color="button2" (click)="mute(item)">
+              <button ion-button color="button2" (click)="chat(task.key)">
           <ion-icon name="chatbubbles"></ion-icon>
           Chat
         </button>
-            <button ion-button color="button3" (click)="delete(item)">
+              <button ion-button color="button3" (click)="update(task.key)">
           <ion-icon name="trash"></ion-icon>
-          Other
+          Update
         </button>
-          </ion-item-options>
+            </ion-item-options>
 
-          <ion-item-options side="left" (ionSwipe)="complete()">
-            <button ion-button color="completeButton" expandable (click)="complete()">
+            <ion-item-options side="left" (ionSwipe)="complete(task.key)">
+              <button ion-button color="completeButton" expandable (click)="complete(task.key)">
           <ion-icon name="checkmark-circle"></ion-icon>
           <div>Completed</div>
           <ion-spinner id="archive-spinner"></ion-spinner>
         </button>
-          </ion-item-options>
-        </ion-item-sliding>
+            </ion-item-options>
+          </ion-item-sliding>
+        </div>
 
         <!--DELETE UP AND ADD NGFOR-->
       </ion-list>
-    </ion-slide>
-
-    <ion-slide>
-      2
-    </ion-slide>
-    <ion-slide>
-      3
     </ion-slide>
   </ion-slides>
 
@@ -113,10 +122,10 @@
     </button>
   </ion-fab>
 
- <ion-fab left bottom edge>
-  <button ion-fab (click)="goToNotifications()">
+  <ion-fab left bottom edge>
+    <button ion-fab (click)="goToNotifications()">
         <ion-icon name="{{Noti}}"></ion-icon>
     </button>
-    </ion-fab>
+  </ion-fab>
 
 </ion-content>

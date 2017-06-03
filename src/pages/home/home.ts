@@ -12,6 +12,10 @@ import { ViewChild } from '@angular/core';
 import { Slides } from 'ionic-angular';
 import { ActionSheetController } from 'ionic-angular';
 import { CreateTaskPage } from '../create-task/create-task';
+import { TaskProvider } from '../../providers/task-provider';
+import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
+import * as moment from 'moment';
+
 
 
 @Component({
@@ -27,11 +31,19 @@ export class HomePage {
   firstSlide: boolean;
   lastSlide: boolean;
   enableSearch: boolean;
+  taskList: FirebaseListObservable<any[]>;
+  datesList: Array<string>;
+  title: string;
+  actualSlide: number;
 
   public Noti = "notifications-off";
   public notiInChange = false;
 
-  constructor(public nav: NavController, public translate: TranslateService, public actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController, public notificationData: NotificationData) {
+
+
+  constructor(public nav: NavController, public translate: TranslateService,
+    public actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController,
+    public notificationData: NotificationData, public taskProvider: TaskProvider) {
 
     this.translate.setDefaultLang('es');
     this.notificationData.getNotifications();
@@ -42,18 +54,42 @@ export class HomePage {
     this.currentIndex = 0;
     this.firstSlide = true;
     this.lastSlide = false;
+
+    this.taskList = taskProvider.getTask();
+    this.getDates(this.taskList).then((dates: Array<Date>) => {
+
+      var maxDate = new Date(Math.max.apply(null, dates));
+      var minDate = new Date(Math.min.apply(null, dates));
+
+      this.datesList = [];
+      this.datesList = this.getDateRange(new Date(), maxDate);
+
+      this.actualSlide = 0;
+      this.title = this.getDateTitle(this.datesList[this.actualSlide]);
+
+    });
+
   }
+
+
 
   toggleSearchBar() {
     this.enableSearch = !this.enableSearch;
   }
 
   nextDay() {
+    this.actualSlide = this.actualSlide + 1;
+    this.title = this.getDateTitle(this.datesList[this.actualSlide]);
+
     this.slides.slideTo(this.currentIndex + 1, 500);
     this.slideChanged();
   }
 
   previousDay() {
+
+    this.actualSlide = this.actualSlide - 1;
+    this.title = this.getDateTitle(this.datesList[this.actualSlide]);
+
     this.slides.slideTo(this.currentIndex - 1, 500);
     this.slideChanged();
   }
@@ -62,7 +98,7 @@ export class HomePage {
     this.currentIndex = this.slides.getActiveIndex();
 
     //Check if its first slide
-    if (this.slides.isBeginning()) {
+    if (this.actualSlide == 0) {
       this.firstSlide = true;
     }
     else {
@@ -70,7 +106,7 @@ export class HomePage {
     }
 
     //Check if its last slide
-    if (this.slides.isEnd()) {
+    if (this.actualSlide == (this.datesList.length - 1)) {
       this.lastSlide = true;
     }
     else {
@@ -165,5 +201,117 @@ export class HomePage {
       refresher.complete();
     }, 2000);
   }
+
+  getDates(list: FirebaseListObservable<any>) {
+
+    var promise = new Promise(function (resolve, reject) {
+      list.subscribe(snapshots => {
+        var dates = [];
+        snapshots.forEach(snapshot => {
+          dates.push(new Date(snapshot.endTime));
+        });
+        resolve(dates);
+      })
+    });
+
+    return promise;
+  }
+
+  getDateRange(startDate, endDate) {
+    var dates = [],
+      currentDate: Date = startDate,
+      addDays = function (days) {
+        var date = new Date(this.valueOf());
+        date.setDate(date.getDate() + days);
+        return date;
+      };
+    while (currentDate <= endDate) {
+      dates.push(moment(currentDate).format('YYYY-MM-DD'));
+      currentDate = addDays.call(currentDate, 1);
+    }
+    return dates;
+  };
+
+  getDateTitle(date) {
+
+    var dateTitle = date.split("-");
+    var month = "";
+    var year = dateTitle[0];
+    var day = dateTitle[2];
+
+    switch (dateTitle[1]) {
+      case "01":
+        month = "Enero";
+        break;
+      case "02":
+        month = "Febrero"
+        break;
+      case "03":
+        month = "Marzo"
+        break;
+      case "04":
+        month = "Abril"
+        break;
+      case "05":
+        month = "Mayo"
+        break;
+      case "06":
+        month = "Junio"
+        break;
+      case "07":
+        month = "Julio"
+        break;
+      case "08":
+        month = "Agosto"
+        break;
+      case "09":
+        month = "Setiembre"
+        break;
+      case "10":
+        month = "Octubre"
+        break;
+      case "11":
+        month = "Noviembre"
+        break;
+      case "12":
+        month = "Diciembre"
+        break;
+      default:
+        month = "error"
+    }
+
+    return (month + " " + day);
+  }
+
+  validateDates(day, startDay, endTime) {
+
+    console.log("start y end")
+    console.log(startDay);
+    console.log(endTime);
+    console.log("validatesDates");
+
+    var result;
+    var minDate = moment(startDay, 'YYYY-MM-DD');
+    var maxDate = moment(endTime, 'YYYY-MM-DD');
+    var currentDate = moment(day, 'YYYY-MM-DD');
+    console.log("mindate");
+    console.log(minDate);
+
+    console.log("currentDate");
+    console.log(currentDate);
+    console.log("maxDay");
+    console.log(maxDate);
+
+    if (currentDate >= minDate && currentDate <= maxDate) {
+      result = true;
+      console.log("true");
+    }
+    else {
+      result = false;
+      console.log("false");
+    }
+    return result;
+  }
+
 
 }
