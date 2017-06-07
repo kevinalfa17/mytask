@@ -28,6 +28,9 @@
       <button (click)="toggleSearchBar()" ion-button icon-only>
         <ion-icon name="search"></ion-icon>
       </button>
+      <button (click)="gotocalendar()" ion-button icon-only>
+        <ion-icon name="search"></ion-icon>
+      </button>
       <button (click)="nextDay()" ion-button icon-only *ngIf="!lastSlide">
         <ion-icon name="arrow-forward"></ion-icon>
       </button>
@@ -106,7 +109,7 @@
       3
     </ion-slide>
   </ion-slides>
-
+  
   <ion-fab right bottom edge>
     <button ion-fab color="danger" (click)="newTaskActionSheet()">
       <ion-icon name="add"></ion-icon>

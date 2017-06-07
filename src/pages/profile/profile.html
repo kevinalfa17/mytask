@@ -37,7 +37,7 @@
           </ion-col>
           <ion-col class="placeholder-profile" *ngIf="!userProfile?.firstName">
             <span>
-              Tap here to edit.
+              {{ "TEXTTAPHERE"| translate}}
             </span>
           </ion-col>
         </ion-row>
@@ -60,7 +60,7 @@
           </ion-col>
           <ion-col class="placeholder-profile" *ngIf="!userProfile?.email">
             <span>
-              Tap here to edit.
+              {{ "TEXTTAPHERE"| translate}}
             </span>
           </ion-col>
         </ion-row>
@@ -71,14 +71,14 @@
       <ion-grid>
         <ion-row>
           <ion-col col-6>
-            ADDRESSSSSS
+            {{ "WORDPADDRESS"| translate}}
           </ion-col>
           <ion-col col-6 *ngIf="userProfile?.address">
             {{userProfile?.address}}
           </ion-col>
           <ion-col class="placeholder-profile" *ngIf="!userProfile?.address">
             <span>
-              Tap here to edit.
+              {{ "WORDPASSWORD"| translate}}
             </span>
           </ion-col>
         </ion-row>
@@ -89,14 +89,14 @@
       <ion-grid>
         <ion-row>
           <ion-col col-6>
-            PHONEEEEE
+            {{ "WORDPHONE"| translate}}
           </ion-col>
           <ion-col col-6 *ngIf="userProfile?.phone">
             {{userProfile?.phone}}
           </ion-col>
           <ion-col class="placeholder-profile" *ngIf="!userProfile?.phone">
             <span>
-              Tap here to edit.
+              {{ "TEXTTAPHERE"| translate}}
             </span>
           </ion-col>
         </ion-row>
@@ -111,7 +111,7 @@
           </ion-col>
           <ion-col class="placeholder-profile">
             <span>
-              Tap here to edit.
+              {{ "TEXTTAPHERE"| translate}}
             </span>
           </ion-col>
         </ion-row>

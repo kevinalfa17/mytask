@@ -49,5 +49,11 @@
     "WORDREFRESH": "Refrescando",
     "TEXTREFRESH": "Hale para refrescar",
     "WORDDETAIL": "Detalles",
-    "WORDTYPE":"Tipo"
+    "WORDTYPE": "Tipo",
+    "TEXTTAKEPIC": "Tomar foto",
+    "TEXTSELECTPIC": "Seleccionar foto",
+    "TEXTPROFILEPICTURE": "Foto de perfil",
+    "WORDADDRESS": "Direccion",
+    "WORDPHONE": "Telefono",
+    "TEXTTAPHERE": "Toque aqui para editar"
 }

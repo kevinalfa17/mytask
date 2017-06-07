@@ -1,51 +1,51 @@
-import {
-  NavController,
-  LoadingController,
-  AlertController
-} from 'ionic-angular';
+// Some imports of modules
+import { NavController, LoadingController, AlertController } from 'ionic-angular';
 import { Component, NgZone } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { AuthData } from '../../providers/auth-data';
-import { SignupPage } from '../signup/signup';
-import { ResetPasswordPage } from '../reset-password/reset-password';
-import { EmailValidator } from '../../validators/email';
-import { ProfileData } from '../../providers/profile-data';
-import { TabsPage } from '../tabs/tabs';
-import { AboutPage } from '../about/about';
 import { TranslateService } from 'ng2-translate';
 import { Facebook } from '@ionic-native/facebook';
 import firebase from 'firebase';
 import { Platform } from 'ionic-angular';
-////////////////////////////////////////////////////////
 import { AuthProviders, AuthMethods, AngularFire } from 'angularfire2';
 import { GooglePlus } from '@ionic-native/google-plus';
-////////////////////////////////////////////////////////
 
+//Providers
+import { AuthData } from '../../providers/auth-data';
+import { EmailValidator } from '../../validators/email';
+// Pages referenced
+import { SignupPage } from '../signup/signup';
+import { ResetPasswordPage } from '../reset-password/reset-password';
+import { TabsPage } from '../tabs/tabs';
+
+/**
+ * This page it's used to give o the user the ambient of 
+ * a nice login
+ */
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html'
 
 })
-export class LoginPage {
-  userProfile: any = null;
-  email: any;
-  password: any;
 
-  zone: NgZone;
-  public loginForm;
-  loading: any;
+export class LoginPage {
+  userProfile: any = null; // Var where is the userProfile of firebase
+  email: any; // The site where is saved the email gived for the user
+  password: any; // The site where is saved the password gived for the user
+
+  zone: NgZone; // Variable to keep the NgZone
+  public loginForm; // Where is saved the information of the form filled
+  loading: any; // Variable of loading
 
   constructor(public platform: Platform, public nav: NavController, public translate: TranslateService, public googlePlus: GooglePlus, private facebook: Facebook,
-    public angfire: AngularFire, public authData: AuthData, public profileData: ProfileData, public formBuilder: FormBuilder, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
+    public angfire: AngularFire, public authData: AuthData, public formBuilder: FormBuilder, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
     this.translate.setDefaultLang('es');
 
     /**
      * Creates a ControlGroup that declares the fields available, their values and the validators that they are going
      * to be using.
      *
-     * I set the password's min length to 6 characters because that's Firebase's default, feel free to change that.
+     * I set the password's min length to 6 characters because that's Firebase's default. 
      */
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     this.zone = new NgZone({});
     firebase.auth().onAuthStateChanged(user => {
       this.zone.run(() => {
@@ -56,13 +56,14 @@ export class LoginPage {
         }
       })
     });
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     this.loginForm = formBuilder.group({
       email: ['', Validators.compose([Validators.required, EmailValidator.isValid])],
       password: ['', Validators.compose([Validators.minLength(6), Validators.required])]
     });
   }
-
+  /**
+   * Functions used to translate the page
+   */
   translateToSpanish() {
     this.translate.use('es');
   }
@@ -105,6 +106,10 @@ export class LoginPage {
     }
   }
 
+  /**
+   * This is the function used to reference the user profile of Facebook
+   * and get information for the login
+   */
   facebookLogin(): void {
     if (this.platform.is("android")) {
 
@@ -148,7 +153,11 @@ export class LoginPage {
         });
     }
   }
-  /////////////////////////////////////////////////////////////////////////////////////////////////
+
+  /**
+ * This is the function used to reference the user profile of Twitter
+ * and get information for the login
+ */
   twitterLogin() {
     this.angfire.auth.login({
       provider: AuthProviders.Twitter,
@@ -170,7 +179,10 @@ export class LoginPage {
     })
 
   }
-
+  /**
+   * This is the function used to reference the user profile of Google
+   * and get information for the login
+   */
   googleLogin() {
     if (this.platform.is("android")) {
       this.googlePlus.login({
@@ -192,7 +204,6 @@ export class LoginPage {
           })
           .catch(error => console.log("Firebase failure: " + JSON.stringify(error)));
       }).catch(err => console.error("Error: ", err));
-      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     } else {
       var provider = new firebase.auth.GoogleAuthProvider();
       firebase.auth().signInWithPopup(provider).then((newUser) => {
@@ -211,12 +222,13 @@ export class LoginPage {
           console.log("Firebase failure: " + JSON.stringify(error));
         });
     }
-
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
   }
 
+  /**
+   * Function used to dsplay and alert
+   * @param value The value or information to alert
+   * @param title The name of the notification
+   */
   displayAlert(value, title) {
     let coolAlert = this.alertCtrl.create({
       title: title,
@@ -230,11 +242,16 @@ export class LoginPage {
     coolAlert.present();
 
   }
-
+  /**
+   * Used to go to the sing up page
+   */
   goToSignup(): void {
     this.nav.push(SignupPage);
   }
 
+  /**
+   * Used to go to the reset password page
+   */
   goToResetPassword(): void {
     this.nav.push(ResetPasswordPage);
   }

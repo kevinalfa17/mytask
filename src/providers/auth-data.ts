@@ -1,7 +1,12 @@
+// Some important imports of modules
 import { Injectable } from '@angular/core';
 import firebase from 'firebase';
 
 
+/**
+ * This class it is used for the manage of the login and sing up 
+ * in the app  
+   */
 @Injectable()
 export class AuthData {
   constructor() { }
@@ -29,9 +34,6 @@ export class AuthData {
         email: email,
         type: "user"
       });
-
-
-      //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       if (picRef != null) {
         firebase.storage().ref('/ProfilePictures').child(newUser.uid).child('profilePicture.png').putString(picRef, 'base64', { contentType: 'image/png' }).then((savedPicture) => {
           firebase.database().ref("/userProfile").child(newUser.uid).child('profilePicture').set(savedPicture.downloadURL);
@@ -39,10 +41,8 @@ export class AuthData {
       } else {
         firebase.database().ref("/userProfile").child(newUser.uid).child('profilePicture').set("null");
       }
-      //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     });
 
-    //mtbtec
   }
 
   /**

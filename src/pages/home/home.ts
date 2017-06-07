@@ -1,19 +1,20 @@
+// Import modules
 import { Component } from '@angular/core';
 import { NavController, AlertController } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate';
-import { HomePage2 } from '../home2/home';
-import { Notifications } from '../notifications/notifications';
-import { NotificationData } from '../../providers/notification-provider';
-import { ProfileData } from '../../providers/profile-data';
-///////////////////////////////////////////////
-declare var window;
-import { GoogleCalendar } from '../googleCalendar/googleCalendar';
-//////////////////////////////////////////////
 import { ViewChild } from '@angular/core';
 import { Slides } from 'ionic-angular';
 import { ActionSheetController } from 'ionic-angular';
+// Providers used
+import { NotificationData } from '../../providers/notification-provider';
+import { ProfileData } from '../../providers/profile-data';
+// Some pages
+import { Notifications } from '../notifications/notifications';
+import { GoogleCalendar } from '../googleCalendar/googleCalendar';
 import { CreateTaskPage } from '../create-task/create-task';
 
+
+declare var window;
 
 @Component({
   selector: 'page-home',
@@ -29,11 +30,11 @@ export class HomePage {
   lastSlide: boolean;
   enableSearch: boolean;
 
-  public Noti = "notifications-off";
-  public notiInChange = false;
-  public currentUser: any;
+  public Noti = "notifications-off"; // The image to put in the notification buttom 
+  public currentUser: any; // The uid of the current user
 
-  constructor(public nav: NavController, public profileData: ProfileData, public translate: TranslateService, public actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController, public notificationData: NotificationData) {
+  constructor(public nav: NavController, public profileData: ProfileData, public translate: TranslateService,
+    public actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController, public notificationData: NotificationData) {
 
     this.translate.setDefaultLang('es');
 
@@ -46,12 +47,15 @@ export class HomePage {
     this.lastSlide = false;
   }
 
+  /**
+   * Function used to refresh the information 
+   */
   ionViewDidLoad() {
     this.currentUser = this.profileData.currentUser.uid;
     this.notificationData.getNotifications(this.currentUser);
     if ((this.notificationData.numberNewNotifications != 0)) {
       this.Noti = "notifications";
-    } else {
+      this.notificationData.addLocalNotification("Cambios", "Nueva notificacion", "now", 0, "", "");
       this.Noti = "notifications-off";
     }
   }
@@ -132,15 +136,15 @@ export class HomePage {
   }
 
 
-  //Gabo functions
-  goToHomePage2(): void {
-    this.nav.push(HomePage2);
-  }
-
   call(passedNumber) {
     passedNumber = encodeURIComponent(passedNumber);
     window.location = "tel:" + passedNumber;
   }
+
+  /**
+   * This function is to go to the notification page, but if not be new 
+   * notifications a message can alert the user and don't pass to the next page
+   */
   goToNotifications() {
     this.notificationData.getNotifications(this.currentUser);
     if (this.notificationData.numberNewNotifications != 0) {
@@ -160,6 +164,10 @@ export class HomePage {
     }
   }
 
+  /**
+   * Function used to refresh the home page
+   * @param refresher Param of the html
+   */
   doRefresh(refresher) {
     this.nav.setRoot(this.nav.getActive().component);
 
@@ -167,6 +175,11 @@ export class HomePage {
 
       refresher.complete();
     }, 2000);
+  }
+
+  //DELETE
+  gotocalendar() {
+    this.nav.setRoot(GoogleCalendar);
   }
 
 }

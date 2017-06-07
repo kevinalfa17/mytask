@@ -8,7 +8,11 @@
 
 <ion-content padding>
   <button ion-button icon-only (click)="addLocalnoti()">
-        <ion-icon name="logo-facebook"></ion-icon>
+        <ion-icon name="alarm"></ion-icon>
+    </button>
+
+    <button ion-button icon-only (click)="cancelLocalNotification()">
+        <ion-icon name="close"></ion-icon>
     </button>
 
   <ion-list>
@@ -19,6 +23,14 @@
       <p><strong>{{"WORDCONDITION" | translate}}: </strong>{{noti?.Condition}}</p>
     </ion-item>
   </ion-list>
+
+  <button ion-button icon-only (click)="recordAudio()">
+        <ion-icon name="logo-facebook"></ion-icon>
+    </button>
+  <button ion-button icon-only (click)="recordVideo()">
+        <ion-icon name="logo-facebook"></ion-icon>
+    </button>
+
 
 
 </ion-content>

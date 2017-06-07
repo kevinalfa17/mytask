@@ -4,10 +4,6 @@ import { ChatPage } from '../pages/chat/chat';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
-import { HomePage2 } from '../pages/home2/home';
-import { EventCreatePage } from '../pages/event-create/event-create';
-import { EventDetailPage } from '../pages/event-detail/event-detail';
-import { EventListPage } from '../pages/event-list/event-list';
 import { LoginPage } from '../pages/login/login';
 import { ProfilePage } from '../pages/profile/profile';
 import { ResetPasswordPage } from '../pages/reset-password/reset-password';
@@ -63,10 +59,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     ChatViewPage,
     HomePage,
     TabsPage,
-    HomePage2,
-    EventCreatePage,
-    EventDetailPage,
-    EventListPage,
     LoginPage,
     ProfilePage,
     ResetPasswordPage,
@@ -112,10 +104,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     ChatViewPage,
     HomePage,
     TabsPage,
-    HomePage2,
-    EventCreatePage,
-    EventDetailPage,
-    EventListPage,
     LoginPage,
     ProfilePage,
     ResetPasswordPage,

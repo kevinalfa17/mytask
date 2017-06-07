@@ -1,35 +1,33 @@
-import {
-  NavController,
-  LoadingController,
-  AlertController
-} from 'ionic-angular';
+// Some important imports of diferent modules
+import { NavController, LoadingController, AlertController } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { AuthData } from '../../providers/auth-data';
-import { EmailValidator } from '../../validators/email';
-import { HomePage } from '../home/home';
-import { TabsPage } from '../tabs/tabs';
-import { InAppBrowser } from '@ionic-native/in-app-browser'
-import { File } from '@ionic-native/file';
 import { Camera } from '@ionic-native/camera';
 import { Platform } from 'ionic-angular';
-
 import { TranslateService } from 'ng2-translate'
+//Providers
+import { AuthData } from '../../providers/auth-data';
+import { EmailValidator } from '../../validators/email';
+//Pages
+import { HomePage } from '../home/home';
+import { TabsPage } from '../tabs/tabs';
 
+/**
+ * This page it's used to sign up a new user
+ */
 @Component({
   selector: 'page-signup',
   templateUrl: 'signup.html'
 })
 export class SignupPage {
-  public signupForm;
-  loading: any;
-  public image: string;
-  public image64: string;
-  window: any;
+  public signupForm; // Where it's the information that given by the user
+  loading: any; // Variable of loanding
+  public image: string; // The imagen to show in the html
+  public image64: string; // The imagen to keep in the database
 
   constructor(public nav: NavController, public translate: TranslateService, public authData: AuthData, public platform: Platform,
     public formBuilder: FormBuilder, public loadingCtrl: LoadingController,
-    public alertCtrl: AlertController, public camera: Camera, public browser: InAppBrowser, public file: File) {
+    public alertCtrl: AlertController, public camera: Camera) {
 
     this.signupForm = formBuilder.group({
       email: ['', Validators.compose([Validators.required, EmailValidator.isValid])],
@@ -40,10 +38,8 @@ export class SignupPage {
   }
 
   /**
-   * If the form is valid it will call the AuthData service to sign the user up password displaying a loading
-   *  component while the user waits.
-   *
-   * If the form is invalid it will just log the form value, feel free to handle that as you like.
+   * This function uses all the information given by the user and 
+   * check the strings and later goes to sign up 
    */
   signupUser() {
     if (!this.signupForm.valid) {
@@ -75,6 +71,10 @@ export class SignupPage {
     }
   }
 
+  /**
+   * This function it's used to select a image from the galery to
+   * show in profile picture
+   */
   selectPicture() {
     if (this.platform.is("android")) {
       this.camera.getPicture({
@@ -107,6 +107,11 @@ export class SignupPage {
       })
     }
   }
+
+  /**
+ * This function it's used to take a image from the galery to
+ * show in profile picture
+ */
   takePicture() {
     if (this.platform.is("android")) {
       this.camera.getPicture({

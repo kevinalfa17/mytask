@@ -1,30 +1,30 @@
-import { Platform } from 'ionic-angular';
-import { NavController, AlertController } from 'ionic-angular';
+// Imports of diferent modules
+import { Platform, NavController, AlertController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { TabsPage } from '../pages/tabs/tabs';
 import { TranslateService } from 'ng2-translate';
 import { Component, NgZone } from '@angular/core';
 import firebase from 'firebase';
-import { LoginPage } from '../pages/login/login';
-
-import {Notifications} from '../pages/notifications/notifications'
-
-///////////////////////////////
 import { Push, PushObject, PushOptions } from '@ionic-native/push';
+import { LocalNotifications } from '@ionic-native/local-notifications';
+//Pages
+import { LoginPage } from '../pages/login/login';
+import { Notifications } from '../pages/notifications/notifications'
 
-///////////////////////////////
+/**
+ * It's the principal code of the application
+ */
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   rootPage: any = LoginPage;
-  public alert: any;
+  public alert: any; // Use it to show alerts
 
   constructor(public platform: Platform, public zone: NgZone, public push: Push, public nav: NavController,
-    public translate: TranslateService, statusBar: StatusBar, splashScreen: SplashScreen, public alertCtrl: AlertController) {
+    public translate: TranslateService, statusBar: StatusBar, splashScreen: SplashScreen, public alertCtrl: AlertController, public localNotifications: LocalNotifications) {
     translate.setDefaultLang('es');
-    ///////////////////////////////////////////////////////////////////////
     this.zone = new NgZone({});
     firebase.initializeApp({
       apiKey: "AIzaSyB5IMqaEgPDA_Js_T6ZlcjoqaZBoFQYTtw",
@@ -38,11 +38,9 @@ export class MyApp {
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
       this.zone.run(() => {
         if (!user) {
-          //this.nav.setRoot(LoginPage);
-          /this.rootPage = LoginPage; /////////AQUI PAG PRINCIPAL
+          this.rootPage = LoginPage;
           unsubscribe();
         } else {
-          //this.nav.setRoot(TabsPage);
           this.rootPage = TabsPage;
           unsubscribe();
         }
@@ -50,11 +48,8 @@ export class MyApp {
     });
 
     platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
-      //////////////////////////////////////////////////////////////////////////////////////
 
       platform.registerBackButtonAction(() => {
         if (this.nav.canGoBack()) {
@@ -91,16 +86,23 @@ export class MyApp {
 
       pushObject.on('registration').subscribe((registration: any) => {
 
-        //console.log('Device registered', registration)
         alert(registration.registrationId);
-
 
       });
 
       pushObject.on('error').subscribe(error => console.error('Error with Push plugin', error));
       //////////////////////////////////////////////////////////////////////////////////////
+      this.localNotifications.on('click', notification => {
+        const notificationData = JSON.parse(notification.data);
+        alert(`You clicked: ${notification.text}. Your data is: ${notificationData.testData}`);
+      });
+
     });
   }
+
+  /**
+   * Function used to show alert of go out the application
+   */
   showAlert() {
     this.alert = this.alertCtrl.create({
       title: 'Exit?',
@@ -124,9 +126,9 @@ export class MyApp {
     this.alert.present();
   }
 
-
-
-
+  /**
+   * Those functions are used to manage the lenguaje
+   */
   translateToSpanish() {
     this.translate.use('es');
   }

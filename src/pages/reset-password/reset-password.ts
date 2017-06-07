@@ -1,12 +1,14 @@
-import { 
-  NavController, 
-  LoadingController, 
-  AlertController } from 'ionic-angular';
+//Some imports of diferent modules
+import { NavController, LoadingController, AlertController } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+//Providers
 import { AuthData } from '../../providers/auth-data';
 import { EmailValidator } from '../../validators/email';
 
+/**
+ * This page it's used to reset the password
+ */
 @Component({
   selector: 'page-reset-password',
   templateUrl: 'reset-password.html',
@@ -15,8 +17,8 @@ export class ResetPasswordPage {
   public resetPasswordForm;
 
 
-  constructor(public authData: AuthData, public formBuilder: FormBuilder, 
-    public nav: NavController, public loadingCtrl: LoadingController, 
+  constructor(public authData: AuthData, public formBuilder: FormBuilder,
+    public nav: NavController, public loadingCtrl: LoadingController,
     public alertCtrl: AlertController) {
 
     this.resetPasswordForm = formBuilder.group({
@@ -30,8 +32,8 @@ export class ResetPasswordPage {
    *
    * If the form is invalid it will just log the form value, feel free to handle that as you like.
    */
-  resetPassword(){
-    if (!this.resetPasswordForm.valid){
+  resetPassword() {
+    if (!this.resetPasswordForm.valid) {
       console.log(this.resetPasswordForm.value);
     } else {
       this.authData.resetPassword(this.resetPasswordForm.value.email).then((user) => {

@@ -10,16 +10,15 @@
 <ion-content padding>
   <ion-card>
     <ion-card-content>
-      <h1> Foto de perfil </h1>
+      <h1> {{"TEXTPROFILEPICTURE" | translate}} </h1>
       <button ion-button icon-left color="dark" (click)="takePicture()">
       <ion-icon name="camera"></ion-icon>
-      Tomar foto
+      {{"TEXTTAKEPIC" | translate}}
     </button>
       <button ion-button icon-left color="dark" (click)="selectPicture()">
       <ion-icon name="grid"></ion-icon>
-      Seleccionar foto
+      {{"TEXTSELECTPIC" | translate}}
     </button>
-
       <img [src]="image" *ngIf="image">
     </ion-card-content>
   </ion-card>
@@ -28,16 +27,16 @@
   <form [formGroup]="signupForm" (submit)="signupUser()" novalidate>
 
     <ion-item>
-      <ion-label stacked>Email</ion-label>
+      <ion-label stacked>{{"WORDEMAIL" | translate}}</ion-label>
       <ion-input #email formControlName="email" type="email" placeholder="Your email address" [class.invalid]="!signupForm.controls.email.valid && signupForm.controls.email.dirty">
       </ion-input>
     </ion-item>
     <ion-item class="error-message" *ngIf="!signupForm.controls.email.valid  && signupForm.controls.email.dirty">
-      <p>Please enter a valid email.</p>
+      <p>{{"TEXTENTERVALIDEMAIL" | translate}}</p>
     </ion-item>
 
     <ion-item>
-      <ion-label stacked>Password</ion-label>
+      <ion-label stacked>{{"WORDPASSWORD" | translate}}</ion-label>
       <ion-input #password formControlName="password" type="password" placeholder="Your password" [class.invalid]="!signupForm.controls.password.valid && signupForm.controls.password.dirty">
       </ion-input>
     </ion-item>
@@ -46,7 +45,7 @@
     </ion-item>
 
     <button ion-button block type="submit">
-      Create an Account
+      {{"TEXTNA" | translate}}
     </button>
   </form>
 </ion-content>

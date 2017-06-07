@@ -1,8 +1,11 @@
+//Important imports of diferent modules
 import { NavController, AlertController } from 'ionic-angular';
 import { Component, OnInit, NgZone } from '@angular/core';
+//Providers
 import { ProfileData } from '../../providers/profile-data';
 import { NotificationData } from '../../providers/notification-provider';
 import { AuthData } from '../../providers/auth-data';
+//Pages
 import { LoginPage } from '../login/login';
 import { TabsPage } from '../tabs/tabs';
 import { NotificationDetailPage } from '../notification-detail/notification-detail'
@@ -12,14 +15,17 @@ import { NotificationDetailPage } from '../notification-detail/notification-deta
   templateUrl: 'profile.html'
 })
 export class ProfilePage {
-  public userProfile: any;
-  profilePicture: string;
-  public birthDate: string;
+  public userProfile: any; // The information of the current user
+  public profilePicture: string; // The link to the profile picture
+  public birthDate: string; // The birthdate
 
   constructor(public navCtrl: NavController, public notificationData: NotificationData, public profileData: ProfileData, public authData: AuthData, public alertCtrl: AlertController) {
 
   }
 
+  /**
+  * Function used to reload and see the changing data and refresh the diferent lists
+  */
   ionViewDidEnter() {
     this.profileData.getUserProfile().then(profileSnap => {
       this.userProfile = profileSnap;
@@ -28,6 +34,9 @@ export class ProfilePage {
     });
   }
 
+  /**
+   * This function it's used to go out the current user
+   */
   logOut() {
     this.authData.logoutUser().then(() => {
       this.profileData.gooutuser();
@@ -35,6 +44,9 @@ export class ProfilePage {
     });
   }
 
+  /**
+   * Used to go and update the name of the user
+   */
   updateName() {
     let alert = this.alertCtrl.create({
       message: "Your first name & last name",
@@ -65,10 +77,16 @@ export class ProfilePage {
     alert.present();
   }
 
+  /**
+   * Used to go and update the birthdate of the user
+   */
   updateDOB(birthDate) {
     this.profileData.updateDOB(birthDate);
   }
 
+  /**
+   * Used to go and update the email of the user
+   */
   updateEmail() {
     let alert = this.alertCtrl.create({
       inputs: [
@@ -96,7 +114,9 @@ export class ProfilePage {
     });
     alert.present();
   }
-
+  /**
+   * Used to go and update the password of the user
+   */
   updatePassword() {
     let alert = this.alertCtrl.create({
       inputs: [
@@ -126,6 +146,9 @@ export class ProfilePage {
     alert.present();
   }
 
+  /**
+   * Used to go and update the address of the user
+   */
   updateaddress() {
     let alert = this.alertCtrl.create({
       message: "Your address",
@@ -150,6 +173,10 @@ export class ProfilePage {
     });
     alert.present();
   }
+
+  /**
+ * Used to go and update the name of the phone
+ */
   updatephone() {
     let alert = this.alertCtrl.create({
       message: "Your phone",
@@ -176,7 +203,9 @@ export class ProfilePage {
   }
 
 
-
+  /**
+   * Used to go to Home page
+   */
   goToHome(): void {
     this.navCtrl.setRoot(TabsPage);
   }

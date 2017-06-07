@@ -1,6 +1,5 @@
 //Providers
 import { AuthData } from '../providers/auth-data';
-import { EventData } from '../providers/event-data';
 import { ProfileData } from '../providers/profile-data';
 import { ChatProvider } from '../providers/chat-provider';
 import { UtilsProvider } from '../providers/utils-provider';
@@ -8,6 +7,7 @@ import { TypesProvider } from '../providers/types-provider';
 import { ContactsProvider } from '../providers/contacts-provider';
 import { TaskProvider } from '../providers/task-provider';
 import { NotificationData } from '../providers/notification-provider';
+import { MediaData } from '../providers/media-provider';
 
 
 //Others
@@ -22,9 +22,9 @@ import {File} from '@ionic-native/file'
 import { Facebook } from '@ionic-native/facebook';
 import firebase from 'firebase';
 import { LocalNotifications } from '@ionic-native/local-notifications';
-////////////////////////////////////////////////////
 import { Push } from '@ionic-native/push';
 import { GooglePlus } from '@ionic-native/google-plus';
+import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ionic-native/media-capture';
 
 
 
@@ -47,7 +47,6 @@ export function GetProviders() {
       {provide: Camera, useClass: CameraMock},
       {provide: ErrorHandler, useClass: IonicErrorHandler},
       AuthData,
-      EventData,
       NavController,
       Push,
       ProfileData,
@@ -63,7 +62,9 @@ export function GetProviders() {
       LocalNotifications,
       ContactsProvider,
       TaskProvider,
-      NotificationData
+      NotificationData,
+      MediaCapture,
+      MediaData
     ];
   } else {
     // Use device providers
@@ -71,7 +72,6 @@ export function GetProviders() {
       Camera,
       {provide: ErrorHandler, useClass: IonicErrorHandler},
       AuthData,
-      EventData,
       NavController,
       Push,
       ProfileData,
@@ -87,7 +87,9 @@ export function GetProviders() {
       LocalNotifications,
       ContactsProvider,
       TaskProvider,
-      NotificationData
+      NotificationData,
+      MediaCapture,
+      MediaData
     ];  
   }
   return providers;

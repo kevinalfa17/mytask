@@ -49,5 +49,11 @@
     "WORDREFRESH": "Refreshing",
     "TEXTREFRESH": "Pull to refresh",
     "WORDDETAIL": "Details",
-    "WORDTYPE":"Type"
+    "WORDTYPE": "Type",
+    "TEXTTAKEPIC": "Take picture",
+    "TEXTSELECTPIC": "Select picture",
+    "TEXTPROFILEPICTURE": "Profile Picture",
+    "WORDADDRESS": "Address",
+    "WORDPHONE": "Phone",
+    "TEXTTAPHERE": "Tap here to edit"
 }

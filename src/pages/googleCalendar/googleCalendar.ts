@@ -1,6 +1,6 @@
 import { Platform } from 'ionic-angular';
 import { Component, NgZone } from '@angular/core';
-import { InAppBrowser } from '@ionic-native/in-app-browser';
+//import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { ProfilePage } from '../profile/profile'
 import { ProfileData } from '../../providers/profile-data';
 import firebase from 'firebase'
@@ -34,7 +34,7 @@ export class GoogleCalendar {
   APIKEY = "AIzaSyBJhYl15v4K2fy99k-m9Q-kQbxjx4bsIxU";
   REDIRECTURL = "https://project-10af2.firebaseapp.com/__/auth/handler";
 
-  constructor(public browser: InAppBrowser, public platform: Platform, public profileData: ProfileData, public google: GooglePlus) { }
+  constructor( public platform: Platform, public profileData: ProfileData, public google: GooglePlus) { }
 
 
   sendInvite() {

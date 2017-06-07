@@ -1,28 +1,38 @@
+//Some imports of diferent modules
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { NotificationDetailPage } from '../notification-detail/notification-detail';
-import { EventData } from '../../providers/event-data';
 import firebase from 'firebase'
 import moment from 'moment';
+import { LocalNotifications } from '@ionic-native/local-notifications';
+//Providers
+import { NotificationDetailPage } from '../notification-detail/notification-detail';
+import { EventData } from '../../providers/event-data';
 import { NotificationData } from '../../providers/notification-provider';
 import { ProfileData } from '../../providers/profile-data';
-import { LocalNotifications } from '@ionic-native/local-notifications';
+import { MediaData } from '../../providers/media-provider'
 
+/**
+ * This page it's used to show the diferent remote notifications and 
+ * allows you to interact with
+ */
 @Component({
     selector: 'notifications',
     templateUrl: 'notifications.html',
 })
 export class Notifications {
-    public notificationsList: any;
-    public notificationlistview: any;
-    public notificationsReference: firebase.database.Reference;
-    public currentUser: any;
-    public localNotificationsList = [];
+    public notificationsList: any; // The list where it's saved the diferent notifications
+    public currentUser: any; // The information of the current user
+
+    public au: any; // AUN NO SE
+    public vi: any; // AUN NO SE
 
 
-    constructor(public navCtrl: NavController, public profiledata: ProfileData, public notificationData: NotificationData, public localNotifications: LocalNotifications) {
-        this.notificationsList = [];
+    constructor(public navCtrl: NavController, public profiledata: ProfileData, public notificationData: NotificationData, public localNotifications: LocalNotifications, public media: MediaData) {
     }
+
+    /**
+     * Function used to reload and see the changing data and refresh the diferent lists
+     */
     ionViewWillEnter() {
         this.currentUser = this.profiledata.currentUser.uid;
         //this.notificationData.getNotifications(this.currentUser);
@@ -31,31 +41,35 @@ export class Notifications {
         this.notificationsList = this.notificationData.getNotificationsList(this.currentUser);
     }
 
+    /**
+     * This function goes to the notification detail page to show the information
+     * @param notificationId The key of the notification to show
+     */
     goToNotificationDetail(notificationId) {
         this.navCtrl.push(NotificationDetailPage, { notificationId: notificationId, currentUser: this.currentUser });
     }
 
+    ///////////////////////SOLO SON PARA PRUEBAS, BORRAR LUEGO///////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     * DELETE THIS!!!!!!!!!!!!!!!!!!!!
+     */
     addLocalnoti() {
-        var localNoti = {
-            id: moment.now(),
-            title: "SIRVAA",
-            text: 'Single ILocalNotification',
-            sound: null,//'file://audio/notification.wav',
-            at: moment.now() + 100,
-            every: "minute",
-            smallIcon: "http://static.tumblr.com/5c90a92aa8597626a00a0845eea82ca3/e5nd402/pEdn4g1vc/tumblr_static_kvycde7padscokkwgs8k88oc.png",
-            led: 'FF0000'
-        };
-        this.localNotificationsList.push(localNoti);
-        this.localNotifications.schedule(localNoti);
+        this.notificationData.addLocalNotification("Jugar", "PERO YA PERRO", "minute", 5, "", "");
+    }
+    cancelLocalNotification() {
 
     }
 
-    cancellLocalNotification() {
-
+    recordAudio() {
+        this.au = this.media.captureAudio();
+        alert(this.au);
+        //this.media.savedInStorage(this.currentUser, this.au, "audio");
     }
 
-    delete(notiID) {
-        this.notificationData.deleteNotificationTemp(notiID, this.currentUser);
+    recordVideo() {
+        this.vi = this.media.captureVideo();
+
+        this.media.savedInStorage(this.currentUser, this.vi, "video");
     }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
