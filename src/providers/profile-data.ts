@@ -108,9 +108,6 @@ export class ProfileData {
           var yourRef = this.af.database.list(`/userProfile/${snapshot.key}/${subnode}`);
 
           yourRef.update(key, task);
-
-          //let endpoint = this.af.database.object(`/userProfile/${snapshot.key}/${subnode}/${key}`);
-          //endpoint.set(true);
         }
 
       });

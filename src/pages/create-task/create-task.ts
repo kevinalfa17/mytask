@@ -7,6 +7,7 @@ import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { NewContactPage } from '../new-contact/new-contact';
 import { ModalController } from 'ionic-angular';
 import { ContactListPage } from '../contact-list/contact-list';
+import * as moment from 'moment';
 
 
 @IonicPage()
@@ -30,16 +31,17 @@ export class CreateTaskPage {
   repeatToggle: boolean;
   notificationsToggle: boolean;
   advanced: boolean;
-  startDate:string;
-  startTime:string;
-  endTime:string;
+  startDate: string;
+  startTime: string;
+  endTime: string;
+  haveImage:boolean;
 
 
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public typesProvider: TypesProvider,
     public af: AngularFire, public translate: TranslateService, public modalCtrl: ModalController,
-     public taskProvider: TaskProvider) {
+    public taskProvider: TaskProvider) {
 
     this.types = typesProvider.getTypesRef();
     this.translate.setDefaultLang('es');
@@ -54,9 +56,10 @@ export class CreateTaskPage {
     this.startDate = "";
     this.endTime = "";
     this.startTime = "";
-    this.taskName ="";
+    this.taskName = "";
     this.repeatToggle = false;
     this.notificationsToggle = false;
+    this.haveImage = true;
   }
 
   loadSubtypes(selectedType) {
@@ -88,11 +91,11 @@ export class CreateTaskPage {
   addUser() {
     let chooseModal = this.modalCtrl.create(ContactListPage);
     chooseModal.onDidDismiss(data => {
-      if(typeof data !== "undefined"){
+      if (typeof data !== "undefined") {
         this.addUserToList(data);
 
       }
-      
+
     });
     chooseModal.present();
   }
@@ -153,10 +156,27 @@ export class CreateTaskPage {
   }
 
 
-  addTask(){
+  addTask() {
+
+    if (this.repeatToggle) {
+      var startAux = moment(this.startDate, 'YYYY-MM-DD');
+      switch (this.recurrence) {
+        case "daily":
+          this.endTime = startAux.add(30, 'days').format('YYYY-MM-DD').toString();
+          break;
+        case "weekly":
+          this.endTime = startAux.add(60, 'days').format('YYYY-MM-DD').toString();
+          break;
+
+        case "monthly":
+          this.endTime = startAux.add(90, 'days').format('YYYY-MM-DD').toString();
+          
+          break;
+      }
+    }
 
     this.taskProvider.addNewTask(this.users, this.taskName, this.type, this.subtype, this.startDate, this.startTime, this.repeatToggle,
-    this.recurrence, this.endTime, this.priority, this.notificationsToggle, [], this.newComment, this.permissons)
+      this.recurrence, this.endTime, parseInt(this.priority), this.notificationsToggle, [], this.newComment, this.permissons,this.haveImage)
 
     this.navCtrl.pop();
   }

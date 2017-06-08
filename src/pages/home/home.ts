@@ -56,16 +56,27 @@ export class HomePage {
     this.lastSlide = false;
 
     this.taskList = taskProvider.getTask();
-    this.getDates(this.taskList).then((dates: Array<Date>) => {
+    this.datesList = ["null"];
 
-      var maxDate = new Date(Math.max.apply(null, dates));
-      var minDate = new Date(Math.min.apply(null, dates));
+   
+    this.taskList.map(list => list.length).subscribe(length => {
+       console.log(length);
+      if (length > 0) {
+        this.getDates(this.taskList).then((dates: Array<Date>) => {
 
-      this.datesList = [];
-      this.datesList = this.getDateRange(new Date(), maxDate);
+          var maxDate = new Date(Math.max.apply(null, dates));
+          var minDate = new Date(Math.min.apply(null, dates));
 
-      this.actualSlide = 0;
-      this.title = this.getDateTitle(this.datesList[this.actualSlide]);
+          this.datesList = [];
+          this.datesList = this.getDateRange(new Date(), maxDate);
+
+          this.actualSlide = 0;
+          console.log(this.datesList);
+          console.log(this.actualSlide);
+          this.title = this.getDateTitle(this.datesList[this.actualSlide]);
+
+        });
+      }
 
     });
 
@@ -115,10 +126,6 @@ export class HomePage {
 
   }
 
-  complete() {
-
-  }
-
   newTaskActionSheet() {
     let actionSheet = this.actionSheetCtrl.create({
       title: '',
@@ -155,7 +162,6 @@ export class HomePage {
     actionSheet.present();
   }
 
-
   //Gabo functions
 
   ionViewDidLoad() {
@@ -166,6 +172,7 @@ export class HomePage {
       this.Noti = "notifications-off";
     }
   }
+
   goToHomePage2(): void {
     this.nav.push(HomePage2);
   }
@@ -174,6 +181,7 @@ export class HomePage {
     passedNumber = encodeURIComponent(passedNumber);
     window.location = "tel:" + passedNumber;
   }
+
   goToNotifications() {
     this.notificationData.getNotifications();
     if (this.notificationData.numberNewNotifications != 0) {
@@ -232,7 +240,7 @@ export class HomePage {
     return dates;
   };
 
-  getDateTitle(date) {
+  getDateTitle(date: string) {
 
     var dateTitle = date.split("-");
     var month = "";
@@ -283,35 +291,126 @@ export class HomePage {
     return (month + " " + day);
   }
 
-  validateDates(day, startDay, endTime) {
-
-    console.log("start y end")
-    console.log(startDay);
-    console.log(endTime);
-    console.log("validatesDates");
+  validateDates(day, startDay, endTime, repeat, recurrence) {
 
     var result;
     var minDate = moment(startDay, 'YYYY-MM-DD');
     var maxDate = moment(endTime, 'YYYY-MM-DD');
     var currentDate = moment(day, 'YYYY-MM-DD');
-    console.log("mindate");
-    console.log(minDate);
 
-    console.log("currentDate");
-    console.log(currentDate);
-    console.log("maxDay");
-    console.log(maxDate);
+    if (repeat && currentDate >= minDate) {
+      switch (recurrence) {
+        case "daily":
+          result = true
+          break;
+        case "weekly":
+          if (minDate.day() == currentDate.day()) {
+            result = true;
+          }
+          else {
+            result = false;
+          }
+          break;
+        case "monthly":
 
-    if (currentDate >= minDate && currentDate <= maxDate) {
-      result = true;
-      console.log("true");
+          if (minDate.date() == currentDate.date()) {
+            result = true;
+          }
+          else {
+            result = false;
+          }
+          break;
+      }
     }
     else {
-      result = false;
-      console.log("false");
+
+      if (currentDate >= minDate && currentDate <= maxDate) {
+
+        result = true;
+      }
+      else {
+        result = false;
+      }
     }
+
     return result;
   }
 
+  complete(key, status) {
+    console.log(key);
+    if (status == 0) {
+      this.taskProvider.updateStatus(key, 1);
+    }
+    else {
+      this.taskProvider.updateStatus(key, 4);
+    }
+
+  }
+
+  update(key, status) {
+
+    if (status == 0) {
+      let actionSheet = this.actionSheetCtrl.create({
+        title: '',
+        buttons: [
+          {
+            text: 'Accept',
+            handler: () => {
+              this.taskProvider.updateStatus(key, 1);
+            }
+          },
+          {
+            text: 'Back',
+            role: 'cancel',
+          }
+        ]
+      });
+      actionSheet.present();
+
+
+    } else {
+      var name;
+      if (status == 3) {
+        name = "In Progress";
+      }
+      else {
+        name = "On Hold";
+      }
+      let actionSheet = this.actionSheetCtrl.create({
+        title: '',
+        buttons: [
+          {
+            text: "Complete",
+            handler: () => {
+              this.taskProvider.updateStatus(key, 4);
+            }
+          },
+          {
+            text: name,
+            handler: () => {
+              if (status == 3) {
+                this.taskProvider.updateStatus(key, 1);
+              }
+              else {
+                this.taskProvider.updateStatus(key, 3);
+              }
+            }
+          },
+          {
+            text: 'Cancel Task',
+            handler: () => {
+              this.taskProvider.updateStatus(key, 2);
+            }
+          },
+
+          {
+            text: 'Back',
+            role: 'cancel',
+          }
+        ]
+      });
+      actionSheet.present();
+    }
+  }
 
 }
