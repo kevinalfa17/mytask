@@ -49,5 +49,6 @@
     "WORDREFRESH": "Refrescando",
     "TEXTREFRESH": "Hale para refrescar",
     "WORDDETAIL": "Detalles",
-    "WORDTYPE":"Tipo"
+    "WORDTYPE":"Tipo",
+    "TASKTITLE": "Tarea"
 }

@@ -49,5 +49,6 @@
     "WORDREFRESH": "Refreshing",
     "TEXTREFRESH": "Pull to refresh",
     "WORDDETAIL": "Details",
-    "WORDTYPE":"Type"
+    "WORDTYPE":"Type",
+    "TASKTITLE": "Task"
 }

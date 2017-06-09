@@ -104,9 +104,10 @@ export class ProfileData {
       snapshots.forEach(snapshot => {
 
         if (snapshot.key !== null) {
-
+          console.log("3333");
+          console.log(subnode);
           var yourRef = this.af.database.list(`/userProfile/${snapshot.key}/${subnode}`);
-
+          task.phone = snapshot.val().phone;
           yourRef.update(key, task);
         }
 

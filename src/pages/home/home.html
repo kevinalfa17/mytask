@@ -3,12 +3,12 @@
   <ion-navbar color="primary">
     <div>
       <div style="position:relative;float:left">
-        <button ion-button menuToggle *ngIf="firstSlide">
+        <button ion-button menuToggle *ngIf="(taskSegment && firstSlide) || (!taskSegment && firstSlide2)">
           <ion-icon name="apps"></ion-icon>
         </button>
 
         <ion-buttons>
-          <button (click)="previousDay()" ion-button icon-only *ngIf="!firstSlide">
+          <button (click)="previousDay()" ion-button icon-only *ngIf="(taskSegment && !firstSlide)||(!taskSegment && !firstSlide2)">
         <ion-icon name="arrow-back"></ion-icon>
     </button>
         </ion-buttons>
@@ -19,7 +19,7 @@
             {{title}}
           </ion-title>
         </div>
-        <ion-searchbar style="width:80%" *ngIf="enableSearch" (ionCancel)="toggleSearchBar()" [showCancelButton]="true"></ion-searchbar>
+        <ion-searchbar [(ngModel)]="searchTerm" style="width:80%" *ngIf="enableSearch" (ionCancel)="toggleSearchBar()" [showCancelButton]="true"></ion-searchbar>
       </div>
 
     </div>
@@ -28,7 +28,7 @@
       <button (click)="toggleSearchBar()" ion-button icon-only>
         <ion-icon name="search"></ion-icon>
       </button>
-      <button (click)="nextDay()" ion-button icon-only *ngIf="!lastSlide">
+      <button (click)="nextDay()" ion-button icon-only *ngIf="(taskSegment && !lastSlide)||(!taskSegment && !lastSlide2)">
         <ion-icon name="arrow-forward"></ion-icon>
       </button>
     </ion-buttons>
@@ -47,16 +47,71 @@
 
   <ion-toolbar no-border-top>
     <ion-segment [(ngModel)]="taskOwner">
-      <ion-segment-button value="me">
+      <ion-segment-button value="me" (ionSelect)="showOwnTasks()">
         Yo
       </ion-segment-button>
-      <ion-segment-button value="Others">
+      <ion-segment-button value="Others" (ionSelect)="showOtherTasks()">
         Otros
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
 
-  <ion-slides (ionSlideDidChange)="slideChanged()">
+  <ion-slides (ionSlideDidChange)="slideChanged2()" *ngIf="!taskSegment">
+    <ion-slide *ngFor="let day of datesList2">
+      <ion-list>
+
+        <div *ngFor="let task of delegatedTaskList | async">
+          <ion-item-sliding *ngIf="validateDates2(day,task.startDay,task.endTime,task.repeat,task.recurrence)">
+          <!--<ion-item-sliding >-->
+
+          <ion-item>
+            <ion-avatar item-left>
+              <img src="assets/img/0.jpg" *ngIf="task.status==0">
+              <img src="assets/img/1.jpg" *ngIf="task.status==1">
+              <img src="assets/img/2.jpg" *ngIf="task.status==2">
+              <img src="assets/img/3.jpg" *ngIf="task.status==3">
+              <img src="assets/img/4.jpg" *ngIf="task.status==4">
+            </ion-avatar>
+            <h2>{{task.taskName}}</h2>
+            <p>{{task.type}}</p>
+            <ion-note item-right>
+              <ion-icon *ngIf="task.haveImage" name="attach"></ion-icon>
+              {{task.endTime}}
+            </ion-note>
+          </ion-item>
+
+          <ion-item-options>
+            <button ion-button color="button1" (click)="postpone(task.$key)">
+          <ion-icon name="alarm"></ion-icon>
+          Postpone
+        </button>
+            <button ion-button color="button2" (click)="changeDate(task.$key)">
+          <ion-icon name="calendar"></ion-icon>
+          Date
+        </button>
+            <button ion-button color="completeButton" (click)="call(task.phone)">
+          <ion-icon name="call"></ion-icon>
+          Call
+        </button>
+          </ion-item-options>
+
+          <ion-item-options side="left" (ionSwipe)="end(task.$key)">
+            <button ion-button color="button3" expandable (click)="end(task.$key)">
+          <ion-icon name="checkmark-circle"></ion-icon>
+          <div>Finished</div>
+          <ion-spinner id="archive-spinner"></ion-spinner>
+        </button>
+          </ion-item-options>
+          </ion-item-sliding>
+        </div>
+
+      </ion-list>
+
+
+    </ion-slide>
+  </ion-slides>
+
+  <ion-slides (ionSlideDidChange)="slideChanged()" *ngIf="taskSegment">
     <ion-slide *ngFor="let day of datesList">
 
       <ion-list>
@@ -80,9 +135,9 @@
             </ion-item>
 
             <ion-item-options>
-              <button ion-button color="button1" (click)="comment(task.$key)">
-          <ion-icon name="create"></ion-icon>
-          Comment
+              <button ion-button color="button1" (click)="view(task.$key)">
+          <ion-icon name="eye"></ion-icon>
+          View
         </button>
               <button ion-button color="button2" (click)="chat(task.$key)">
           <ion-icon name="chatbubbles"></ion-icon>

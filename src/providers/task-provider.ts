@@ -14,27 +14,29 @@ export class TaskProvider {
   }
 
 
-  getTask() {
+  getTasks() {
     let tasks = this.af.database.list(`/userProfile/${this.up.currentUser.uid}/tasks`, {
       query: {
         orderByChild: 'reversePriority',
       }
     });
     return tasks;
-
   }
 
-  getDelegatedTaskRef() {
-
-    let delegatedTasksId = this.af.database.list(`/userProfile/${this.up.currentUser.uid}/delegatedTasks`, );
-    //Get task for each id
-    return delegatedTasksId;
+  getTask(key){
+        let task = this.af.database.object(`/userProfile/${this.up.currentUser.uid}/tasks/${key}`);
+        return task
   }
 
+  getDelegatedTasks() {
+
+    let delegatedTasks = this.af.database.list(`/userProfile/${this.up.currentUser.uid}/delegatedTasks`, );
+    return delegatedTasks;
+  }
 
 
   addNewTask(responsable, taskname, type, subtype, startDate, startTime, repeat,
-    recurrence, endTime, priority, notifications, files, comments, permissons,haveImage) {
+    recurrence, endTime, priority, notifications, files, comments, permissons,haveImage, alarm) {
 
     let task = {
       creatorid: this.up.currentUser.uid,
@@ -54,7 +56,9 @@ export class TaskProvider {
       comments: comments,
       permissons: permissons,
       status: 0,
-      haveImage: haveImage
+      haveImage: haveImage,
+      alarm:alarm,
+      phone: 0
 
     };
 
@@ -68,7 +72,9 @@ export class TaskProvider {
       repeat: repeat,
       recurrence: recurrence,
       endTime: endTime,
-      status: 0
+      status: 0,
+      alarm:alarm,
+      phone: 0
     };
 
 
@@ -79,10 +85,13 @@ export class TaskProvider {
       this.up.insertTask(user, key, "tasks", task);
       this.up.insertNotification(user, comments, taskname, type, this.up.currentUser.uid, key)
 
+      console.log("1111");
+      console.log(this.up.currentUser.email);
       delegatedTask.responsable = user;
       this.up.insertTask(this.up.currentUser.email, key, "delegatedTasks", delegatedTask);
-      permissons.forEach((user) => {
-        this.up.insertTask(user, key, "delegatedTasks", task);
+      permissons.forEach((user2) => {
+        console.log("2222");
+        this.up.insertTask(user2, key, "delegatedTasks", task);
       });
 
     });

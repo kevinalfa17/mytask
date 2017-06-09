@@ -112,8 +112,13 @@
       </ion-item>
 
       <ion-item>
-        <ion-label>Ends</ion-label>
-        <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="endTime" [disabled]="repeatToggle"></ion-datetime>
+        <ion-label>Ends Date</ion-label>
+        <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="endDate" [disabled]="repeatToggle"></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Ends Time</ion-label>
+        <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="endTime"></ion-datetime>
       </ion-item>
 
     </ion-list>

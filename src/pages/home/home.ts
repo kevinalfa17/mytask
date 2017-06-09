@@ -12,6 +12,7 @@ import { ViewChild } from '@angular/core';
 import { Slides } from 'ionic-angular';
 import { ActionSheetController } from 'ionic-angular';
 import { CreateTaskPage } from '../create-task/create-task';
+import { TaskDetailPage } from '../task-detail-page/task-detail-page';
 import { TaskProvider } from '../../providers/task-provider';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import * as moment from 'moment';
@@ -25,16 +26,25 @@ import * as moment from 'moment';
 export class HomePage {
 
   @ViewChild(Slides) slides: Slides;
+  @ViewChild(Slides) slides2: Slides;
   taskOwner: string;
   days: number;
   currentIndex: number;
+  currentIndex2: number;
   firstSlide: boolean;
   lastSlide: boolean;
+  firstSlide2: boolean;
+  lastSlide2: boolean;
   enableSearch: boolean;
   taskList: FirebaseListObservable<any[]>;
+  delegatedTaskList: FirebaseListObservable<any[]>;
   datesList: Array<string>;
+  datesList2: Array<number>;
   title: string;
   actualSlide: number;
+  actualSlide2: number;
+  taskSegment: boolean;
+  searchTerm:string;
 
   public Noti = "notifications-off";
   public notiInChange = false;
@@ -52,15 +62,22 @@ export class HomePage {
 
     this.days = 3; //Change to task.length in data base
     this.currentIndex = 0;
+    this.currentIndex2 = 0;
     this.firstSlide = true;
     this.lastSlide = false;
+    this.firstSlide2 = true;
+    this.lastSlide2 = false;
 
-    this.taskList = taskProvider.getTask();
+    this.taskList = taskProvider.getTasks();
+    this.delegatedTaskList = taskProvider.getDelegatedTasks();
     this.datesList = ["null"];
+    this.datesList2 = [0, 1, 2];
+    this.taskSegment = true;
+    this.searchTerm = "";
 
-   
+
     this.taskList.map(list => list.length).subscribe(length => {
-       console.log(length);
+      console.log(length);
       if (length > 0) {
         this.getDates(this.taskList).then((dates: Array<Date>) => {
 
@@ -71,8 +88,7 @@ export class HomePage {
           this.datesList = this.getDateRange(new Date(), maxDate);
 
           this.actualSlide = 0;
-          console.log(this.datesList);
-          console.log(this.actualSlide);
+          this.actualSlide2 = 0;
           this.title = this.getDateTitle(this.datesList[this.actualSlide]);
 
         });
@@ -89,20 +105,41 @@ export class HomePage {
   }
 
   nextDay() {
-    this.actualSlide = this.actualSlide + 1;
-    this.title = this.getDateTitle(this.datesList[this.actualSlide]);
+    if (this.taskSegment) {
 
-    this.slides.slideTo(this.currentIndex + 1, 500);
-    this.slideChanged();
+
+      this.actualSlide = this.actualSlide + 1;
+      this.title = this.getDateTitle(this.datesList[this.actualSlide]);
+
+      this.slides.slideTo(this.currentIndex + 1, 500);
+      this.slideChanged();
+    }
+    else {
+      this.actualSlide2 = this.actualSlide2 + 1;
+      this.title = this.getDateTitle2(this.actualSlide2);
+
+      this.slides2.slideTo(this.currentIndex2 + 1, 500);
+      this.slideChanged2();
+    }
   }
 
   previousDay() {
 
-    this.actualSlide = this.actualSlide - 1;
-    this.title = this.getDateTitle(this.datesList[this.actualSlide]);
+    if (this.taskSegment) {
+      this.actualSlide = this.actualSlide - 1;
+      this.title = this.getDateTitle(this.datesList[this.actualSlide]);
 
-    this.slides.slideTo(this.currentIndex - 1, 500);
-    this.slideChanged();
+      this.slides.slideTo(this.currentIndex - 1, 500);
+      this.slideChanged();
+    }
+    else {
+      this.actualSlide2 = this.actualSlide2 - 1;
+      this.title = this.getDateTitle2(this.actualSlide2);
+
+      this.slides2.slideTo(this.currentIndex2 - 1, 500);
+      this.slideChanged2();
+
+    }
   }
 
   slideChanged() {
@@ -122,6 +159,29 @@ export class HomePage {
     }
     else {
       this.lastSlide = false;
+
+    }
+
+  }
+
+  slideChanged2() {
+    this.currentIndex2 = this.slides2.getActiveIndex();
+
+    //Check if its first slide
+    if (this.actualSlide2 == 0) {
+      this.firstSlide2 = true;
+    }
+    else {
+      this.firstSlide2 = false;
+    }
+
+    //Check if its last slide
+    if (this.actualSlide2 == 2) {
+      this.lastSlide2 = true;
+    }
+    else {
+      this.lastSlide2 = false;
+
     }
 
   }
@@ -140,13 +200,6 @@ export class HomePage {
           text: 'Assign task',
           handler: () => {
             this.nav.push(CreateTaskPage);
-          }
-        },
-
-        {
-          text: 'Call (Provisional)',
-          handler: () => {
-            this.call(+50687362890);
           }
         },
 
@@ -291,9 +344,33 @@ export class HomePage {
     return (month + " " + day);
   }
 
+  getDateTitle2(slideNumber) {
+    var title;
+    switch (slideNumber) {
+      case 0:
+        title = "Yesterday";
+        break;
+      case 1:
+        title = "Today"
+        break;
+      case 2:
+        title = "Tomorrow"
+        break;
+    }
+
+    return title;
+  }
+
   validateDates(day, startDay, endTime, repeat, recurrence) {
 
     var result;
+
+    if(this.searchTerm !== ""){
+      return false;
+    }
+
+
+
     var minDate = moment(startDay, 'YYYY-MM-DD');
     var maxDate = moment(endTime, 'YYYY-MM-DD');
     var currentDate = moment(day, 'YYYY-MM-DD');
@@ -325,6 +402,67 @@ export class HomePage {
     else {
 
       if (currentDate >= minDate && currentDate <= maxDate) {
+
+        result = true;
+      }
+      else {
+        result = false;
+      }
+    }
+
+    return result;
+  }
+
+
+  validateDates2(day, startDay, endTime, repeat, recurrence) {
+
+    var result;
+    var currentDate;
+    var minDate = moment(startDay, 'YYYY-MM-DD');
+    var maxDate = moment(endTime, 'YYYY-MM-DD');
+    switch (day) {
+      case 0:
+        currentDate = moment().subtract(1, "days");
+        break;
+      case 1:
+        currentDate = moment();
+        break;
+      case 2:
+        currentDate = moment().add(1, "days");
+        break;
+    }
+   
+    if (repeat && currentDate >= minDate) {
+      switch (recurrence) {
+        case "daily":
+          result = true
+          break;
+        case "weekly":
+          if (minDate.day() == currentDate.day()) {
+            result = true;
+          }
+          else {
+            result = false;
+          }
+          break;
+        case "monthly":
+
+          if (minDate.date() == currentDate.date()) {
+            result = true;
+          }
+          else {
+            result = false;
+          }
+          break;
+      }
+    }
+    else {
+
+      console.log("currentDate");
+      console.log(currentDate);
+      console.log(maxDate);
+
+      if (currentDate.format('YYYY-MM-DD') == maxDate.format('YYYY-MM-DD')) {
 
         result = true;
       }
@@ -412,5 +550,23 @@ export class HomePage {
       actionSheet.present();
     }
   }
+
+  view(key) {
+    this.nav.push(TaskDetailPage, {
+      key: key
+    })
+  }
+
+  showOwnTasks() {
+    this.taskSegment = true;
+    this.title = this.getDateTitle(this.datesList[this.actualSlide]);
+  }
+
+  showOtherTasks() {
+    this.taskSegment = false;
+    this.title = this.getDateTitle2(this.actualSlide2);
+  }
+
+
 
 }

@@ -33,8 +33,9 @@ export class CreateTaskPage {
   advanced: boolean;
   startDate: string;
   startTime: string;
+  endDate: string;
   endTime: string;
-  haveImage:boolean;
+  haveImage: boolean;
 
 
 
@@ -54,6 +55,7 @@ export class CreateTaskPage {
     this.newComment = "";
     this.priority = "1";
     this.startDate = "";
+    this.endDate = "";
     this.endTime = "";
     this.startTime = "";
     this.taskName = "";
@@ -158,25 +160,45 @@ export class CreateTaskPage {
 
   addTask() {
 
+     if(typeof this.subtype == 'undefined') {
+        this.subtype = "";
+    }
+
+    console.log("this.type");
+    console.log(this.subtype);
+    
+
+    if (this.startDate == "") {
+
+      this.startDate = moment().format('YYYY-MM-DD').toString();
+
+    }
+
+    if (this.endDate == "") {
+
+      this.endDate = moment().format('YYYY-MM-DD').toString();
+
+    }
+
     if (this.repeatToggle) {
       var startAux = moment(this.startDate, 'YYYY-MM-DD');
       switch (this.recurrence) {
         case "daily":
-          this.endTime = startAux.add(30, 'days').format('YYYY-MM-DD').toString();
+          this.endDate = startAux.add(30, 'days').format('YYYY-MM-DD').toString();
           break;
         case "weekly":
-          this.endTime = startAux.add(60, 'days').format('YYYY-MM-DD').toString();
+          this.endDate = startAux.add(60, 'days').format('YYYY-MM-DD').toString();
           break;
 
         case "monthly":
-          this.endTime = startAux.add(90, 'days').format('YYYY-MM-DD').toString();
-          
+          this.endDate = startAux.add(90, 'days').format('YYYY-MM-DD').toString();
+
           break;
       }
     }
 
     this.taskProvider.addNewTask(this.users, this.taskName, this.type, this.subtype, this.startDate, this.startTime, this.repeatToggle,
-      this.recurrence, this.endTime, parseInt(this.priority), this.notificationsToggle, [], this.newComment, this.permissons,this.haveImage)
+      this.recurrence, this.endDate, parseInt(this.priority), this.notificationsToggle, [], this.newComment, this.permissons, this.haveImage, this.endTime)
 
     this.navCtrl.pop();
   }
