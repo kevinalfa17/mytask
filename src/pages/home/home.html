@@ -61,7 +61,7 @@
       <ion-list>
 
         <div *ngFor="let task of delegatedTaskList | async">
-          <ion-item-sliding *ngIf="validateDates2(day,task.startDay,task.endTime,task.repeat,task.recurrence)">
+          <ion-item-sliding *ngIf="validateDates2(day,task.startDay,task.endTime,task.repeat,task.recurrence,task.taskName,task.responsable)">
           <!--<ion-item-sliding >-->
 
           <ion-item>
@@ -73,7 +73,7 @@
               <img src="assets/img/4.jpg" *ngIf="task.status==4">
             </ion-avatar>
             <h2>{{task.taskName}}</h2>
-            <p>{{task.type}}</p>
+            <p>{{task.responsable}}</p>
             <ion-note item-right>
               <ion-icon *ngIf="task.haveImage" name="attach"></ion-icon>
               {{task.endTime}}
@@ -117,7 +117,7 @@
       <ion-list>
 
         <div *ngFor="let task of taskList | async">
-          <ion-item-sliding *ngIf="validateDates(day,task.startDay,task.endTime,task.repeat,task.recurrence)">
+          <ion-item-sliding *ngIf="validateDates(day,task.startDay,task.endTime,task.repeat,task.recurrence,task.taskName)">
             <ion-item>
               <ion-avatar item-left>
                 <img src="assets/img/0.jpg" *ngIf="task.status==0">

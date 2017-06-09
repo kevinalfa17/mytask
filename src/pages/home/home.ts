@@ -361,16 +361,13 @@ export class HomePage {
     return title;
   }
 
-  validateDates(day, startDay, endTime, repeat, recurrence) {
-
-    var result;
+  validateDates(day, startDay, endTime, repeat, recurrence,taskName) {
 
     if(this.searchTerm !== ""){
-      return false;
+      return this.searchOwnTask(taskName);
     }
 
-
-
+    var result;
     var minDate = moment(startDay, 'YYYY-MM-DD');
     var maxDate = moment(endTime, 'YYYY-MM-DD');
     var currentDate = moment(day, 'YYYY-MM-DD');
@@ -414,7 +411,13 @@ export class HomePage {
   }
 
 
-  validateDates2(day, startDay, endTime, repeat, recurrence) {
+  validateDates2(day, startDay, endTime, repeat, recurrence,taskName,responsable) {
+
+    
+
+    if(this.searchTerm !== ""){
+      return this.searchDelegatedTask(taskName,responsable);
+    }
 
     var result;
     var currentDate;
@@ -567,6 +570,14 @@ export class HomePage {
     this.title = this.getDateTitle2(this.actualSlide2);
   }
 
+  searchOwnTask(taskName){
+    return (taskName.indexOf(this.searchTerm) !== -1);
 
+  }
+
+   searchDelegatedTask(taskName,responsable){
+    return ((taskName.indexOf(this.searchTerm) !== -1) || (responsable.indexOf(this.searchTerm) !== -1));
+
+  }
 
 }
