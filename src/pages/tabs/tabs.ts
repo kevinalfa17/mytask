@@ -12,6 +12,9 @@ import { ProfilePage } from '../profile/profile';
 import { LoginPage } from '../login/login';
 import { AdminPage } from '../admin/admin';
 
+//Providers
+import { ProfileData } from '../../providers/profile-data';
+
 /**
  * It's the page used to give the tabs in the app
  */
@@ -25,7 +28,7 @@ export class TabsPage {
   tab1Root = HomePage;
   tab2Root = AdminPage;
   tab3Root = ContactPage;
-  constructor(public nav: NavController, public authData: AuthData, public translate: TranslateService) {
+  constructor(public nav: NavController, public pd: ProfileData, public authData: AuthData, public translate: TranslateService) {
     this.translate.setDefaultLang('en');
   }
 
