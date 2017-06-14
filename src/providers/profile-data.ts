@@ -252,4 +252,36 @@ export class ProfileData {
 
   }
 
+
+  editTask(email, key, subnode, field, value) {
+
+    var userkey;
+    this.af.database.list('/userProfile', {
+      query: {
+        orderByChild: 'email',
+        equalTo: email
+      },
+      preserveSnapshot: true
+    }).subscribe(snapshots => {
+      snapshots.forEach(snapshot => {
+
+        if (snapshot.key !== null) {
+          var yourRef = this.af.database.object(`/userProfile/${snapshot.key}/${subnode}/${key}`);
+          if(field == "alarm"){
+            yourRef.update({ alarm: value })
+          }
+          if(field == "comments"){
+            yourRef.update({ comments: value })
+          }
+          if(field == "endTime"){
+            yourRef.update({ endTime: value })
+          }
+
+        }
+
+      });
+    })
+
+  }
+
 }

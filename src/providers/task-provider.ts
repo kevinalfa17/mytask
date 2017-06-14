@@ -257,8 +257,18 @@ export class TaskProvider {
 
     this.up.endTask(responsable,key,"tasks");
     
-    permissons.forEach((user2) => {
-      this.up.endTask(user2,key,"delegatedTasks");
+    permissons.forEach((user) => {
+      this.up.endTask(user,key,"delegatedTasks");
+    });
+  };
+
+
+  editTask(key, permissons , responsable , field, value){
+
+    this.up.editTask(responsable,key,"tasks",field,value);
+    
+    permissons.forEach((user) => {
+      this.up.editTask(user,key,"delegatedTasks",field,value);
     });
   };
 
