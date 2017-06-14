@@ -48,7 +48,7 @@ export class HomePage {
   actualSlide: number;
   actualSlide2: number;
   taskSegment: boolean;
-  searchTerm:string;
+  searchTerm: string;
 
   public Noti = "notifications-off"; // The image to put in the notification buttom 
   public currentUser: any; // The uid of the current user
@@ -72,7 +72,7 @@ export class HomePage {
 
     this.taskList = taskProvider.getTasks();
     this.delegatedTaskList = taskProvider.getDelegatedTasks();
-    this.datesList = ["null"];
+    this.datesList = [];
     this.datesList2 = [0, 1, 2];
     this.taskSegment = true;
     this.searchTerm = "";
@@ -221,7 +221,7 @@ export class HomePage {
           text: 'Cancel',
           role: 'cancel',
           handler: () => {
-   
+
           }
         }
       ]
@@ -304,6 +304,7 @@ export class HomePage {
 
   getDateTitle(date: string) {
 
+
     var dateTitle = date.split("-");
     var month = "";
     var year = dateTitle[0];
@@ -370,9 +371,9 @@ export class HomePage {
     return title;
   }
 
-  validateDates(day, startDay, endTime, repeat, recurrence,taskName) {
+  validateDates(day, startDay, endTime, repeat, recurrence, taskName) {
 
-    if(this.searchTerm !== ""){
+    if (this.searchTerm !== "") {
       return this.searchOwnTask(taskName);
     }
 
@@ -420,12 +421,12 @@ export class HomePage {
   }
 
 
-  validateDates2(day, startDay, endTime, repeat, recurrence,taskName,responsable) {
+  validateDates2(day, startDay, endTime, repeat, recurrence, taskName, responsable) {
 
-    
 
-    if(this.searchTerm !== ""){
-      return this.searchDelegatedTask(taskName,responsable);
+
+    if (this.searchTerm !== "") {
+      return this.searchDelegatedTask(taskName, responsable);
     }
 
     var result;
@@ -443,7 +444,7 @@ export class HomePage {
         currentDate = moment().add(1, "days");
         break;
     }
-   
+
     if (repeat && currentDate >= minDate) {
       switch (recurrence) {
         case "daily":
@@ -485,15 +486,15 @@ export class HomePage {
   complete(key, status, permissons) {
 
     if (status == 0) {
-      this.taskProvider.updateStatus(key, 1,permissons);
+      this.taskProvider.updateStatus(key, 1, permissons);
     }
     else {
-      this.taskProvider.updateStatus(key, 4,permissons);
+      this.taskProvider.updateStatus(key, 4, permissons);
     }
 
   }
 
-  update(key, status , permissons) {
+  update(key, status, permissons) {
 
     if (status == 0) {
       let actionSheet = this.actionSheetCtrl.create({
@@ -502,7 +503,7 @@ export class HomePage {
           {
             text: 'Accept',
             handler: () => {
-              this.taskProvider.updateStatus(key, 1,permissons);
+              this.taskProvider.updateStatus(key, 1, permissons);
             }
           },
           {
@@ -567,7 +568,9 @@ export class HomePage {
 
   showOwnTasks() {
     this.taskSegment = true;
-    this.title = this.getDateTitle(this.datesList[this.actualSlide]);
+    if (this.datesList.length > 0) {
+      this.title = this.getDateTitle(this.datesList[this.actualSlide]);
+    }
   }
 
   showOtherTasks() {
@@ -575,36 +578,36 @@ export class HomePage {
     this.title = this.getDateTitle2(this.actualSlide2);
   }
 
-  searchOwnTask(taskName){
+  searchOwnTask(taskName) {
     return (taskName.indexOf(this.searchTerm) !== -1);
 
   }
 
-   searchDelegatedTask(taskName,responsable){
+  searchDelegatedTask(taskName, responsable) {
     return ((taskName.indexOf(this.searchTerm) !== -1) || (responsable.indexOf(this.searchTerm) !== -1));
 
   }
 
-  chooseColor(endTime,status,recurrence){
+  chooseColor(endTime, status, recurrence) {
 
     console.log("Choose");
 
     var maxDate = moment(endTime, 'YYYY-MM-DD');
     var currentDate = moment().subtract(1, "days");
 
-    if((currentDate.format('YYYY-MM-DD') == maxDate.format('YYYY-MM-DD')) && status !== 4){
+    if ((currentDate.format('YYYY-MM-DD') == maxDate.format('YYYY-MM-DD')) && status !== 4) {
       return "incomplete";
     }
-    else{
+    else {
       currentDate = moment();
-      if((currentDate.format('YYYY-MM-DD') == maxDate.format('YYYY-MM-DD')) && status == 0){
+      if ((currentDate.format('YYYY-MM-DD') == maxDate.format('YYYY-MM-DD')) && status == 0) {
         return "warning";
       }
-      else{
+      else {
         return "white";
       }
     }
-    
+
 
 
 
