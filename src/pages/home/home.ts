@@ -176,10 +176,4 @@ export class HomePage {
       refresher.complete();
     }, 2000);
   }
-
-  //DELETE
-  gotocalendar() {
-    this.nav.setRoot(GoogleCalendar);
-  }
-
 }

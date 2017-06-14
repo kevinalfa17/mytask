@@ -20,7 +20,7 @@
 
     <div class="row row-center">
       <div class="center">
-        <img [src]="profilePicture" *ngIf="profilePicture"  border=4 WIDTH=178 HEIGHT=180 ALIGN="middle">
+        <img [src]="profilePicture" *ngIf="profilePicture" border=4 WIDTH=178 HEIGHT=180 ALIGN="middle">
       </div>
     </div>
 
@@ -71,7 +71,7 @@
       <ion-grid>
         <ion-row>
           <ion-col col-6>
-            {{ "WORDPADDRESS"| translate}}
+            {{ "WORDADDRESS"| translate}}
           </ion-col>
           <ion-col col-6 *ngIf="userProfile?.address">
             {{userProfile?.address}}

@@ -11,6 +11,9 @@ import { NotificationData } from '../../providers/notification-provider';
 import { ProfileData } from '../../providers/profile-data';
 import { MediaData } from '../../providers/media-provider'
 
+///quitar
+import { TaskProvider } from '../../providers/task-provider'
+
 /**
  * This page it's used to show the diferent remote notifications and 
  * allows you to interact with
@@ -27,7 +30,7 @@ export class Notifications {
     public vi: any; // AUN NO SE
 
 
-    constructor(public navCtrl: NavController, public profiledata: ProfileData, public notificationData: NotificationData, public localNotifications: LocalNotifications, public media: MediaData) {
+    constructor(public taskp: TaskProvider, public navCtrl: NavController, public profiledata: ProfileData, public notificationData: NotificationData, public localNotifications: LocalNotifications, public media: MediaData) {
     }
 
     /**
@@ -61,15 +64,19 @@ export class Notifications {
     }
 
     recordAudio() {
-        this.au = this.media.captureAudio();
-        alert(this.au);
-        //this.media.savedInStorage(this.currentUser, this.au, "audio");
+        this.media.captureAudio(this.currentUser);
     }
 
     recordVideo() {
-        this.vi = this.media.captureVideo();
+        this.vi = this.media.captureVideo(this.currentUser);
 
-        this.media.savedInStorage(this.currentUser, this.vi, "video");
+        //this.media.savedInStorage(this.currentUser, this.vi, "video");
     }
+
+    send() {
+        this.taskp.sendInvite('IZI PICI', 'HERE', 'GG DISCRETOS',
+            '2017-07-28T09:00:00-07:00', '2017-07-29T09:00:00-07:00', ["jgon.peralta@gmail.com", "gbarboza963@gmail.com"])
+    }
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }

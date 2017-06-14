@@ -1,5 +1,4 @@
 //Pages
-import { AboutPage } from '../pages/about/about';
 import { ChatPage } from '../pages/chat/chat';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
@@ -53,7 +52,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 @NgModule({
   declarations: [
     MyApp,
-    AboutPage,
     ContactPage,
     ChatPage,
     ChatViewPage,
@@ -98,7 +96,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AboutPage,
     ContactPage,
     ChatPage,
     ChatViewPage,

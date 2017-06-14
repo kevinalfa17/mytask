@@ -14,6 +14,8 @@
     <button ion-button icon-only (click)="cancelLocalNotification()">
         <ion-icon name="close"></ion-icon>
     </button>
+    <button primary (click)="send()">Send Google Calendar Invite
+    </button>
 
   <ion-list>
     <ion-item *ngFor="let noti of notificationsList" color="{{noti?.Type}}" (click)="goToNotificationDetail(noti.id)">
@@ -25,7 +27,7 @@
   </ion-list>
 
   <button ion-button icon-only (click)="recordAudio()">
-        <ion-icon name="logo-facebook"></ion-icon>
+        <ion-icon name="mic"></ion-icon>
     </button>
   <button ion-button icon-only (click)="recordVideo()">
         <ion-icon name="logo-facebook"></ion-icon>
