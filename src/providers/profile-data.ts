@@ -161,4 +161,30 @@ export class ProfileData {
     })
 
   }
+
+endTask(email, key,subnode) {
+
+    var userkey;
+    this.af.database.list('/userProfile', {
+      query: {
+        orderByChild: 'email',
+        equalTo: email
+      },
+      preserveSnapshot: true
+    }).subscribe(snapshots => {
+      snapshots.forEach(snapshot => {
+
+        if (snapshot.key !== null) {
+          var yourRef = this.af.database.object(`/userProfile/${snapshot.key}/${subnode}/${key}`);
+          yourRef.remove();
+        }
+
+      });
+    })
+
+  }
+
+
+
+
 }

@@ -106,6 +106,15 @@ export class TaskProvider {
       this.up.updateStatus(user2, key, newStatus)
     });
   };
+  
 
+  endTask(key, permissons , responsable){
+
+    this.up.endTask(responsable,key,"tasks");
+    
+    permissons.forEach((user2) => {
+      this.up.endTask(user2,key,"delegatedTasks");
+    });
+  };
 
 }
