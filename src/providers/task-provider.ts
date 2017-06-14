@@ -23,9 +23,9 @@ export class TaskProvider {
     return tasks;
   }
 
-  getTask(key){
-        let task = this.af.database.object(`/userProfile/${this.up.currentUser.uid}/tasks/${key}`);
-        return task
+  getTask(key) {
+    let task = this.af.database.object(`/userProfile/${this.up.currentUser.uid}/tasks/${key}`);
+    return task
   }
 
   getDelegatedTasks() {
@@ -36,11 +36,11 @@ export class TaskProvider {
 
 
   addNewTask(responsable, taskname, type, subtype, startDate, startTime, repeat,
-    recurrence, endTime, priority, notifications, files, comments, permissons,haveImage, alarm) {
-
+    recurrence, endTime, priority, notifications, files, comments, permissons, haveImage, alarm) {
+    permissons.push(this.up.currentUser.email);
     let task = {
       creatorid: this.up.currentUser.uid,
-      responsable: responsable,
+      responsable: "",
       taskName: taskname,
       type: type,
       subtype: subtype,
@@ -57,7 +57,7 @@ export class TaskProvider {
       permissons: permissons,
       status: 0,
       haveImage: haveImage,
-      alarm:alarm,
+      alarm: alarm,
       phone: 0
 
     };
@@ -73,24 +73,22 @@ export class TaskProvider {
       recurrence: recurrence,
       endTime: endTime,
       status: 0,
-      alarm:alarm,
+      alarm: alarm,
       phone: 0
     };
 
 
 
-    var key = this.af.database.list(`/tasks`).push(task).key;
 
     responsable.forEach((user) => {
+      task.responsable = user;
+      var key = this.af.database.list(`/tasks`).push(task).key;
       this.up.insertTask(user, key, "tasks", task);
       this.up.insertNotification(user, comments, taskname, type, this.up.currentUser.uid, key)
 
-      console.log("1111");
-      console.log(this.up.currentUser.email);
       delegatedTask.responsable = user;
-      this.up.insertTask(this.up.currentUser.email, key, "delegatedTasks", delegatedTask);
+      //this.up.insertTask(this.up.currentUser.email, key, "delegatedTasks", delegatedTask);
       permissons.forEach((user2) => {
-        console.log("2222");
         this.up.insertTask(user2, key, "delegatedTasks", task);
       });
 
@@ -100,8 +98,13 @@ export class TaskProvider {
 
   };
 
-   updateStatus(key,newStatus) {
-    this.af.database.list(`/userProfile/${this.up.currentUser.uid}/tasks`).update(key,{status: newStatus });
+  updateStatus(key, newStatus, permissons) {
+
+    this.af.database.list(`/userProfile/${this.up.currentUser.uid}/tasks`).update(key, { status: newStatus });
+    
+    permissons.forEach((user2) => {
+      this.up.updateStatus(user2, key, newStatus)
+    });
   };
 
 

@@ -91,7 +91,7 @@ export class ProfileData {
   }
 
 
-  insertTask(email, key, subnode,task) {
+  insertTask(email, key, subnode, task) {
 
     var userkey;
     this.af.database.list('/userProfile', {
@@ -104,8 +104,6 @@ export class ProfileData {
       snapshots.forEach(snapshot => {
 
         if (snapshot.key !== null) {
-          console.log("3333");
-          console.log(subnode);
           var yourRef = this.af.database.list(`/userProfile/${snapshot.key}/${subnode}`);
           task.phone = snapshot.val().phone;
           yourRef.update(key, task);
@@ -116,6 +114,31 @@ export class ProfileData {
 
   }
 
+
+
+
+  updateStatus(email, key, newStatus) {
+
+    var userkey;
+    this.af.database.list('/userProfile', {
+      query: {
+        orderByChild: 'email',
+        equalTo: email
+      },
+      preserveSnapshot: true
+    }).subscribe(snapshots => {
+      snapshots.forEach(snapshot => {
+
+        if (snapshot.key !== null) {
+          console.log("444");
+          var yourRef = this.af.database.object(`/userProfile/${snapshot.key}/delegatedTasks/${key}`);
+          yourRef.update({status:newStatus})
+        }
+
+      });
+    })
+
+  }
 
   insertNotification(email, description, name, type, creatorid, key) {
 

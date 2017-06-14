@@ -12,6 +12,8 @@ import { ViewChild } from '@angular/core';
 import { Slides } from 'ionic-angular';
 import { ActionSheetController } from 'ionic-angular';
 import { CreateTaskPage } from '../create-task/create-task';
+import { CreateOwnTaskPage } from '../create-own-task-page/create-own-task-page';
+
 import { TaskDetailPage } from '../task-detail-page/task-detail-page';
 import { TaskProvider } from '../../providers/task-provider';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
@@ -77,7 +79,6 @@ export class HomePage {
 
 
     this.taskList.map(list => list.length).subscribe(length => {
-      console.log(length);
       if (length > 0) {
         this.getDates(this.taskList).then((dates: Array<Date>) => {
 
@@ -86,6 +87,7 @@ export class HomePage {
 
           this.datesList = [];
           this.datesList = this.getDateRange(new Date(), maxDate);
+
 
           this.actualSlide = 0;
           this.actualSlide2 = 0;
@@ -193,7 +195,7 @@ export class HomePage {
         {
           text: 'Create own task',
           handler: () => {
-            console.log('Own task clicked');
+            this.nav.push(CreateOwnTaskPage);
           }
         },
         {
@@ -207,7 +209,7 @@ export class HomePage {
           text: 'Cancel',
           role: 'cancel',
           handler: () => {
-            console.log('Cancel clicked');
+   
           }
         }
       ]
@@ -295,6 +297,8 @@ export class HomePage {
 
   getDateTitle(date: string) {
 
+    console.log("DAAAAAAAAAAAAAAATE");
+    console.log(date);
     var dateTitle = date.split("-");
     var month = "";
     var year = dateTitle[0];
@@ -461,10 +465,6 @@ export class HomePage {
     }
     else {
 
-      console.log("currentDate");
-      console.log(currentDate);
-      console.log(maxDate);
-
       if (currentDate.format('YYYY-MM-DD') == maxDate.format('YYYY-MM-DD')) {
 
         result = true;
@@ -477,18 +477,18 @@ export class HomePage {
     return result;
   }
 
-  complete(key, status) {
-    console.log(key);
+  complete(key, status, permissons) {
+
     if (status == 0) {
-      this.taskProvider.updateStatus(key, 1);
+      this.taskProvider.updateStatus(key, 1,permissons);
     }
     else {
-      this.taskProvider.updateStatus(key, 4);
+      this.taskProvider.updateStatus(key, 4,permissons);
     }
 
   }
 
-  update(key, status) {
+  update(key, status , permissons) {
 
     if (status == 0) {
       let actionSheet = this.actionSheetCtrl.create({
@@ -497,7 +497,7 @@ export class HomePage {
           {
             text: 'Accept',
             handler: () => {
-              this.taskProvider.updateStatus(key, 1);
+              this.taskProvider.updateStatus(key, 1,permissons);
             }
           },
           {
@@ -523,24 +523,24 @@ export class HomePage {
           {
             text: "Complete",
             handler: () => {
-              this.taskProvider.updateStatus(key, 4);
+              this.taskProvider.updateStatus(key, 4, permissons);
             }
           },
           {
             text: name,
             handler: () => {
               if (status == 3) {
-                this.taskProvider.updateStatus(key, 1);
+                this.taskProvider.updateStatus(key, 1, permissons);
               }
               else {
-                this.taskProvider.updateStatus(key, 3);
+                this.taskProvider.updateStatus(key, 3, permissons);
               }
             }
           },
           {
             text: 'Cancel Task',
             handler: () => {
-              this.taskProvider.updateStatus(key, 2);
+              this.taskProvider.updateStatus(key, 2, permissons);
             }
           },
 
@@ -577,6 +577,32 @@ export class HomePage {
 
    searchDelegatedTask(taskName,responsable){
     return ((taskName.indexOf(this.searchTerm) !== -1) || (responsable.indexOf(this.searchTerm) !== -1));
+
+  }
+
+  chooseColor(endTime,status,recurrence){
+
+    console.log("Choose");
+
+    var maxDate = moment(endTime, 'YYYY-MM-DD');
+    var currentDate = moment().subtract(1, "days");
+
+    if((currentDate.format('YYYY-MM-DD') == maxDate.format('YYYY-MM-DD')) && status !== 4){
+      return "incomplete";
+    }
+    else{
+      currentDate = moment();
+      if((currentDate.format('YYYY-MM-DD') == maxDate.format('YYYY-MM-DD')) && status == 0){
+        return "warning";
+      }
+      else{
+        return "white";
+      }
+    }
+    
+
+
+
 
   }
 

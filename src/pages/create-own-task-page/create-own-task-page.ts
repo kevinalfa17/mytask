@@ -8,14 +8,15 @@ import { NewContactPage } from '../new-contact/new-contact';
 import { ModalController } from 'ionic-angular';
 import { ContactListPage } from '../contact-list/contact-list';
 import * as moment from 'moment';
+import { ProfileData } from '../../providers/profile-data';
 
 
 @IonicPage()
 @Component({
-  selector: 'page-create-task',
-  templateUrl: 'create-task.html',
+  selector: 'page-create-own-task',
+  templateUrl: 'create-own-task-page.html',
 })
-export class CreateTaskPage {
+export class CreateOwnTaskPage {
 
   types: FirebaseListObservable<any[]>;
   subtypes: FirebaseListObservable<any[]>;
@@ -35,19 +36,16 @@ export class CreateTaskPage {
   startTime: string;
   endDate: string;
   endTime: string;
-  minDate: string;
   haveImage: boolean;
-
-
-
+  minDate: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public typesProvider: TypesProvider,
     public af: AngularFire, public translate: TranslateService, public modalCtrl: ModalController,
-    public taskProvider: TaskProvider) {
+    public taskProvider: TaskProvider, public up: ProfileData) {
 
     this.types = typesProvider.getTypesRef();
     this.translate.setDefaultLang('es');
-    this.users = [];
+    this.users = [up.currentUser.email];
     this.permissons = [];
     this.data = "";
     this.type = "";
@@ -64,6 +62,7 @@ export class CreateTaskPage {
     this.notificationsToggle = false;
     this.haveImage = true;
     this.minDate = moment().format("YYYY-MM-DD");
+
   }
 
   loadSubtypes(selectedType) {
@@ -84,44 +83,6 @@ export class CreateTaskPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad CreateTask');
   }
-
-  newUser() {
-    this.navCtrl.push(NewContactPage,
-      {
-        callback: this.getData
-      });
-  }
-
-  addUser() {
-    let chooseModal = this.modalCtrl.create(ContactListPage);
-    chooseModal.onDidDismiss(data => {
-      if (typeof data !== "undefined") {
-        this.addUserToList(data);
-
-      }
-
-    });
-    chooseModal.present();
-  }
-
-  getData = (data) => {
-    return new Promise((resolve, reject) => {
-      this.data = data;
-      this.addUserToList(data);
-      resolve();
-    });
-  };
-
-
-  quitUser(i) {
-    this.users.splice(i, 1);
-
-  }
-
-  addUserToList(name) {
-    this.users.push(name);
-  }
-
 
 
 
