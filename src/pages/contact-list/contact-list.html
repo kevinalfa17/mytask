@@ -7,6 +7,11 @@
 <ion-header>
 
   <ion-navbar color="primary">
+    <ion-buttons left>
+      <button ion-button icon-only (click)="viewCtrl.dismiss()"> 
+        <ion-icon name="arrow-back"></ion-icon> 
+        </button>
+    </ion-buttons>
     <ion-title>{{'WORDTAB3' | translate}}</ion-title>
   </ion-navbar>
 
@@ -20,7 +25,7 @@
 
     <button ion-item *ngFor="let user of users | async" (click)="userSelected(user.email)">
     {{user.name}}
-  </button>  
+  </button>
 
   </ion-list>
 

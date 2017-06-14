@@ -17,9 +17,10 @@ import { NotificationDetailPage } from '../pages/notification-detail/notificatio
 import { Tasksinteractions } from '../pages/tasksinterations/tasksinteractions';
 import { GoogleCalendar } from '../pages/googleCalendar/googleCalendar';
 import {CreateTaskPage} from '../pages/create-task/create-task';
+import {CreateOwnTaskPage} from '../pages/create-own-task-page/create-own-task-page';
 import {NewContactPage} from '../pages/new-contact/new-contact';
 import {ContactListPage} from '../pages/contact-list/contact-list';
-
+import {TaskDetailPage} from '../pages/task-detail-page/task-detail-page';
 
 //Providers
 import { Camera } from '@ionic-native/camera';
@@ -49,6 +50,7 @@ import { Http } from '@angular/http';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+  
 @NgModule({
   declarations: [
     MyApp,
@@ -71,7 +73,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     CreateTaskPage,
     NewContactPage,
     ContactListPage,
-    NotificationDetailPage
+    NotificationDetailPage,
+    TaskDetailPage,
+    CreateOwnTaskPage
   ],
   imports: [
     BrowserModule,
@@ -115,7 +119,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     CreateTaskPage,
     NewContactPage,
     ContactListPage,
-    NotificationDetailPage
+    NotificationDetailPage,
+    TaskDetailPage,
+    CreateOwnTaskPage
   ],
   providers: GetProviders()
 })

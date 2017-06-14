@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import { ProfileData } from "./profile-data";
 import 'rxjs/add/operator/map';
 import moment from 'moment';
@@ -26,28 +26,34 @@ export class TaskProvider {
   }
 
 
-  getTaskRef() {
-
-    let tasksId = this.af.database.list(`/userProfile/${this.up.currentUser.uid}/tasks`);
-    //Get task for each id
-    return tasksId;
+  getTasks() {
+    let tasks = this.af.database.list(`/userProfile/${this.up.currentUser.uid}/tasks`, {
+      query: {
+        orderByChild: 'reversePriority',
+      }
+    });
+    return tasks;
   }
 
-  getDelegatedTaskRef() {
 
-    let delegatedTasksId = this.af.database.list(`/userProfile/${this.up.currentUser.uid}/delegatedTasks`);
-    //Get task for each id
-    return delegatedTasksId;
+  getTask(key) {
+    let task = this.af.database.object(`/userProfile/${this.up.currentUser.uid}/tasks/${key}`);
+    return task
   }
 
+  getDelegatedTasks() {
+
+    let delegatedTasks = this.af.database.list(`/userProfile/${this.up.currentUser.uid}/delegatedTasks`, );
+    return delegatedTasks;
+  }
 
 
   addNewTask(responsable, taskname, type, subtype, startDate, startTime, repeat,
-    recurrence, endTime, priority, notifications, files, comments, permissons) {
-
+    recurrence, endTime, priority, notifications, files, comments, permissons, haveImage, alarm) {
+    permissons.push(this.up.currentUser.email);
     let task = {
-      Creatorid: this.up.currentUser.uid,
-      responsable: responsable,
+      creatorid: this.up.currentUser.uid,
+      responsable: "",
       taskName: taskname,
       type: type,
       subtype: subtype,
@@ -57,14 +63,33 @@ export class TaskProvider {
       recurrence: recurrence,
       endTime: endTime,
       priority: priority,
+      reversePriority: (6 - priority),
       notifications: notifications,
       files: files,
       comments: comments,
       permissons: permissons,
-      state: 0
+      status: 0,
+      haveImage: haveImage,
+      alarm: alarm,
+      phone: 0
 
     };
-    var key = this.af.database.list(`/tasks`).push(task).key;
+
+    let delegatedTask = {
+      creatorid: this.up.currentUser.uid,
+      responsable: "",
+      taskName: taskname,
+      type: type,
+      startDay: startDate,
+      startTime: startTime,
+      repeat: repeat,
+      recurrence: recurrence,
+      endTime: endTime,
+      status: 0,
+      alarm: alarm,
+      phone: 0
+    };
+
 
     let noti = {
       Name: taskname,
@@ -77,18 +102,28 @@ export class TaskProvider {
       DateSended: moment().format('D/M/YYYY'),
       HourSended: moment().format('h:mm:s a'),
       Read: 'false',
-      taskid: key,
+      taskid: "",
     };
-    var key2 = this.af.database.list(`/notifications`).push(noti).key;
+    
 
     responsable.forEach((user) => {
-      this.up.insertTask(user, key, "tasks");
+
+      task.responsable = user;
+      var key = this.af.database.list(`/tasks`).push(task).key;
+      this.up.insertTask(user, key, "tasks", task);
+
+      noti.taskid = key;
+      var key2 = this.af.database.list(`/notifications`).push(noti).key;
       this.up.insertNotification(user, comments, taskname, type, this.up.currentUser.uid, key2, key)
+
+      delegatedTask.responsable = user;
+      //this.up.insertTask(this.up.currentUser.email, key, "delegatedTasks", delegatedTask);
+      permissons.forEach((user2) => {
+        this.up.insertTask(user2, key, "delegatedTasks", task);
+      });
+
     });
 
-    permissons.forEach((user) => {
-      this.up.insertTask(user, key, "delegatedTasks");
-    });
 
 
   };
@@ -208,5 +243,23 @@ export class TaskProvider {
     }
     return true;
   }
+  updateStatus(key, newStatus, permissons) {
+
+    this.af.database.list(`/userProfile/${this.up.currentUser.uid}/tasks`).update(key, { status: newStatus });
+    
+    permissons.forEach((user2) => {
+      this.up.updateStatus(user2, key, newStatus)
+    });
+  };
+  
+
+  endTask(key, permissons , responsable){
+
+    this.up.endTask(responsable,key,"tasks");
+    
+    permissons.forEach((user2) => {
+      this.up.endTask(user2,key,"delegatedTasks");
+    });
+  };
 
 }

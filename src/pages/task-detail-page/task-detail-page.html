@@ -1,0 +1,61 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-buttons left>
+    </ion-buttons>
+    <ion-title>{{'TASKTITLE' | translate}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+
+  <ion-list ng-for>
+    <ion-item>
+      {{(task | async)?.taskName}}
+    </ion-item>
+    <ion-item *ngIf="!(task | async)?.repeat">
+      <ion-icon name="clock"></ion-icon>
+      Inicio: {{(task | async)?.startDate}} - Fin: {{(task | async)?.endTime}}
+    </ion-item>
+
+    <ion-item *ngIf="(task | async)?.repeat">
+      <ion-icon name="clock"></ion-icon>
+      Inicio: {{(task | async)?.startDay}} Recurrencia: {{(task | async)?.recurrence}}
+    </ion-item>
+    <ion-item>
+      <ion-icon name="alert"></ion-icon>
+      Prioridad: {{(task | async)?.priority}}
+    </ion-item>
+    <ion-item>
+      <ion-icon name="chatbubbles"></ion-icon>
+       Comments 
+    </ion-item>
+
+    <ion-item>
+     <ion-textarea type="text" [readonly]="true" value="{{(task | async)?.comments}}"></ion-textarea>
+    </ion-item>
+
+     <ion-item>
+      <ion-icon name="people"></ion-icon>
+      Responsables 
+      <ion-list>
+        <ion-item *ngFor="let item of (task | async)?.responsable">
+          {{item}}
+        </ion-item>
+      </ion-list>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="attach"></ion-icon>
+       Files 
+      <ion-list>
+        <ion-item *ngFor="let file of (task | async)?.files">
+          {{file}}}
+        </ion-item>
+      </ion-list>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>

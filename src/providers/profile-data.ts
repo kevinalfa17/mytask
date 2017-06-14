@@ -141,8 +141,9 @@ export class ProfileData {
    * @param email The email of the person to add the task
    * @param key The key of the task used in the tasknode
    * @param subnode The name of the node where is the information of the task
+   * @param task
    */
-  insertTask(email, key, subnode) {
+  insertTask(email, key, subnode, task) {
     var userkey;
     this.af.database.list('/userProfile', {
       query: {
@@ -154,8 +155,32 @@ export class ProfileData {
       snapshots.forEach(snapshot => {
 
         if (snapshot.key !== null) {
-          let endpoint = this.af.database.object(`/userProfile/${snapshot.key}/${subnode}/${key}`);
-          endpoint.set(true);
+          var yourRef = this.af.database.list(`/userProfile/${snapshot.key}/${subnode}`);
+          task.phone = snapshot.val().phone;
+          yourRef.update(key, task);
+        }
+
+      });
+    })
+
+  }
+
+  updateStatus(email, key, newStatus) {
+
+    var userkey;
+    this.af.database.list('/userProfile', {
+      query: {
+        orderByChild: 'email',
+        equalTo: email
+      },
+      preserveSnapshot: true
+    }).subscribe(snapshots => {
+      snapshots.forEach(snapshot => {
+
+        if (snapshot.key !== null) {
+          console.log("444");
+          var yourRef = this.af.database.object(`/userProfile/${snapshot.key}/delegatedTasks/${key}`);
+          yourRef.update({ status: newStatus })
         }
 
       });
@@ -164,17 +189,18 @@ export class ProfileData {
   }
 
   /**
-   * This function it's used to insert a new notification in the node of notifications
-   * and create a new node in the userdata to reference later
-   * @param email The list of emails to notificate something
-   * @param description The comment of the task 
-   * @param name The name used for the task
-   * @param type The type of task 
-   * @param creatorid The id of the creator user 
-   * @param key The key of the new notification for put it in the user data
-   * @param keyT The key of the task for use it later
-   */
+ * This function it's used to insert a new notification in the node of notifications
+ * and create a new node in the userdata to reference later
+ * @param email The list of emails to notificate something
+ * @param description The comment of the task 
+ * @param name The name used for the task
+ * @param type The type of task 
+ * @param creatorid The id of the creator user 
+ * @param key The key of the new notification for put it in the user data
+ * @param keyT The key of the task for use it later
+ */
   insertNotification(email, description, name, type, creatorid, key, keyT) {
+
     var userkey;
     this.af.database.list('/userProfile', {
       query: {
@@ -203,4 +229,27 @@ export class ProfileData {
     })
 
   }
+
+  endTask(email, key, subnode) {
+
+    var userkey;
+    this.af.database.list('/userProfile', {
+      query: {
+        orderByChild: 'email',
+        equalTo: email
+      },
+      preserveSnapshot: true
+    }).subscribe(snapshots => {
+      snapshots.forEach(snapshot => {
+
+        if (snapshot.key !== null) {
+          var yourRef = this.af.database.object(`/userProfile/${snapshot.key}/${subnode}/${key}`);
+          yourRef.remove();
+        }
+
+      });
+    })
+
+  }
+
 }

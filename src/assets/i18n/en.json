@@ -55,5 +55,6 @@
     "TEXTPROFILEPICTURE": "Profile Picture",
     "WORDADDRESS": "Address",
     "WORDPHONE": "Phone",
-    "TEXTTAPHERE": "Tap here to edit"
+    "TEXTTAPHERE": "Tap here to edit",
+    "TASKTITLE": "Task"
 }
