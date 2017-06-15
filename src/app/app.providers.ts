@@ -26,7 +26,8 @@ import { Push } from '@ionic-native/push';
 import { GooglePlus } from '@ionic-native/google-plus';
 import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ionic-native/media-capture';
 import { Vibration } from '@ionic-native/vibration';
-
+import { FileChooser } from '@ionic-native/file-chooser';
+import {FilePath} from '@ionic-native/file-path';
 
 
 /////////////////////////////////////////////////////
@@ -67,7 +68,9 @@ export function GetProviders() {
       MediaCapture,
       MediaData,
       Tools,
-      Vibration
+      Vibration,
+      FileChooser,
+      FilePath
     ];
   } else {
     // Use device providers
@@ -94,7 +97,9 @@ export function GetProviders() {
       MediaCapture,
       MediaData,
       Tools,
-      Vibration
+      Vibration,
+      FileChooser,
+      FilePath
     ];
   }
   return providers;

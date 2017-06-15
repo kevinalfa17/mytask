@@ -3,9 +3,13 @@ import { Injectable } from '@angular/core';
 import firebase from 'firebase';
 import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions, CaptureAudioOptions } from '@ionic-native/media-capture';
 import { NavController, LoadingController, AlertController } from 'ionic-angular';
+import { FileChooser } from '@ionic-native/file-chooser';
+import { File } from '@ionic-native/file';
+import { FilePath } from '@ionic-native/file-path';
+import { Platform } from 'ionic-angular';
 //Providers
 import { Tools } from '../providers/tools'
-
+declare var cordova;
 /**
  * This class it's used to manage all the activities with media and files
  */
@@ -15,8 +19,9 @@ export class MediaData {
     public video: any; // Variable to keep a new video
     public image: any; //Variable to keep a new image
     public file: any; // Variable to keep a new file
+    public nativepath: any;
 
-    constructor(public mediaCapture: MediaCapture, public tools: Tools, public loadingCtrl: LoadingController) {
+    constructor(public plat: Platform, public mediaCapture: MediaCapture, public f: File, public fp: FilePath, public filecho: FileChooser, public tools: Tools, public loadingCtrl: LoadingController) {
 
     }
 
@@ -67,8 +72,18 @@ export class MediaData {
     /**
      * This function it's used to take and save a new file
      */
-    captureFile() {
+    captureFile(currentUser) {
+        this.filecho.open().then((url) => {
 
+            (<any>window).FilePath.resolveNativePath(url, (result) => {
+
+                (<any>window).resolveLocalFileSystemURL(result, (res) => {
+                    res.file((resFile) => {
+                        this.savedInStorage(result, currentUser, resFile.type);
+                    });
+                });
+            })
+        });
     }
 
     /**
@@ -87,7 +102,7 @@ export class MediaData {
      * @param data The data to save
      * @param type The type of data to distribute in diferent folders
      */
-    savedInStorage(data: any, currentUser:any, type: string) {
+    savedInStorage(data: any, currentUser: any, type: string) {
         let name = this.tools.getfilename(data);
         let ext = this.tools.getfileext(data);
         let mime = this.tools.getmime(data);
@@ -111,7 +126,8 @@ export class MediaData {
                 ref.put(fileblob, {
                     contentType: mime
                 });
-                firebase.database().ref("/userProfile").child(currentUser).child(type).child(newName).set(ref.getDownloadURL); // Aqui PONER REF A TASK
+
+                //firebase.database().ref("/userProfile").child(currentUser).child(type).child(newName).set(ref.getDownloadURL); // Aqui PONER REF A TASK
 
             });
         }

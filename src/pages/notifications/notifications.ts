@@ -62,6 +62,10 @@ export class Notifications {
     cancelLocalNotification() {
 
     }
+    chooseFile() {
+
+        this.media.captureFile(this.currentUser);
+    }
 
     recordAudio() {
         this.media.captureAudio(this.currentUser);

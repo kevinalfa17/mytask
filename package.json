@@ -22,6 +22,7 @@
         "@ionic-native/core": "^3.6.1",
         "@ionic-native/facebook": "^3.4.4",
         "@ionic-native/file": "^3.10.3",
+        "@ionic-native/file-path": "^3.12.1",
         "@ionic-native/google-plus": "^3.6.1",
         "@ionic-native/in-app-browser": "^3.10.3",
         "@ionic-native/local-notifications": "^3.10.3",
@@ -36,6 +37,7 @@
         "cordova-plugin-console": "1.0.5",
         "cordova-plugin-device": "1.1.4",
         "cordova-plugin-facebook4": "~1.7.4",
+        "cordova-plugin-filepath": "^1.0.2",
         "cordova-plugin-googleplus": "~5.1.1",
         "cordova-plugin-inappbrowser": "^1.7.1",
         "cordova-plugin-media-capture": "~1.4.3",
@@ -84,7 +86,8 @@
             "cordova-plugin-statusbar": {},
             "cordova-plugin-whitelist": {},
             "ionic-plugin-keyboard": {},
-            "cordova-plugin-inappbrowser": {}
+            "cordova-plugin-inappbrowser": {},
+            "cordova-plugin-filepath": {}
         },
         "platforms": [
             "android"
