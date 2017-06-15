@@ -189,17 +189,18 @@ export class ProfileData {
   }
 
   /**
- * This function it's used to insert a new notification in the node of notifications
- * and create a new node in the userdata to reference later
- * @param email The list of emails to notificate something
- * @param description The comment of the task 
- * @param name The name used for the task
- * @param type The type of task 
- * @param creatorid The id of the creator user 
- * @param key The key of the new notification for put it in the user data
- * @param keyT The key of the task for use it later
- */
-  insertNotification(email, description, name, type, creatorid, key, keyT) {
+
+   * This function it's used to insert a new notification in the node of notifications
+   * and create a new node in the userdata to reference later
+   * @param email The list of emails to notificate something
+   * @param description The comment of the task 
+   * @param name The name used for the task
+   * @param type The type of task 
+   * @param creatorid The id of the creator user 
+   * @param key The key of the new notification for put it in the user data
+   * @param keyT The key of the task for use it later
+   */
+  insertNotification(email, description, name, type, creatorid, key, keyT, comment) {
 
     var userkey;
     this.af.database.list('/userProfile', {
@@ -223,6 +224,7 @@ export class ProfileData {
             From: this.currentUser.email,
             DateSended: moment().format('D/M/YYYY'),
             HourSended: moment().format('h:mm:s a'),
+            comment: comment
           });
         }
       });

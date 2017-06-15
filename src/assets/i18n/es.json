@@ -56,5 +56,10 @@
     "WORDADDRESS": "Direccion",
     "WORDPHONE": "Telefono",
     "TEXTTAPHERE": "Toque aqui para editar",
-    "TASKTITLE": "Tarea"
+    "TASKTITLE": "Tarea",
+    "WORDCOMMENT": "Comentario",
+    "WORDTEXT": "Texto",
+    "WORDNEWDATE": "Nueva fecha",
+    "WORDNEWHOUR": "Nueva hora",
+    "TEXTNOFUNC": "Parametros incompletos"
 }
