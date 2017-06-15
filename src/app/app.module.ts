@@ -21,6 +21,8 @@ import {CreateOwnTaskPage} from '../pages/create-own-task-page/create-own-task-p
 import {NewContactPage} from '../pages/new-contact/new-contact';
 import {ContactListPage} from '../pages/contact-list/contact-list';
 import {TaskDetailPage} from '../pages/task-detail-page/task-detail-page';
+import {EditTaskPage} from '../pages/edit-task-page/edit-task-page';
+
 
 //Providers
 import { Camera } from '@ionic-native/camera';
@@ -75,7 +77,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     ContactListPage,
     NotificationDetailPage,
     TaskDetailPage,
-    CreateOwnTaskPage
+    CreateOwnTaskPage,
+    EditTaskPage
   ],
   imports: [
     BrowserModule,
@@ -121,7 +124,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     ContactListPage,
     NotificationDetailPage,
     TaskDetailPage,
-    CreateOwnTaskPage
+    CreateOwnTaskPage,
+    EditTaskPage
   ],
   providers: GetProviders()
 })

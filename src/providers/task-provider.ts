@@ -104,7 +104,7 @@ export class TaskProvider {
       Read: 'false',
       taskid: "",
     };
-    
+
 
     responsable.forEach((user) => {
 
@@ -246,30 +246,61 @@ export class TaskProvider {
   updateStatus(key, newStatus, permissons) {
 
     this.af.database.list(`/userProfile/${this.up.currentUser.uid}/tasks`).update(key, { status: newStatus });
-    
+
     permissons.forEach((user2) => {
       this.up.updateStatus(user2, key, newStatus)
     });
   };
-  
 
-  endTask(key, permissons , responsable){
 
-    this.up.endTask(responsable,key,"tasks");
-    
+  endTask(key, permissons, responsable) {
+
+    this.up.endTask(responsable, key, "tasks");
+
     permissons.forEach((user) => {
-      this.up.endTask(user,key,"delegatedTasks");
+      this.up.endTask(user, key, "delegatedTasks");
     });
   };
 
 
-  editTask(key, permissons , responsable , field, value){
+  editTask(key, permissons, responsable, field, value) {
 
-    this.up.editTask(responsable,key,"tasks",field,value);
-    
-    permissons.forEach((user) => {
-      this.up.editTask(user,key,"delegatedTasks",field,value);
+    this.af.database.list(`/userProfile/${this.up.currentUser.uid}/tasks`).update(key, { comments: value });
+
+    permissons.forEach((user2) => {
+      this.up.updateComment(user2,key,value);
     });
+
   };
+
+  forEachPromise(list: Array<string>, key, value,af) {
+    var promise = new Promise(function (resolve, reject) {
+      var user = list.pop();
+      let subscription = af.database.list('/userProfile', {
+        query: {
+          orderByChild: 'email',
+          equalTo: user
+        },
+        preserveSnapshot: true
+      }).subscribe(snapshots => {
+        snapshots.forEach(snapshot => {
+          if (snapshot.key !== null) {
+            console.log("FOR EACH PROMISE 1");
+            af.database.list(`/userProfile/${snapshot.key}/delegatedTasks`).update(key, { comments: value });
+            
+          }
+
+        });
+      })
+
+    }).then((result: Array<string>) => {
+      if (result.length > 0) {
+        console.log("FOR EACH PROMISE 2")
+        this.forEachPromise(result, key, value,af)
+      }
+
+    });
+
+  }
 
 }

@@ -12,6 +12,7 @@ import { ProfileData } from '../../providers/profile-data';
 import { Notifications } from '../notifications/notifications';
 import { GoogleCalendar } from '../googleCalendar/googleCalendar';
 import { CreateTaskPage } from '../create-task/create-task';
+import { EditTaskPage } from '../edit-task-page/edit-task-page';
 import { CreateOwnTaskPage } from '../create-own-task-page/create-own-task-page';
 
 import { TaskDetailPage } from '../task-detail-page/task-detail-page';
@@ -85,15 +86,25 @@ export class HomePage {
           var maxDate = new Date(Math.max.apply(null, dates));
           var minDate = new Date(Math.min.apply(null, dates));
 
+
           this.datesList = [];
-          this.datesList = this.getDateRange(new Date(), maxDate);
+          this.datesList = this.getDateRange(new Date(moment().format("YYYY-MM-DD")), maxDate);
+
+          if (this.datesList.length == 1) {
+            this.lastSlide = true;
+          }
 
 
           this.actualSlide = 0;
           this.actualSlide2 = 0;
-          this.title = this.getDateTitle(this.datesList[this.actualSlide]);
+          if (this.datesList.length > 0) {
+            this.title = this.getDateTitle(this.datesList[this.actualSlide]);
+          }
 
         });
+      }
+      else {
+        this.lastSlide = true;
       }
 
     });
@@ -288,6 +299,7 @@ export class HomePage {
   }
 
   getDateRange(startDate, endDate) {
+
     var dates = [],
       currentDate: Date = startDate,
       addDays = function (days) {
@@ -295,10 +307,18 @@ export class HomePage {
         date.setDate(date.getDate() + days);
         return date;
       };
-    while (currentDate <= endDate) {
-      dates.push(moment(currentDate).format('YYYY-MM-DD'));
-      currentDate = addDays.call(currentDate, 1);
+
+    if (moment(currentDate).format('YYYY-MM-DD') == moment(endDate).format('YYYY-MM-DD')) {
+      dates.push(moment.utc(endDate).format('YYYY-MM-DD'));
     }
+    else {
+      while (currentDate <= endDate) {
+        dates.push(moment.utc(currentDate).format('YYYY-MM-DD'));
+        currentDate = addDays.call(currentDate, 1);
+      }
+
+    }
+
     return dates;
   };
 
@@ -566,10 +586,20 @@ export class HomePage {
     })
   }
 
+  edit(key,permissons) {
+    this.nav.push(EditTaskPage, {
+      key: key,
+      permissons:permissons
+    })
+  }
+
   showOwnTasks() {
     this.taskSegment = true;
     if (this.datesList.length > 0) {
       this.title = this.getDateTitle(this.datesList[this.actualSlide]);
+    }
+    else{
+      this.title = "";
     }
   }
 
@@ -590,7 +620,6 @@ export class HomePage {
 
   chooseColor(endTime, status, recurrence) {
 
-    console.log("Choose");
 
     var maxDate = moment(endTime, 'YYYY-MM-DD');
     var currentDate = moment().subtract(1, "days");

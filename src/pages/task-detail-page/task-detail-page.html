@@ -16,12 +16,14 @@
     </ion-item>
     <ion-item *ngIf="!(task | async)?.repeat">
       <ion-icon name="clock"></ion-icon>
-      Inicio: {{(task | async)?.startDate}} - Fin: {{(task | async)?.endTime}}
+      Inicio: {{(task | async)?.startDate}} at {{(task | async)?.startTime}}
+      Fin: {{(task | async)?.endTime}} at {{(task | async)?.alarm}}
     </ion-item>
 
     <ion-item *ngIf="(task | async)?.repeat">
       <ion-icon name="clock"></ion-icon>
-      Inicio: {{(task | async)?.startDay}} Recurrencia: {{(task | async)?.recurrence}}
+      Inicio: {{(task | async)?.startDay}} at {{(task | async)?.startTime}}
+      Recurrencia: {{(task | async)?.recurrence}}
     </ion-item>
     <ion-item>
       <ion-icon name="alert"></ion-icon>
@@ -34,16 +36,6 @@
 
     <ion-item>
      <ion-textarea type="text" [readonly]="true" value="{{(task | async)?.comments}}"></ion-textarea>
-    </ion-item>
-
-     <ion-item>
-      <ion-icon name="people"></ion-icon>
-      Responsables 
-      <ion-list>
-        <ion-item *ngFor="let item of (task | async)?.responsable">
-          {{item}}
-        </ion-item>
-      </ion-list>
     </ion-item>
 
     <ion-item>

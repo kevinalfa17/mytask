@@ -1,0 +1,66 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-buttons left>
+    </ion-buttons>
+    <ion-title>{{'TASKTITLE' | translate}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+
+  <ion-list ng-for>
+    <ion-item>
+      {{(task | async)?.taskName}}
+    </ion-item>
+    <ion-item *ngIf="!(task | async)?.repeat">
+      <ion-icon name="clock"></ion-icon>
+      Inicio: {{(task | async)?.startDate}} at {{(task | async)?.startTime}} Fin: {{(task | async)?.endTime}} at {{(task | async)?.alarm}}
+    </ion-item>
+
+    <ion-item *ngIf="(task | async)?.repeat">
+      <ion-icon name="clock"></ion-icon>
+      Inicio: {{(task | async)?.startDay}} at {{(task | async)?.startTime}} Recurrencia: {{(task | async)?.recurrence}}
+    </ion-item>
+    <ion-item>
+      <ion-icon name="chatbubbles"></ion-icon>
+      Comments
+    </ion-item>
+
+    <ion-item>
+      <ion-textarea type="text" [readonly]="true" value="{{(task | async)?.comments}}"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>New Ends Date</ion-label>
+      <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="endDate" [disabled]="((task | async)?.repeat)" min="{{setMin((task | async)?.endTime,(task | async)?.alarm)}}"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>New Ends Time</ion-label>
+      <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="endTime" [disabled]="((task | async)?.repeat)"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <button ion-button (click)="changeDate()" [disabled]="((task | async)?.repeat)">
+      Change Date/Time
+    </button>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Add comment</ion-label>
+      <ion-textarea [(ngModel)]="newComment" type="text" placeholder="Write a commentary"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <input #aux1 style="display: none" type="text" value="{{ (task | async)?.responsable }}">
+      <input #aux2 style="display: none" type="text" value="{(task | async)?.comments}}">
+      <button ion-button (click)="addComment(aux1.value,aux2.value)">
+      Add Comments
+    </button>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>
