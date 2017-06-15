@@ -144,10 +144,6 @@ export class NotificationData {
 
         this.pd.insertNotification(Noti.From, "Task Accepted", Noti.Name, Noti.Type, currentUser.uid, Noti.id, Noti.taskid, Noti.comment);
 
-        this.userProfile.child('tasks').child(Noti.taskid).set({
-            State: true,
-        });
-
         this.userProfile.child('taskManage').child('Accept').push({
             Name: Noti.Name,
             HourSended: Noti.HourSended
@@ -169,10 +165,6 @@ export class NotificationData {
         });
 
         this.pd.insertNotification(Noti.From, "Task Rejected", Noti.Name, Noti.Type, currentUser.uid, Noti.id, Noti.taskid, Noti.comment);
-
-        this.userProfile.child('tasks').child(Noti.taskid).set({
-            State: false,
-        });
 
         this.userProfile.child('taskManage').child('Rejected').push({
             Name: Noti.Name,

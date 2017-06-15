@@ -5,6 +5,7 @@ import { TranslateService } from 'ng2-translate';
 import { ViewChild } from '@angular/core';
 import { Slides } from 'ionic-angular';
 import { ActionSheetController } from 'ionic-angular';
+import firebase from 'firebase';
 // Providers used
 import { NotificationData } from '../../providers/notification-provider';
 import { ProfileData } from '../../providers/profile-data';
@@ -52,6 +53,7 @@ export class HomePage {
 
   public Noti = "notifications-off"; // The image to put in the notification buttom 
   public currentUser: any; // The uid of the current user
+  public currentUserVal: any; // The values of the current user
 
   constructor(public nav: NavController, public translate: TranslateService,
     public actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController,
@@ -106,9 +108,17 @@ export class HomePage {
   ionViewDidLoad() {
     this.currentUser = this.profileData.currentUser.uid;
     this.notificationData.getNotifications(this.currentUser);
+
+    firebase.database().ref("/userProfile").child(this.currentUser).on("value", (data) => {
+      this.currentUserVal = data.val().phone;
+    });
+    if (this.currentUserVal == null) {
+      this.profileData.updatephone("00000000");
+    }
     if ((this.notificationData.numberNewNotifications != 0)) {
       this.Noti = "notifications";
       this.notificationData.addLocalNotification("Cambios", "Nueva notificacion", "now", 0, "", "");
+    } else {
       this.Noti = "notifications-off";
     }
   }

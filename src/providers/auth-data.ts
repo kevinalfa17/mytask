@@ -32,7 +32,8 @@ export class AuthData {
     return firebase.auth().createUserWithEmailAndPassword(email, password).then((newUser) => {
       firebase.database().ref('/userProfile').child(newUser.uid).set({
         email: email,
-        type: "user"
+        type: "user",
+        phone: "00000000"
       });
       if (picRef != null) {
         firebase.storage().ref('/ProfilePictures').child(newUser.uid).child('profilePicture.png').putString(picRef, 'base64', { contentType: 'image/png' }).then((savedPicture) => {
