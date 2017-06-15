@@ -211,7 +211,8 @@ export class NotificationData {
         for (var i = 0; i < numNotif; ++i) {
             var notif = this.localNotifications[i];
             if (notif.id == id) {
-                this.localNotifications.cancel(notif);
+                this.localNotifications.cancel(notif.id);
+                console.log("cancelada");
             }
         }
     }

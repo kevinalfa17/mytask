@@ -11,6 +11,8 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
 //Pages
 import { LoginPage } from '../pages/login/login';
 import { Notifications } from '../pages/notifications/notifications'
+//Providers
+import { NotificationData } from '../../src/providers/notification-provider';
 
 /**
  * It's the principal code of the application
@@ -23,7 +25,8 @@ export class MyApp {
   public alert: any; // Use it to show alerts
 
   constructor(public platform: Platform, public zone: NgZone, public push: Push, public nav: NavController,
-    public translate: TranslateService, statusBar: StatusBar, splashScreen: SplashScreen, public alertCtrl: AlertController, public localNotifications: LocalNotifications) {
+    public translate: TranslateService, statusBar: StatusBar, splashScreen: SplashScreen,
+    public alertCtrl: AlertController, public localNotifications: LocalNotifications) {
     translate.setDefaultLang('es');
     this.zone = new NgZone({});
     firebase.initializeApp({
@@ -93,8 +96,25 @@ export class MyApp {
       pushObject.on('error').subscribe(error => console.error('Error with Push plugin', error));
       //////////////////////////////////////////////////////////////////////////////////////
       this.localNotifications.on('click', notification => {
-        const notificationData = JSON.parse(notification.data);
-        alert(`You clicked: ${notification.text}. Your data is: ${notificationData.testData}`);
+        this.alert = this.alertCtrl.create({
+          title: notification.title,
+          message: notification.text,
+          buttons: [
+            {
+              text: 'Ok',
+              role: 'cancel',
+              handler: () => {
+                this.alert = null;
+              }
+            },
+            {
+              text: 'Cancel',
+              handler: () => {
+                this.localNotifications.cancel(notification.id);
+              }
+            }]
+        });
+        this.alert.present();
       });
 
     });
