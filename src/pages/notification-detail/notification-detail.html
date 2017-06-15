@@ -18,6 +18,7 @@
       <p><strong>{{"TEXTOFDE" | translate}}: </strong>{{currentNotification?.From}}</p>
       <p><strong>{{"TEXTDS" | translate}}: </strong>{{currentNotification?.DateSended}}</p>
       <p><strong>{{"TEXTHS" | translate}}: </strong>{{currentNotification?.HourSended}}</p>
+      <p><strong>{{"WORDCOMMENT" | translate}}: </strong>{{currentNotification?.comment}}</p>
     </ion-card-content>
     <button ion-button icon-only (click)="accept()">
         <ion-icon name="checkmark"></ion-icon>
@@ -25,7 +26,7 @@
     <button ion-button icon-only (click)="reject()">
         <ion-icon name="close"></ion-icon>
     </button>
-     <button ion-button icon-only (click)="delete()">
+    <button ion-button icon-only (click)="delete()">
         <ion-icon name="trash"></ion-icon>
     </button>
 

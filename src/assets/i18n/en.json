@@ -55,5 +55,10 @@
     "TEXTPROFILEPICTURE": "Profile Picture",
     "WORDADDRESS": "Address",
     "WORDPHONE": "Phone",
-    "TEXTTAPHERE": "Tap here to edit"
+    "TEXTTAPHERE": "Tap here to edit",
+    "WORDCOMMENT": "Comment",
+    "WORDTEXT": "Text",
+    "WORDNEWDATE": "New Date",
+    "WORDNEWHOUR": "New hour",
+    "TEXTNOFUNC": "Incomplete params"
 }

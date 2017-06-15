@@ -138,10 +138,11 @@ export class NotificationData {
         var tem = this.userProfile.child(currentUser).child('notifications');
 
         this.notificationListNode.child(Noti.id).update({
-            Condition: "Accepted"
+            Condition: "Accepted",
+            comment: Noti.comment
         });
 
-        this.pd.insertNotification(Noti.From, "Task Accepted", Noti.Name, Noti.Type, currentUser.uid, Noti.id, Noti.taskid);
+        this.pd.insertNotification(Noti.From, "Task Accepted", Noti.Name, Noti.Type, currentUser.uid, Noti.id, Noti.taskid, Noti.comment);
 
         this.userProfile.child('tasks').child(Noti.taskid).set({
             State: true,
@@ -163,10 +164,11 @@ export class NotificationData {
     rejectNotification(Noti, currentUser) {
         var tem = this.userProfile.child(currentUser).child('notifications');
         this.notificationListNode.child(Noti.id).update({
-            Condition: "Rejected"
+            Condition: "Rejected",
+            comment: Noti.comment
         });
 
-        this.pd.insertNotification(Noti.From, "Task Rejected", Noti.Name, Noti.Type, currentUser.uid, Noti.id, Noti.taskid);
+        this.pd.insertNotification(Noti.From, "Task Rejected", Noti.Name, Noti.Type, currentUser.uid, Noti.id, Noti.taskid, Noti.comment);
 
         this.userProfile.child('tasks').child(Noti.taskid).set({
             State: false,

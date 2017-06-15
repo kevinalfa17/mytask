@@ -1,0 +1,61 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title> {{"WORDCOMMENT" | translate}} </ion-title>
+  </ion-navbar>
+
+</ion-header>
+<ion-content>
+  <ion-list>
+
+    <ion-item (click)="func()">
+      <ion-grid>
+
+        <ion-row>
+          <ion-col col-6>
+            <strong>{{ "WORDTEXT"| translate}}:</strong>
+          </ion-col>
+          <ion-col col-6 *ngIf="com">
+            {{com}}
+          </ion-col>
+          <ion-col class="placeholder-profile" *ngIf="!com">
+            <span>
+              {{ "TEXTTAPHERE"| translate}}
+            </span>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+
+    <ion-item-group>
+      <ion-item>
+        <ion-label>Start Date</ion-label>
+        <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="DD MMM YYYY" [(ngModel)]="Event.startDate"></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Start Time</ion-label>
+        <ion-datetime displayFormat="hh:mm:a" pickerFormat="hh:mm:a" [(ngModel)]="Event.startTime"></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>End Date</ion-label>
+        <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="DD MMM YYYY" [(ngModel)]="Event.endDate"></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>End Time</ion-label>
+        <ion-datetime displayFormat="hh:mm:a" pickerFormat="hh:mm:a" [(ngModel)]="Event.endTime"></ion-datetime>
+      </ion-item>
+
+    </ion-item-group>
+
+
+
+  </ion-list>
+
+
+  <button ion-button icon-only (click)="send()">
+        <ion-icon name="checkmark"></ion-icon>
+  </button>
+</ion-content>

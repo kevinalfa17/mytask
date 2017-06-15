@@ -34,6 +34,9 @@ export class SignupPage {
       password: ['', Validators.compose([Validators.minLength(6), Validators.required])]
     })
 
+    this.image = "";
+    this.image64 = "";
+
     this.translate.setDefaultLang('es');
   }
 

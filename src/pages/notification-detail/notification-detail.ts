@@ -5,6 +5,9 @@ import { NavController, NavParams } from 'ionic-angular';
 import { NotificationData } from '../../providers/notification-provider';
 import { ProfileData } from '../../providers/profile-data';
 
+//Pages
+import { CommentNoti } from '../commentNoti/commentNoti';
+
 /**
  * This page it's used to show the information of one notification
  */
@@ -23,10 +26,10 @@ export class NotificationDetailPage {
   * Function used to reload and see the changing data and refresh the diferent params
   */
   ionViewDidEnter() {
-    this.currentUser = this.navParams.get('currentUser');
+    this.currentUser = this.navParams.get('currentUser'); //uid
 
     this.notificationData.getNotificationDetail(this.navParams.get('notificationId'), this.currentUser).on('value', snapshot => {
-      this.currentNotification = snapshot.val();
+      this.currentNotification = snapshot.val(); //object notif
       this.currentNotification.id = snapshot.key;
     });
   }
@@ -46,8 +49,7 @@ export class NotificationDetailPage {
     if (this.currentNotification.Name == "null") {
 
     } else {
-
-      this.notificationData.acceptNotification(this.currentNotification, this.currentUser);
+      this.nav.push(CommentNoti, { notification: this.currentNotification, currentUser: this.currentUser, type: "accept" });
       this.nav.pop();
     }
   }
@@ -57,7 +59,7 @@ export class NotificationDetailPage {
   reject() {
     if (this.currentNotification.Name == "null") {
     } else {
-      this.notificationData.rejectNotification(this.currentNotification, this.currentUser);
+      this.nav.push(CommentNoti, { notification: this.currentNotification, currentUser: this.currentUser, type: "reject" });
       this.nav.pop();
     }
   }

@@ -83,7 +83,7 @@ export class TaskProvider {
 
     responsable.forEach((user) => {
       this.up.insertTask(user, key, "tasks");
-      this.up.insertNotification(user, comments, taskname, type, this.up.currentUser.uid, key2, key)
+      this.up.insertNotification(user, comments, taskname, type, this.up.currentUser.uid, key2, key, "")
     });
 
     permissons.forEach((user) => {

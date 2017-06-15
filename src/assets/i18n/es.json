@@ -55,5 +55,10 @@
     "TEXTPROFILEPICTURE": "Foto de perfil",
     "WORDADDRESS": "Direccion",
     "WORDPHONE": "Telefono",
-    "TEXTTAPHERE": "Toque aqui para editar"
+    "TEXTTAPHERE": "Toque aqui para editar",
+    "WORDCOMMENT": "Comentario",
+    "WORDTEXT": "Texto",
+    "WORDNEWDATE": "Nueva fecha",
+    "WORDNEWHOUR": "Nueva hora",
+    "TEXTNOFUNC": "Parametros incompletos"
 }

@@ -174,7 +174,7 @@ export class ProfileData {
    * @param key The key of the new notification for put it in the user data
    * @param keyT The key of the task for use it later
    */
-  insertNotification(email, description, name, type, creatorid, key, keyT) {
+  insertNotification(email, description, name, type, creatorid, key, keyT, comment) {
     var userkey;
     this.af.database.list('/userProfile', {
       query: {
@@ -197,6 +197,7 @@ export class ProfileData {
             From: this.currentUser.email,
             DateSended: moment().format('D/M/YYYY'),
             HourSended: moment().format('h:mm:s a'),
+            comment: comment
           });
         }
       });
