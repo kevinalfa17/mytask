@@ -257,7 +257,7 @@ export class ProfileData {
   }
 
 
-  updateComment(email, key, newComment) {
+  updateComment(email, key, value, field, subnode) {
 
     var userkey;
     let subscription = this.af.database.list('/userProfile', {
@@ -270,10 +270,16 @@ export class ProfileData {
       snapshots.forEach(snapshot => {
 
         if (snapshot.key !== null) {
+          if (field == "comments") {
+            this.af.database.list(`/userProfile/${snapshot.key}/${subnode}`).update(key, { comments: value })
+          }
+          else if (field == "alarm") {
+            this.af.database.list(`/userProfile/${snapshot.key}/${subnode}`).update(key, { alarm: value })
+          }
+          else if (field == "endTime") {
+            this.af.database.list(`/userProfile/${snapshot.key}/${subnode}`).update(key, { endTime: value })
+          }
 
-          this.af.database.list(`/userProfile/${snapshot.key}/delegatedTasks`).update(key, { comments: newComment }).then(()=>{
-
-          });
           subscription.unsubscribe();
         }
 

@@ -75,8 +75,12 @@ export class HomePage {
     this.delegatedTaskList = taskProvider.getDelegatedTasks();
     this.datesList = [];
     this.datesList2 = [0, 1, 2];
-    this.taskSegment = true;
     this.searchTerm = "";
+
+    if(this.taskOwner == "me"){
+      this.taskSegment = true;
+    }
+    
 
 
     this.taskList.map(list => list.length).subscribe(length => {
@@ -97,7 +101,7 @@ export class HomePage {
 
           this.actualSlide = 0;
           this.actualSlide2 = 0;
-          if (this.datesList.length > 0) {
+          if (this.datesList.length > 0 && this.taskSegment == true) {
             this.title = this.getDateTitle(this.datesList[this.actualSlide]);
           }
 
@@ -580,9 +584,10 @@ export class HomePage {
     }
   }
 
-  view(key) {
+  view(key,permissons) {
     this.nav.push(TaskDetailPage, {
-      key: key
+     key: key,
+     permissons:permissons
     })
   }
 
@@ -591,6 +596,10 @@ export class HomePage {
       key: key,
       permissons:permissons
     })
+  }
+
+  end(key,permissons,responsable){
+    this.taskProvider.endTask(key,permissons,responsable);
   }
 
   showOwnTasks() {
@@ -637,11 +646,45 @@ export class HomePage {
       }
     }
 
-
-
-
-
   }
 
+
+
+
+   postpone(key, permissons, responsable,alarm) {
+
+    var alarmAux = alarm.split(":");
+    var newAlarm = moment();
+    newAlarm.hours(alarmAux[0]);
+    newAlarm.minutes(alarmAux[1]);
+
+
+
+      let actionSheet = this.actionSheetCtrl.create({
+        title: '',
+        buttons: [
+          {
+            text: '1 H.',
+            handler: () => {
+              newAlarm = newAlarm.add(1,"hours");
+              this.taskProvider.editTask(key,permissons,responsable,"alarm",newAlarm.format("HH:mm"),"delegatedTasks")
+            }
+          },
+          {
+            text: '30 M.',
+            handler: () => {
+              newAlarm = newAlarm.add(30,"minutes");
+              this.taskProvider.editTask(key,permissons,responsable,"alarm",newAlarm.format("HH:mm"),"delegatedTasks")
+            }
+          },
+          {
+            text: 'Back',
+            role: 'cancel',
+          }
+        ]
+      });
+      actionSheet.present();
+
+  }
 
 }

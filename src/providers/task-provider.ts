@@ -263,44 +263,15 @@ export class TaskProvider {
   };
 
 
-  editTask(key, permissons, responsable, field, value) {
+  editTask(key, permissons, responsable, field, value ,subnode) {
 
-    this.af.database.list(`/userProfile/${this.up.currentUser.uid}/tasks`).update(key, { comments: value });
-
+   // this.af.database.list(`/userProfile/${this.up.currentUser.uid}/tasks`).update(key, { comments: value });
+    this.up.updateComment(responsable,key,value,field,"tasks");
     permissons.forEach((user2) => {
-      this.up.updateComment(user2,key,value);
+      this.up.updateComment(user2,key,value,field,subnode);
     });
 
   };
 
-  forEachPromise(list: Array<string>, key, value,af) {
-    var promise = new Promise(function (resolve, reject) {
-      var user = list.pop();
-      let subscription = af.database.list('/userProfile', {
-        query: {
-          orderByChild: 'email',
-          equalTo: user
-        },
-        preserveSnapshot: true
-      }).subscribe(snapshots => {
-        snapshots.forEach(snapshot => {
-          if (snapshot.key !== null) {
-            console.log("FOR EACH PROMISE 1");
-            af.database.list(`/userProfile/${snapshot.key}/delegatedTasks`).update(key, { comments: value });
-            
-          }
-
-        });
-      })
-
-    }).then((result: Array<string>) => {
-      if (result.length > 0) {
-        console.log("FOR EACH PROMISE 2")
-        this.forEachPromise(result, key, value,af)
-      }
-
-    });
-
-  }
 
 }

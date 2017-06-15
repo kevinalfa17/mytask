@@ -34,7 +34,7 @@
 
     <ion-item>
       <ion-label>New Ends Date</ion-label>
-      <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="endDate" [disabled]="((task | async)?.repeat)" min="{{setMin((task | async)?.endTime,(task | async)?.alarm)}}"></ion-datetime>
+      <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="endDate" [disabled]="((task | async)?.repeat)" min="{{(task | async)?.endTime}}"></ion-datetime>
     </ion-item>
 
     <ion-item>
@@ -43,7 +43,8 @@
     </ion-item>
 
     <ion-item>
-      <button ion-button (click)="changeDate()" [disabled]="((task | async)?.repeat)">
+      <input #aux1 style="display: none" type="text" value="{{ (task | async)?.responsable }}">
+      <button ion-button (click)="changeDate(aux1.value)" [disabled]="((task | async)?.repeat)">
       Change Date/Time
     </button>
     </ion-item>
@@ -54,8 +55,7 @@
     </ion-item>
 
     <ion-item>
-      <input #aux1 style="display: none" type="text" value="{{ (task | async)?.responsable }}">
-      <input #aux2 style="display: none" type="text" value="{(task | async)?.comments}}">
+      <input #aux2 style="display: none" type="text" value="{{(task | async)?.comments}}">
       <button ion-button (click)="addComment(aux1.value,aux2.value)">
       Add Comments
     </button>

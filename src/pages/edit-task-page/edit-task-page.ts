@@ -35,21 +35,28 @@ export class EditTaskPage {
     console.log('ionViewDidLoad TaskDetailPage');
   }
 
-  setMin(min, time) {
+  /*setMin(min, time) {
 
     this.endDate = min;
     this.endTime = time;
     return min;
 
+  }*/
+
+
+  changeDate(responsable) {
+
+    if (this.endTime !== "") {
+      this.taskProvider.editTask(this.key, this.permissons, responsable, "alarm", this.endTime, "delegatedTasks");
+    }
+    if (this.endDate !== "") {
+      this.taskProvider.editTask(this.key, this.permissons, responsable, "endTime", this.endDate, "delegatedTasks");
+    }
   }
 
-  addComment(responsable,oldComment) {
+  addComment(responsable, oldComment) {
 
-    console.log("comment");
-    console.log(responsable);
-    console.log(this.newComment);
-
-    this.taskProvider.editTask(this.key,this.permissons,responsable,"comments",(oldComment + "\n" + this.newComment));
+    this.taskProvider.editTask(this.key, this.permissons, responsable, "comments", (oldComment + " \n  ->A: " + this.newComment), "delegatedTasks");
     this.newComment = "";
 
   }
