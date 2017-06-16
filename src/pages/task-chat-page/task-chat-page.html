@@ -2,7 +2,7 @@
   <ion-navbar color="primary">
     <ion-title>Chat</ion-title>
     <ion-buttons end>
-      <button ion-button (click)="sendPicture()"><ion-icon name="image" ></ion-icon>{{'SENDIMAGE' | translate}}</button>
+      <button ion-button (click)="sendPicture()"><ion-icon name="image" ></ion-icon> Send Image</button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
@@ -24,7 +24,7 @@
       </ion-col>
       
       <ion-col width-70 [hidden]="!chats">
-          <ion-input type="text"  placeholder="{{'ENTERMESSAGE' | translate}}"
+          <ion-input type="text"  placeholder="Enter Message"
               [(ngModel)]="message">
           </ion-input>
       </ion-col>

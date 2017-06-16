@@ -16,6 +16,7 @@ import { EditTaskPage } from '../edit-task-page/edit-task-page';
 import { CreateOwnTaskPage } from '../create-own-task-page/create-own-task-page';
 
 import { TaskDetailPage } from '../task-detail-page/task-detail-page';
+import { TaskChatPage } from '../task-chat-page/task-chat-page';
 import { TaskProvider } from '../../providers/task-provider';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import * as moment from 'moment';
@@ -77,10 +78,10 @@ export class HomePage {
     this.datesList2 = [0, 1, 2];
     this.searchTerm = "";
 
-    if(this.taskOwner == "me"){
+    if (this.taskOwner == "me") {
       this.taskSegment = true;
     }
-    
+
 
 
     this.taskList.map(list => list.length).subscribe(length => {
@@ -244,6 +245,35 @@ export class HomePage {
     actionSheet.present();
   }
 
+  contact(phone, key) {
+
+    let actionSheet = this.actionSheetCtrl.create({
+      title: '',
+      buttons: [
+        {
+          text: 'Chat',
+          handler: () => {
+            this.nav.push(TaskChatPage, {
+              key: key,
+              admin: true
+            })
+          }
+        },
+        {
+          text: 'Call',
+          handler: () => {
+            this.call(phone);
+          }
+        },
+        {
+          text: 'Back',
+          role: 'cancel',
+        }
+      ]
+    });
+    actionSheet.present();
+
+  }
 
   call(passedNumber) {
     passedNumber = encodeURIComponent(passedNumber);
@@ -584,22 +614,22 @@ export class HomePage {
     }
   }
 
-  view(key,permissons) {
+  view(key, permissons) {
     this.nav.push(TaskDetailPage, {
-     key: key,
-     permissons:permissons
+      key: key,
+      permissons: permissons
     })
   }
 
-  edit(key,permissons) {
+  edit(key, permissons) {
     this.nav.push(EditTaskPage, {
       key: key,
-      permissons:permissons
+      permissons: permissons
     })
   }
 
-  end(key,permissons,responsable){
-    this.taskProvider.endTask(key,permissons,responsable);
+  end(key, permissons, responsable) {
+    this.taskProvider.endTask(key, permissons, responsable);
   }
 
   showOwnTasks() {
@@ -607,7 +637,7 @@ export class HomePage {
     if (this.datesList.length > 0) {
       this.title = this.getDateTitle(this.datesList[this.actualSlide]);
     }
-    else{
+    else {
       this.title = "";
     }
   }
@@ -651,7 +681,7 @@ export class HomePage {
 
 
 
-   postpone(key, permissons, responsable,alarm) {
+  postpone(key, permissons, responsable, alarm) {
 
     var alarmAux = alarm.split(":");
     var newAlarm = moment();
@@ -660,31 +690,39 @@ export class HomePage {
 
 
 
-      let actionSheet = this.actionSheetCtrl.create({
-        title: '',
-        buttons: [
-          {
-            text: '1 H.',
-            handler: () => {
-              newAlarm = newAlarm.add(1,"hours");
-              this.taskProvider.editTask(key,permissons,responsable,"alarm",newAlarm.format("HH:mm"),"delegatedTasks")
-            }
-          },
-          {
-            text: '30 M.',
-            handler: () => {
-              newAlarm = newAlarm.add(30,"minutes");
-              this.taskProvider.editTask(key,permissons,responsable,"alarm",newAlarm.format("HH:mm"),"delegatedTasks")
-            }
-          },
-          {
-            text: 'Back',
-            role: 'cancel',
+    let actionSheet = this.actionSheetCtrl.create({
+      title: '',
+      buttons: [
+        {
+          text: '1 H.',
+          handler: () => {
+            newAlarm = newAlarm.add(1, "hours");
+            this.taskProvider.editTask(key, permissons, responsable, "alarm", newAlarm.format("HH:mm"), "delegatedTasks")
           }
-        ]
-      });
-      actionSheet.present();
+        },
+        {
+          text: '30 M.',
+          handler: () => {
+            newAlarm = newAlarm.add(30, "minutes");
+            this.taskProvider.editTask(key, permissons, responsable, "alarm", newAlarm.format("HH:mm"), "delegatedTasks")
+          }
+        },
+        {
+          text: 'Back',
+          role: 'cancel',
+        }
+      ]
+    });
+    actionSheet.present();
 
+  }
+
+
+  chat(key) {
+    this.nav.push(TaskChatPage, {
+      key: key,
+      admin: false
+    })
   }
 
 }
