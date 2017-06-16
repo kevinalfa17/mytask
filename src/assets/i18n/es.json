@@ -111,5 +111,9 @@
     "YOURPASSWORD":"Tu contraseña",
     "RESETPASSWORD":"Resetear contraseña",
     "TEXTPARAMIREJECT": "Mis tareas rechazadas por otros usuarios",
-    "NEWCONTACTTITLE":"Nuevo contacto"
+    "NEWCONTACTTITLE":"Nuevo contacto",
+    "ALARM":"Alarmas",
+    "HOUR":"Hora",
+    "MINUTE":"Minuto",
+    "DAY":"Dia"
 }

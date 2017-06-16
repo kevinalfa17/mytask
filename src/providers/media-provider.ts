@@ -35,6 +35,8 @@ export class MediaData {
         this.mediaCapture.captureImage(options).then(
             (data: MediaFile[]) => {
                 dat = this.savedInStorage(data[0].fullPath, currentUser, "image");
+                console.log("dat image");
+                console.log(dat);
             },
             (err: CaptureError) => console.error(err)
         );
@@ -87,6 +89,8 @@ export class MediaData {
                 (<any>window).resolveLocalFileSystemURL(result, (res) => {
                     res.file((resFile) => {
                         dat = this.savedInStorage(result, currentUser, resFile.type);
+                        console.log("dat file");
+                        console.log(dat);
                     });
                 });
             })

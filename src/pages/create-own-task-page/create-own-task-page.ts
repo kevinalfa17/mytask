@@ -177,21 +177,26 @@ export class CreateOwnTaskPage {
 
 
   showFilesOptionsSheet() {
+    console.log("Option sheet");
     let actionSheet = this.actionSheetCtrl.create({
       title: '',
       buttons: [
         {
           text: 'Photo',
           handler: () => {
+            console.log("photo");
             var link;
             link = this.mediaProvider.captureImage(this.up.currentUser.uid);
+            console.log(link);
             var aux = link.split("/");
             let file = {
               link: link,
               name: aux[aux.length - 1],
               type: "photo"
             }
+            console.log(file);
             this.files.push(file);
+            console.log(this.files);
           }
         },
         {
@@ -211,16 +216,19 @@ export class CreateOwnTaskPage {
         {
           text: 'File',
           handler: () => {
-
+            console.log("file");
             var link: string;
             link = this.mediaProvider.captureFile(this.up.currentUser.uid);
+            console.log(link);
             var aux = link.split("/");
             let file = {
               link: link,
               name: aux[aux.length - 1],
               type: "file"
             }
+            console.log(file);
             this.files.push(file);
+            console.log(this.files);
 
           }
         },

@@ -24,6 +24,8 @@ import {TaskDetailPage} from '../pages/task-detail-page/task-detail-page';
 import { CommentNoti } from '../pages/commentNoti/commentNoti';
 import {EditTaskPage} from '../pages/edit-task-page/edit-task-page';
 import {TaskChatPage} from '../pages/task-chat-page/task-chat-page';
+import { AlarmSelectorPage } from '../pages/alarm-selector-page/alarm-selector-page';
+
 
 
 //Providers
@@ -82,7 +84,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     CreateOwnTaskPage,
     CommentNoti,
     EditTaskPage,
-    TaskChatPage
+    TaskChatPage,
+    AlarmSelectorPage
   ],
   imports: [
     BrowserModule,
@@ -131,7 +134,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     CreateOwnTaskPage,
     CommentNoti,
     EditTaskPage,
-    TaskChatPage
+    TaskChatPage,
+    AlarmSelectorPage
   ],
   providers: GetProviders()
 })

@@ -111,5 +111,9 @@
     "YOURPASSWORD":"Your password",
     "RESETPASSWORD":"Reset password",
     "TEXTPARAMIREJECT": "My tasks rejected by other users",
-    "NEWCONTACTTITLE":"New Contact"
+    "NEWCONTACTTITLE":"New Contact",
+    "ALARM":"Alarms",
+    "HOUR":"Hour",
+    "MINUTE":"Minute",
+    "DAY":"Day"
 }

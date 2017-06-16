@@ -1,0 +1,74 @@
+<!--
+  Generated template for the AlarmSelectorPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-buttons left>
+      <button ion-button icon-only (click)="viewCtrl.dismiss()"> 
+        <ion-icon name="arrow-back"></ion-icon> 
+        </button>
+    </ion-buttons>
+    <ion-title>{{'ALARM' | translate}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-list>
+    <ion-item>
+      <ion-label>{{'ALARM' | translate}} 1</ion-label>
+      <ion-select>
+        <ion-option  value="1">
+          1 {{'MINUTE' | translate}}
+        </ion-option>
+        <ion-option  value="2">
+          5 {{'MINUTE' | translate}}s
+        </ion-option>
+        <ion-option  value="3">
+          10 {{'MINUTE' | translate}}s
+        </ion-option>
+        <ion-option  value="4">
+          30 {{'MINUTE' | translate}}s
+        </ion-option>
+         <ion-option  value="5">
+          1 {{'HOUR' | translate}}
+        </ion-option>
+         <ion-option  value="6">
+          2 {{'HOUR' | translate}}s
+        </ion-option>
+        <ion-option  value="7">
+          3 {{'HOUR' | translate}}s
+        </ion-option>
+        <ion-option  value="8">
+          1 {{'DAY' | translate}}
+        </ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>{{'ALARM' | translate}} 2</ion-label>
+      <ion-select>
+        <ion-option *ngFor="let type of types | async" value="{{type.typeName}}">
+          {{type.typeName}}
+        </ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>{{'ALARM' | translate}} 3</ion-label>
+      <ion-select (ionChange)="loadSubtypes($event)">
+        <ion-option *ngFor="let type of types | async" value="{{type.typeName}}">
+          {{type.typeName}}
+        </ion-option>
+      </ion-select>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>
