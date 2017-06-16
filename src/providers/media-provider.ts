@@ -28,15 +28,17 @@ export class MediaData {
     /**
      * This function it's used to take and save a new image
      */
-    captureImage() {
-        var options = { limit: 3 };
-        this.mediaCapture.captureAudio(options).then(function (imageData) {
-            this.image.name = imageData[0];
-            this.image.url = imageData[1].fullpath;
-        }, function (err) {
-            alert("Error al capturar audio");
-        });
-        return this.image;
+    captureImage(currentUser) {
+        var options = { limit: 1 };
+        var dat;
+
+        this.mediaCapture.captureImage(options).then(
+            (data: MediaFile[]) => {
+                dat = this.savedInStorage(data[0].fullPath, currentUser, "image");
+            },
+            (err: CaptureError) => console.error(err)
+        );
+        return dat;
     }
 
     /**
@@ -47,12 +49,14 @@ export class MediaData {
         const options: CaptureAudioOptions = {
             limit: 1, duration: 60
         };
+        var dat;
         this.mediaCapture.captureAudio(options).then(
             (data: MediaFile[]) => {
-                this.savedInStorage(data[0].fullPath, currentUser, "Audio");
+                dat = this.savedInStorage(data[0].fullPath, currentUser, "Audio");
             },
             (err: CaptureError) => console.error(err)
         );
+        return dat;
     }
 
     /**
@@ -60,30 +64,34 @@ export class MediaData {
      * @param currentUser The user uid to keep the video
      */
     captureVideo(currentUser: any) {
+        var dat;
         var options = { limit: 1, duration: 10 };
         this.mediaCapture.captureVideo(options).then(
             (data: MediaFile[]) => {
-                this.savedInStorage(data[0].fullPath, currentUser, "Video");
+                dat = this.savedInStorage(data[0].fullPath, currentUser, "Video");
             },
             (err: CaptureError) => console.error(err)
         );
+        return dat;
     }
 
     /**
      * This function it's used to take and save a new file
      */
     captureFile(currentUser) {
+        var dat;
         this.filecho.open().then((url) => {
 
             (<any>window).FilePath.resolveNativePath(url, (result) => {
 
                 (<any>window).resolveLocalFileSystemURL(result, (res) => {
                     res.file((resFile) => {
-                        this.savedInStorage(result, currentUser, resFile.type);
+                        dat = this.savedInStorage(result, currentUser, resFile.type);
                     });
                 });
             })
         });
+        return dat;
     }
 
     /**
@@ -119,15 +127,13 @@ export class MediaData {
             this.tools.makeFileIntoBlob(data, ext, mime).then((fileblob) => {
                 var newName = this.tools.randomString(10);
 
-                alert('/' + type + currentUser + newName + '.' + ext);
-
                 let ref = firebase.storage().ref('/' + type + '/' + newName + '.' + ext);
-
                 ref.put(fileblob, {
                     contentType: mime
                 });
 
-                //firebase.database().ref("/userProfile").child(currentUser).child(type).child(newName).set(ref.getDownloadURL); // Aqui PONER REF A TASK
+                // firebase.database().ref("/userProfile").child(currentUser).child(type).child(newName).set(ref.getDownloadURL()); // Aqui PONER REF A TASK
+                return ref.getDownloadURL();
 
             });
         }

@@ -25,11 +25,11 @@
   </ion-list>
 
     <ion-list>
-    <h1> TOOO MMEEE {{"WORDREJECT" | translate}}</h1>
-    <ion-item *ngFor="let task of tasksRejectedToMeList">
+    <h1> {{"TEXTPARAMIREJECT" | translate}}</h1>
+    <ion-item *ngFor="let task of items | async" >
       <h2>{{task?.name}}</h2>
-      <p>{{"WORDNAME" | translate}}: <strong>{{task?.Name}}</strong></p>
-      <p>{{"TEXTHS" | translate}}: <strong>{{task?.HourSended}}</strong></p>
+      <p>{{"WORDNAME" | translate}}: <strong>{{task?.taskName}}</strong></p>
+      <p>{{"TYPE" | translate}}: <strong>{{task?.type}}</strong></p>
     </ion-item>
   </ion-list>
 

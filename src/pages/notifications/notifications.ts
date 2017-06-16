@@ -54,26 +54,6 @@ export class Notifications {
     /**
      * DELETE THIS!!!!!!!!!!!!!!!!!!!!
      */
-    addLocalnoti() {
-        this.notificationData.addLocalNotification("Jugar", "PERO YA PERRO", "minute", 5, "", "");
-    }
-    cancelLocalNotification() {
-
-    }
-    chooseFile() {
-
-        this.media.captureFile(this.currentUser);
-    }
-
-    recordAudio() {
-        this.media.captureAudio(this.currentUser);
-    }
-
-    recordVideo() {
-        this.vi = this.media.captureVideo(this.currentUser);
-
-        //this.media.savedInStorage(this.currentUser, this.vi, "video");
-    }
 
     send() {
         this.taskp.sendInvite('IZI PICI', 'HERE', 'GG DISCRETOS',

@@ -17,6 +17,7 @@ import { ProfileData } from '../providers/profile-data';
 export class NotificationData {
     public userProfile: firebase.database.Reference; // Reference for the userProfile node in the database
     public ListNotifications: any; // List used to save somee information taken of the notification list
+    public ListNotificationsRejectedToMe: any; // List used to save somee information taken of the notification list to put in rejected to me
     public numberNewNotifications = 0; // The number of notifications doesn't read
     public notinull: any; // The reference to the null notification
     public ListNotificationsForDelete: any; // The list of notifications for delete later
@@ -54,7 +55,7 @@ export class NotificationData {
             alert("yyeeeaahhh");
             return this.notinull;
         } else {
-            
+
             tem.child(notificationtId).update({
                 Read: "true"
             });
@@ -98,7 +99,9 @@ export class NotificationData {
      */
     getNotifications(currentUser) {
         this.userProfile.child(currentUser).child('notifications').orderByChild('Name').on('value', snapshot => {
+
             let rawList = [];
+
             this.numberNewNotifications = 0;
             snapshot.forEach(snap => {
                 console.log(snap.val().Name);
@@ -113,12 +116,13 @@ export class NotificationData {
                         Description: snap.val().Description,
                         type: snap.val().type,
                         From: snap.val().From,
-                        Condition: snap.val().Condition,
                         DateSended: snap.val().DateSended,
                         HourSended: snap.val().HourSended
                     });
                 } return false
             })
+            
+
             this.ListNotifications = rawList;
         });
 
@@ -132,7 +136,7 @@ export class NotificationData {
     acceptNotification(Noti, currentUser) {
         this.pd.insertNotification(Noti.From, "Task Accepted", Noti.Name, 'Accepted', currentUser.uid, Noti.taskid, Noti.comment);
 
-        this.userProfile.child('taskManage').child('Accept').push({
+        this.userProfile.child(currentUser).child('taskManage').child('Accept').push({
             Name: Noti.Name,
             HourSended: Noti.HourSended
         });
@@ -148,7 +152,7 @@ export class NotificationData {
     rejectNotification(Noti, currentUser) {
         this.pd.insertNotification(Noti.From, "Task Rejected", Noti.Name, "Rejected", currentUser.uid, Noti.taskid, Noti.comment);
 
-        this.userProfile.child('taskManage').child('Rejected').push({
+        this.userProfile.child(currentUser).child('taskManage').child('Rejected').push({
             Name: Noti.Name,
             HourSended: Noti.HourSended
         });

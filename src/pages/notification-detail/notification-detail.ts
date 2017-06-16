@@ -48,6 +48,11 @@ export class NotificationDetailPage {
   accept() {
     if (this.currentNotification.Name == "null") {
 
+    } if (this.currentNotification.type == "Rejected") {
+      //AQUI PONER EL CODIGO
+
+      this.notificationData.deleteNotificationTemp(this.currentNotification.id, this.currentUser);
+      this.nav.pop();
     } else {
       this.nav.push(CommentNoti, { notification: this.currentNotification, currentUser: this.currentUser, type: "accept" });
       this.nav.pop();
@@ -58,6 +63,12 @@ export class NotificationDetailPage {
    */
   reject() {
     if (this.currentNotification.Name == "null") {
+    }
+    if (this.currentNotification.type == "Rejected") {
+      //AQUI PONER EL CODIGO
+      
+      this.notificationData.deleteNotificationTemp(this.currentNotification.id, this.currentUser);
+      this.nav.pop();
     } else {
       this.nav.push(CommentNoti, { notification: this.currentNotification, currentUser: this.currentUser, type: "reject" });
       this.nav.pop();
