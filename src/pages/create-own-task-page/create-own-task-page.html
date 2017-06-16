@@ -87,7 +87,7 @@
 
   <div>
     <ion-list>
-       <ion-item>
+      <ion-item>
         <ion-label stacked>{{'PRIORITY' | translate}}</ion-label>
         <ion-range min="1" max="5" step="1" snaps="true" [(ngModel)]="priority" color="danger">
           <ion-icon range-left small color="danger" name="alert"></ion-icon>
@@ -110,37 +110,31 @@
     <div style="background-color:white; margin-bottom: 40%" *ngIf="advancedToggle">
 
       <ion-label stacked>{{'FILES' | translate}}</ion-label>
-      <div style="float:left;width:50%; border-right:1px solid #8B3A3A;height:20vh; background-color:white">
+      <div style="float:left;width:20%; border-right:1px solid #8B3A3A;height:20vh; background-color:white">
 
         <button ion-item (click)="showFilesOptionsSheet()">
         <ion-icon item-left name="add"></ion-icon>
-        {{'ADDFILES' | translate}}
       </button>
 
       </div>
 
-      <div style="float:right;width:50%; background-color:white">
+      <div style="float:right;width:80%; background-color:white">
 
         <ion-scroll scrollY="true" style="height:20vh" id="scroll-user">
 
           <ion-list>
-            <ion-item>
-              <ion-label>Item1</ion-label>
-              <button ion-button item-right icon-only icon-right clear (click)="quitUser()">
-            <ion-icon name="md-close"></ion-icon>     
-          </button>
-            </ion-item>
-            <ion-item>
-              <ion-label>Item2</ion-label>
-              <button ion-button item-right icon-only icon-right clear (click)="quitUser()">
-            <ion-icon name="md-close"></ion-icon>     
-          </button>
-            </ion-item>
-            <ion-item>
-              <ion-label>Item3</ion-label>
-              <button ion-button item-right icon-only icon-right clear (click)="quitUser()">
-            <ion-icon name="md-close"></ion-icon>     
-          </button>
+            <ion-item *ngFor="let file of files;let i=index">
+              <ion-icon *ngIf="file.type=='audio'" name="volume-down"></ion-icon>
+              <ion-icon *ngIf="file.type=='photo'" name="camera"></ion-icon>
+              <ion-icon *ngIf="file.type=='video'" name="videocam"></ion-icon>
+              <ion-icon *ngIf="file.type=='file'"  name="folder"></ion-icon>
+              {{file.name}}
+              <button ion-button item-right icon-only icon-right clear (click)="quitFile(i)">
+                <ion-icon name="md-close"></ion-icon>     
+              </button>
+              <div *ngIf="file.type=='audio'">
+                <audio [src]="file.link" controls></audio>
+              </div>
             </ion-item>
           </ion-list>
         </ion-scroll>
@@ -194,7 +188,7 @@
 
   </div>
 
-    <button ion-button block (click)="addTask()" >
+  <button ion-button block (click)="addTask()">
     {{'CREATENEWTASK' | translate}}
   </button>
 </ion-content>

@@ -547,14 +547,17 @@ export class HomePage {
     return result;
   }
 
-  complete(key, status, permissons,name) {
+  complete(key, status, permissons, name) {
 
     if (status == 0) {
       this.taskProvider.updateStatus(key, 1, permissons);
+
       permissons.forEach((user) => {
-        this.profileData.insertNotification(user,"Accepted task",name,"Accepted",
-        this.profileData.currentUser.uid,key,"");
-      })
+        if (user !== this.profileData.currentUser.email) {
+          this.profileData.insertNotification(user, "Accepted task", name, "Accepted",
+            this.profileData.currentUser.uid, key, "");
+        }
+      });
     }
     else {
       this.taskProvider.updateStatus(key, 4, permissons);
@@ -562,7 +565,7 @@ export class HomePage {
 
   }
 
-  update(key, status, permissons) {
+  update(key, status, permissons, taskName) {
 
     if (status == 0) {
       let actionSheet = this.actionSheetCtrl.create({
@@ -572,7 +575,13 @@ export class HomePage {
             text: 'Accept',
             handler: () => {
               this.taskProvider.updateStatus(key, 1, permissons);
-              //aceptar
+
+              permissons.forEach((user) => {
+                if (user !== this.profileData.currentUser.email) {
+                  this.profileData.insertNotification(user, "Accepted task", taskName, "Accepted",
+                    this.profileData.currentUser.uid, key, "");
+                }
+              });
             }
           },
           {
@@ -599,6 +608,12 @@ export class HomePage {
             text: "Complete",
             handler: () => {
               this.taskProvider.updateStatus(key, 4, permissons);
+              permissons.forEach((user) => {
+                if (user !== this.profileData.currentUser.email) {
+                  this.profileData.insertNotification(user, "Task completed", taskName, "complete",
+                    this.profileData.currentUser.uid, key, "");
+                }
+              });
             }
           },
           {
@@ -606,9 +621,21 @@ export class HomePage {
             handler: () => {
               if (status == 3) {
                 this.taskProvider.updateStatus(key, 1, permissons);
+                permissons.forEach((user) => {
+                  if (user !== this.profileData.currentUser.email) {
+                    this.profileData.insertNotification(user, "Task In Progress", taskName, "inProgress",
+                      this.profileData.currentUser.uid, key, "");
+                  }
+                });
               }
               else {
                 this.taskProvider.updateStatus(key, 3, permissons);
+                permissons.forEach((user) => {
+                  if (user !== this.profileData.currentUser.email) {
+                    this.profileData.insertNotification(user, "Task On Hold", taskName, "onHold",
+                      this.profileData.currentUser.uid, key, "");
+                  }
+                });
               }
             }
           },
@@ -616,6 +643,12 @@ export class HomePage {
             text: 'Cancel Task',
             handler: () => {
               this.taskProvider.updateStatus(key, 2, permissons);
+              permissons.forEach((user) => {
+                if (user !== this.profileData.currentUser.email) {
+                  this.profileData.insertNotification(user, "Task canceled", taskName, "cancel",
+                    this.profileData.currentUser.uid, key, "");
+                }
+              });
             }
           },
 

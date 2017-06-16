@@ -54,10 +54,11 @@ export class NotificationDetailPage {
       this.notificationData.deleteNotificationTemp(this.currentNotification.id, this.currentUser);
       this.nav.pop();
     } else {
-      this.nav.push(CommentNoti, { notification: this.currentNotification, currentUser: this.currentUser, type: "accept" });
-      this.nav.pop();
+      //this.nav.push(CommentNoti, { notification: this.currentNotification, currentUser: this.currentUser, type: "accept" });
+      //this.nav.pop();
     }
   }
+
   /**
    * Function used to reject the task of the notification
    */

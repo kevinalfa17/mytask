@@ -110,5 +110,6 @@
     "YOUREMAIL":"Your email",
     "YOURPASSWORD":"Your password",
     "RESETPASSWORD":"Reset password",
-    "TEXTPARAMIREJECT": "My tasks rejected by other users"
+    "TEXTPARAMIREJECT": "My tasks rejected by other users",
+    "NEWCONTACTTITLE":"New Contact"
 }

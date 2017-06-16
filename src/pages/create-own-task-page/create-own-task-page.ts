@@ -9,6 +9,10 @@ import { ModalController } from 'ionic-angular';
 import { ContactListPage } from '../contact-list/contact-list';
 import * as moment from 'moment';
 import { ProfileData } from '../../providers/profile-data';
+import { ActionSheetController } from 'ionic-angular';
+import { MediaData } from '../../providers/media-provider';
+
+
 
 
 @IonicPage()
@@ -38,15 +42,18 @@ export class CreateOwnTaskPage {
   endTime: string;
   haveImage: boolean;
   minDate: string;
+  files: Array<any>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public typesProvider: TypesProvider,
     public af: AngularFire, public translate: TranslateService, public modalCtrl: ModalController,
-    public taskProvider: TaskProvider, public up: ProfileData) {
+    public taskProvider: TaskProvider, public up: ProfileData, public actionSheetCtrl: ActionSheetController,
+    public mediaProvider: MediaData) {
 
     this.types = typesProvider.getTypesRef();
     this.translate.setDefaultLang('es');
     this.users = [up.currentUser.email];
     this.permissons = [];
+    this.files = [];
     this.data = "";
     this.type = "";
     this.subtype = "";
@@ -115,6 +122,11 @@ export class CreateOwnTaskPage {
 
   }
 
+  quitFile(i) {
+    this.files.splice(i, 1);
+
+  }
+
 
   addPermissonsToList(name) {
     this.permissons.push(name);
@@ -123,10 +135,10 @@ export class CreateOwnTaskPage {
 
   addTask() {
 
-     if(typeof this.subtype == 'undefined') {
-        this.subtype = "";
+    if (typeof this.subtype == 'undefined') {
+      this.subtype = "";
     }
-    
+
 
     if (this.startDate == "") {
 
@@ -161,6 +173,78 @@ export class CreateOwnTaskPage {
       this.recurrence, this.endDate, parseInt(this.priority), this.notificationsToggle, [], this.newComment, this.permissons, this.haveImage, this.endTime)
 
     this.navCtrl.pop();
+  }
+
+
+  showFilesOptionsSheet() {
+    let actionSheet = this.actionSheetCtrl.create({
+      title: '',
+      buttons: [
+        {
+          text: 'Photo',
+          handler: () => {
+            var link;
+            link = this.mediaProvider.captureImage(this.up.currentUser.uid);
+            var aux = link.split("/");
+            let file = {
+              link: link,
+              name: aux[aux.length - 1],
+              type: "photo"
+            }
+            this.files.push(file);
+          }
+        },
+        {
+          text: 'Video',
+          handler: () => {
+            var link: string;
+            link = this.mediaProvider.captureVideo(this.up.currentUser.uid);
+            var aux = link.split("/");
+            let file = {
+              link: link,
+              name: aux[aux.length - 1],
+              type: "video"
+            }
+            this.files.push(file);
+          }
+        },
+        {
+          text: 'File',
+          handler: () => {
+
+            var link: string;
+            link = this.mediaProvider.captureFile(this.up.currentUser.uid);
+            var aux = link.split("/");
+            let file = {
+              link: link,
+              name: aux[aux.length - 1],
+              type: "file"
+            }
+            this.files.push(file);
+
+          }
+        },
+        {
+          text: 'Audio',
+          handler: () => {
+            var link: string;
+            link = this.mediaProvider.captureAudio(this.up.currentUser.uid);
+            var aux = link.split("/");
+            let file = {
+              link:link,
+              name:aux[aux.length-1],
+              type:"audio"
+            }
+            this.files.push(file);
+          }
+        },
+        {
+          text: 'Back',
+          role: 'cancel',
+        }
+      ]
+    });
+    actionSheet.present();
   }
 
 
