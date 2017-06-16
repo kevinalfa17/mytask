@@ -201,7 +201,7 @@ export class ProfileData {
    * @param key The key of the new notification for put it in the user data
    * @param keyT The key of the task for use it later
    */
-  insertNotification(email, description, name, type, creatorid, key, keyT, comment) {
+  insertNotification(email, description, name, type, creatorid, key, comment) {
 
     var userkey;
     let subscription = this.af.database.list('/userProfile', {
@@ -214,19 +214,20 @@ export class ProfileData {
       snapshots.forEach(snapshot => {
 
         if (snapshot.key !== null) {
-          let endpoint = this.af.database.object(`/userProfile/${snapshot.key}/notifications/${key}`);
-          endpoint.set({
+
+          let noti = {
             Name: name,
             Description: description,
             Condition: "Pending",
             Read: "false",
             Creatoremail: this.currentUser.email,
-            taskid: keyT,
+            taskid: key,
             From: this.currentUser.email,
             DateSended: moment().format('D/M/YYYY'),
             HourSended: moment().format('h:mm:s a'),
             comment: comment
-          });
+          }
+          this.af.database.list(`/userProfile/${snapshot.key}/notifications`).push(noti)
           subscription.unsubscribe();
         }
       });

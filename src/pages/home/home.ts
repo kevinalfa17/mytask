@@ -547,10 +547,14 @@ export class HomePage {
     return result;
   }
 
-  complete(key, status, permissons) {
+  complete(key, status, permissons,name) {
 
     if (status == 0) {
       this.taskProvider.updateStatus(key, 1, permissons);
+      permissons.forEach((user) => {
+        this.profileData.insertNotification(user,"Accepted task",name,"Accepted",
+        this.profileData.currentUser.uid,key,"");
+      })
     }
     else {
       this.taskProvider.updateStatus(key, 4, permissons);
@@ -568,6 +572,7 @@ export class HomePage {
             text: 'Accept',
             handler: () => {
               this.taskProvider.updateStatus(key, 1, permissons);
+              //aceptar
             }
           },
           {

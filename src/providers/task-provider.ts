@@ -90,32 +90,12 @@ export class TaskProvider {
       phone: 0
     };
 
-
-    let noti = {
-      Name: taskname,
-      Condition: 'Pending',
-      From: this.up.currentUser.email,
-      Description: comments,
-      Creatorid: this.up.currentUser.uid,
-      responsable: responsable,
-      Type: type,
-      DateSended: moment().format('D/M/YYYY'),
-      HourSended: moment().format('h:mm:s a'),
-      Read: 'false',
-      taskid: "",
-    };
-
-
     responsable.forEach((user) => {
 
       task.responsable = user;
       var key = this.af.database.list(`/tasks`).push(task).key;
       this.up.insertTask(user, key, "tasks", task);
-
-      noti.taskid = key;
-      var key2 = this.af.database.list(`/notifications`).push(noti).key;
-
-      this.up.insertNotification(user, comments, taskname, type, this.up.currentUser.uid, key2, key, "");
+      this.up.insertNotification(user, comments, taskname, type, this.up.currentUser.uid, key, "");
 
       delegatedTask.responsable = user;
       //this.up.insertTask(this.up.currentUser.email, key, "delegatedTasks", delegatedTask);
@@ -124,8 +104,6 @@ export class TaskProvider {
       });
 
     });
-
-
 
   };
   /**

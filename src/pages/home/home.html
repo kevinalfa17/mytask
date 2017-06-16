@@ -155,7 +155,7 @@
             </ion-item-options>
 
             <ion-item-options side="left" (ionSwipe)="complete(task.$key,task.status,task.permissons)">
-              <button ion-button color="completeButton" expandable (click)="complete(task.$key,task.status,task.permissons)">
+              <button ion-button color="completeButton" expandable (click)="complete(task.$key,task.status,task.permissons,task.taskName)">
           <ion-icon name="checkmark-circle"></ion-icon>
           <div *ngIf="task.status==0">{{'STARTED' | translate }}</div>
           <div *ngIf="task.status!==0">{{'COMPLETED' | translate }}</div>
