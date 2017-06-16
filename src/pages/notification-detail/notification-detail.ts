@@ -49,10 +49,11 @@ export class NotificationDetailPage {
     if (this.currentNotification.Name == "null") {
 
     } else {
-      this.nav.push(CommentNoti, { notification: this.currentNotification, currentUser: this.currentUser, type: "accept" });
-      this.nav.pop();
+      //this.nav.push(CommentNoti, { notification: this.currentNotification, currentUser: this.currentUser, type: "accept" });
+      //this.nav.pop();
     }
   }
+
   /**
    * Function used to reject the task of the notification
    */

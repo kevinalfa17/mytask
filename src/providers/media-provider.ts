@@ -28,7 +28,7 @@ export class MediaData {
     /**
      * This function it's used to take and save a new image
      */
-    captureImage() {
+    captureImage(currentUser) {
         var options = { limit: 3 };
         this.mediaCapture.captureAudio(options).then(function (imageData) {
             this.image.name = imageData[0];

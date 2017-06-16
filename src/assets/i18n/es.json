@@ -109,5 +109,6 @@
     "PASSWORDERROR":"Tu contrasena debe tener mas de 6 caracteres.",
     "YOUREMAIL":"Tu email",
     "YOURPASSWORD":"Tu contraseña",
-    "RESETPASSWORD":"Resetear contraseña"
+    "RESETPASSWORD":"Resetear contraseña",
+    "NEWCONTACTTITLE":"Nuevo contacto"
 }

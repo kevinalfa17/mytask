@@ -109,5 +109,6 @@
     "PASSWORDERROR":"Your password needs more than 6 characters.",
     "YOUREMAIL":"Your email",
     "YOURPASSWORD":"Your password",
-    "RESETPASSWORD":"Reset password"
+    "RESETPASSWORD":"Reset password",
+    "NEWCONTACTTITLE":"New Contact"
 }

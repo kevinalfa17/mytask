@@ -95,6 +95,10 @@ export class TaskProvider {
       task.responsable = user;
       var key = this.af.database.list(`/tasks`).push(task).key;
       this.up.insertTask(user, key, "tasks", task);
+
+      if(user !== this.up.currentUser.email){
+        this.up.insertNotification(user, comments, taskname,"new", this.up.currentUser.uid, key, "");
+      }
       this.up.insertNotification(user, comments, taskname,"new", this.up.currentUser.uid, key, "");
 
       delegatedTask.responsable = user;
