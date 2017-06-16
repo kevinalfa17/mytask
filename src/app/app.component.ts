@@ -55,6 +55,7 @@ export class MyApp {
     platform.ready().then(() => {
       statusBar.styleDefault();
       splashScreen.hide();
+      
 
       platform.registerBackButtonAction(() => {
         if (this.nav.canGoBack()) {

@@ -27,6 +27,16 @@
     <preference name="BackupWebStorage" value="none" />
     <preference name="SplashMaintainAspectRatio" value="true" />
     <preference name="FadeSplashScreenDuration" value="300" />
+
+
+
+ <preference name="AutoHideSplashScreen" value="false"/>
+ <preference name="xwalkVersion" value="21+"/>
+<!--<plugin name="cordova-plugin-crosswalk-webview" spec="~1.6.1"/>-->
+
+
+
+
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <preference name="OverrideUserAgent" value="Mozilla/5.0 (Linux; Android 4.0.4; Galaxy Nexus Build/IMM76B) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.133 Mobile Safari/535.19" />
     <feature name="StatusBar">
