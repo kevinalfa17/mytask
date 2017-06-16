@@ -16,12 +16,23 @@ export class NewContactPage {
   contactEmail:string;
   callback:any;
 
+  /**
+   * Constructor
+   * @param navCtrl 
+   * @param navParams 
+   * @param contactsProvider 
+   * @param af 
+   * @param translate 
+   */
   constructor(public navCtrl: NavController, public navParams: NavParams, public contactsProvider: ContactsProvider,
     public af: AngularFire, public translate: TranslateService) {
       this.translate.setDefaultLang('es');
       this.callback    = this.navParams.get('callback');
   }
 
+  /**
+   * Add new contact to contact list and data base
+   */
   addContact(){
     this.contactsProvider.addNewContact(this.contactName,this.contactEmail,this.contactPhone);
     /* let contact = {

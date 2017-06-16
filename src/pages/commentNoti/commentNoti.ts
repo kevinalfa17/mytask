@@ -12,6 +12,8 @@ import { ProfileData } from '../../providers/profile-data';
 import { Notifications } from '../notifications/notifications';
 import { GoogleCalendar } from '../googleCalendar/googleCalendar';
 import { CreateTaskPage } from '../create-task/create-task';
+import * as moment from 'moment';
+
 
 
 declare var window;
@@ -30,10 +32,24 @@ export class CommentNoti {
   type: string; // type of action
   public com: string; // where the comment it's keep
   Event: any = {}; // dates to reprogram
+  minDate:string;
 
+
+  /**
+   * Constructor
+   * @param nav 
+   * @param navParams 
+   * @param profileData 
+   * @param translate 
+   * @param actionSheetCtrl 
+   * @param alertCtrl 
+   * @param notificationData 
+   */
   constructor(public nav: NavController, public navParams: NavParams, public profileData: ProfileData, public translate: TranslateService,
     public actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController, public notificationData: NotificationData) {
     this.com = "";
+    this.minDate = moment().format("YYYY-MM-DD");
+
   }
   /**
   * Function used to reload and see the changing data and refresh the diferent params

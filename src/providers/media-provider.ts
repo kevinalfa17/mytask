@@ -81,6 +81,8 @@ export class MediaData {
      * This function it's used to take and save a new file
      */
     captureFile(currentUser) {
+        
+        /*
         var dat;
         this.filecho.open().then((url) => {
 
@@ -97,7 +99,7 @@ export class MediaData {
         });
         console.log("dat image2");
         console.log(dat);
-        return dat;
+        return dat;*/
     }
 
     /**
@@ -129,11 +131,10 @@ export class MediaData {
             //     content: '...'
             // });
             // loading.present();
-            let ref;
             this.tools.makeFileIntoBlob(data, ext, mime).then((fileblob) => {
                 var newName = this.tools.randomString(10);
 
-                ref = firebase.storage().ref('/' + type + '/' + newName + '.' + ext);
+                let ref = firebase.storage().ref('/' + type + '/' + newName + '.' + ext);
                 ref.put(fileblob, {
                     contentType: mime
                 });
@@ -149,9 +150,9 @@ export class MediaData {
 
             });
 
-            console.log("heeere3")
-            console.log(ref.getDownloadURL())
-            return ref.getDownloadURL();
+            //console.log("heeere3")
+            //console.log(ref.getDownloadURL())
+            //return ref.getDownloadURL();
         }
     }
 

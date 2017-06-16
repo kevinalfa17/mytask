@@ -39,8 +39,17 @@ export class CreateTaskPage {
   haveImage: boolean;
 
 
-
-
+    
+  /**
+   * Constructor
+   * @param navCtrl 
+   * @param navParams 
+   * @param typesProvider 
+   * @param af 
+   * @param translate 
+   * @param modalCtrl 
+   * @param taskProvider 
+   */
   constructor(public navCtrl: NavController, public navParams: NavParams, public typesProvider: TypesProvider,
     public af: AngularFire, public translate: TranslateService, public modalCtrl: ModalController,
     public taskProvider: TaskProvider) {
@@ -66,16 +75,28 @@ export class CreateTaskPage {
     this.minDate = moment().format("YYYY-MM-DD");
   }
 
+  /**
+   * 
+   * @param selectedType 
+   */
   loadSubtypes(selectedType) {
     this.type = selectedType;
     this.subtypes = this.typesProvider.getSubtypesRef(selectedType);
 
   }
 
+  /**
+   * 
+   * @param selectedSubtype 
+   */
   selectSubtype(selectedSubtype) {
     this.subtype = selectedSubtype;
   }
 
+  /**
+   * 
+   * @param selectedRecurrence 
+   */
   selectRecurrence(selectedRecurrence) {
     this.recurrence = selectedRecurrence;
   }
@@ -85,6 +106,9 @@ export class CreateTaskPage {
     console.log('ionViewDidLoad CreateTask');
   }
 
+  /**
+   * Add new user responsable to the task
+   */
   newUser() {
     this.navCtrl.push(NewContactPage,
       {
@@ -92,6 +116,9 @@ export class CreateTaskPage {
       });
   }
 
+  /**
+   * Add existing user to be responsable to the task
+   */
   addUser() {
     let chooseModal = this.modalCtrl.create(ContactListPage);
     chooseModal.onDidDismiss(data => {
@@ -104,6 +131,9 @@ export class CreateTaskPage {
     chooseModal.present();
   }
 
+  /**
+   *Get new user data 
+   */
   getData = (data) => {
     return new Promise((resolve, reject) => {
       this.data = data;
@@ -112,19 +142,27 @@ export class CreateTaskPage {
     });
   };
 
-
+  /**
+   * remove user from responsable list
+   * @param i 
+   */
   quitUser(i) {
     this.users.splice(i, 1);
 
   }
 
+
+  /**
+   * Push the user into the array
+   * @param name user name
+   */
   addUserToList(name) {
     this.users.push(name);
   }
 
-
-
-
+  /**
+   * Add new user to delegated user
+   */
   newUserPermissons() {
     this.navCtrl.push(NewContactPage,
       {
@@ -132,6 +170,9 @@ export class CreateTaskPage {
       });
   }
 
+  /**
+   * Add existing user to delegated user
+   */
   addUserPermissons() {
     let chooseModal = this.modalCtrl.create(ContactListPage);
     chooseModal.onDidDismiss(data => {
@@ -140,6 +181,9 @@ export class CreateTaskPage {
     chooseModal.present();
   }
 
+  /**
+   * Get data of user to added to delegated user
+   */
   getDataPermissons = (data) => {
     return new Promise((resolve, reject) => {
       this.data = data;
@@ -148,18 +192,26 @@ export class CreateTaskPage {
     });
   };
 
-
+  /**
+   * Remove user from delegated users
+   * @param i 
+   */
   quitUserPermissons(i) {
     this.permissons.splice(i, 1);
 
   }
 
-
+  /**
+   * Add user to delegated list
+   * @param name 
+   */
   addPermissonsToList(name) {
     this.permissons.push(name);
   }
 
-
+  /**
+   * Create a new task in data base
+   */
   addTask() {
 
      if(typeof this.subtype == 'undefined') {

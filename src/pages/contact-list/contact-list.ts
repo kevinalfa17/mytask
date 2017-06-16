@@ -12,12 +12,25 @@ import { AngularFire, FirebaseListObservable } from 'angularfire2';
 export class ContactListPage {
   users: FirebaseListObservable<any[]>;
 
+  /**
+   * Constructor
+   * @param viewCtrl 
+   * @param navCtrl 
+   * @param navParams 
+   * @param contactsProvider 
+   * @param af 
+   * @param translate 
+   */
   constructor(public viewCtrl: ViewController,public navCtrl: NavController, public navParams: NavParams, public contactsProvider: ContactsProvider,
     public af: AngularFire, public translate: TranslateService) {
     this.translate.setDefaultLang('es');
     this.users = this.contactsProvider.getContactsRef();
   }
 
+  /**
+   * Catch the selected user
+   * @param user 
+   */
   userSelected(user) {
     this.viewCtrl.dismiss(user);
   }

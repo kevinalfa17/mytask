@@ -15,6 +15,17 @@ export class ChatViewPage {
   chats:FirebaseListObservable<any>;  
   image: string;
   @ViewChild(Content) content: Content;
+
+  /**
+   * Constructor
+   * @param nav 
+   * @param params 
+   * @param chatProvider 
+   * @param af 
+   * @param profileData 
+   * @param camera 
+   * @param platform 
+   */
   constructor(public nav:NavController, 
   params:NavParams, 
   public chatProvider:ChatProvider, 
@@ -35,7 +46,9 @@ export class ChatViewPage {
     this.content.scrollToBottom();
   }
 
-
+  /**
+   * Send message in chat
+   */
   sendMessage() {
       if(this.message) {
           let chat = {
@@ -47,7 +60,10 @@ export class ChatViewPage {
           this.message = "";
       }
   };
-  
+
+    /**
+   * Send message with image in chat
+   */
   sendPicture() {
       //let chat = {from: this.uid, type: 'picture', picture:null};
       /*this.userProvider.getPicture()

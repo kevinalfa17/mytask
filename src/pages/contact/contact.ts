@@ -16,6 +16,13 @@ export class ContactPage {
     uid: string;
     contactEmails: Array<string>;
 
+
+    /**
+     * Constructor
+     * @param nav 
+     * @param profileData 
+     * @param contactsProvider 
+     */
     constructor(public nav: NavController, public profileData: ProfileData, public contactsProvider: ContactsProvider) {
         this.contactEmails = [];
         contactsProvider.getContactsEmail().then((result: Array<string>) => {

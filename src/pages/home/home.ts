@@ -16,7 +16,7 @@ import { GoogleCalendar } from '../googleCalendar/googleCalendar';
 import { CreateTaskPage } from '../create-task/create-task';
 import { EditTaskPage } from '../edit-task-page/edit-task-page';
 import { CreateOwnTaskPage } from '../create-own-task-page/create-own-task-page';
-import { AlarmSelectorPage } from '../alarm-selector-pag/alarm-selector-pag';
+import { AlarmSelectorPage } from '../alarm-selector-page/alarm-selector-page';
 
 
 import { TaskDetailPage } from '../task-detail-page/task-detail-page';
@@ -60,6 +60,18 @@ export class HomePage {
   public currentUser: any; // The uid of the current user
   public currentUserVal: any; // The values of the current user
 
+  /**
+   * Constructor
+   * @param af 
+   * @param nav 
+   * @param translate 
+   * @param actionSheetCtrl 
+   * @param alertCtrl 
+   * @param notificationData 
+   * @param taskProvider 
+   * @param profileData 
+   * @param modalCtrl 
+   */
   constructor(public af: AngularFire, public nav: NavController, public translate: TranslateService,
     public actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController,
     public notificationData: NotificationData, public taskProvider: TaskProvider,
@@ -89,7 +101,7 @@ export class HomePage {
     }
 
 
-
+    //Load task and check lenght
     this.taskList.map(list => list.length).subscribe(length => {
       if (length > 0) {
         this.getDates(this.taskList).then((dates: Array<Date>) => {
@@ -97,7 +109,7 @@ export class HomePage {
           var maxDate = new Date(Math.max.apply(null, dates));
           var minDate = new Date(Math.min.apply(null, dates));
 
-
+          //Generate a range of dates
           this.datesList = [];
           this.datesList = this.getDateRange(new Date(moment().format("YYYY-MM-DD")), maxDate);
 
@@ -143,11 +155,16 @@ export class HomePage {
     }
   }
 
-
+  /**
+   * Function that show/hides search bar 
+   */
   toggleSearchBar() {
     this.enableSearch = !this.enableSearch;
   }
 
+  /**
+   * Change the actual day slide and title to the next day
+   */
   nextDay() {
     if (this.taskSegment) {
 
@@ -167,6 +184,9 @@ export class HomePage {
     }
   }
 
+  /**
+   * Change the actual day slide and title to the previous day
+   */
   previousDay() {
 
     if (this.taskSegment) {
@@ -186,6 +206,9 @@ export class HomePage {
     }
   }
 
+  /**
+   * Detect a change in the slider (for own tasks)
+   */
   slideChanged() {
     this.currentIndex = this.slides.getActiveIndex();
 
@@ -208,6 +231,9 @@ export class HomePage {
 
   }
 
+  /**
+   * Detect a change in the slider (for own delegated tasks)
+   */
   slideChanged2() {
     this.currentIndex2 = this.slides2.getActiveIndex();
 
@@ -230,6 +256,9 @@ export class HomePage {
 
   }
 
+  /**
+   * Show option sheet to create task
+   */
   newTaskActionSheet() {
     let actionSheet = this.actionSheetCtrl.create({
       title: '',
@@ -259,6 +288,11 @@ export class HomePage {
     actionSheet.present();
   }
 
+  /**
+   * Admin function, contact with a user chating or calling
+   * @param phone 
+   * @param key 
+   */
   contact(phone, key) {
 
     let actionSheet = this.actionSheetCtrl.create({
@@ -330,7 +364,10 @@ export class HomePage {
     }, 2000);
   }
 
-
+  /**
+   * Extract all dates related to a task
+   * @param list 
+   */
   getDates(list: FirebaseListObservable<any>) {
 
     var promise = new Promise(function (resolve, reject) {
@@ -346,6 +383,11 @@ export class HomePage {
     return promise;
   }
 
+  /**
+   * Get a range of dates based in end dates of the tasks
+   * @param startDate 
+   * @param endDate 
+   */
   getDateRange(startDate, endDate) {
 
     var dates = [],
@@ -370,6 +412,10 @@ export class HomePage {
     return dates;
   };
 
+  /**
+   * Select a title according with the date
+   * @param date 
+   */
   getDateTitle(date: string) {
 
 
@@ -422,6 +468,10 @@ export class HomePage {
     return (month + " " + day);
   }
 
+  /**
+   * Title for admin view
+   * @param slideNumber 
+   */
   getDateTitle2(slideNumber) {
     var title;
     switch (slideNumber) {
@@ -439,6 +489,15 @@ export class HomePage {
     return title;
   }
 
+  /**
+   * Validate if a task must be showed in the actual date
+   * @param day 
+   * @param startDay 
+   * @param endTime 
+   * @param repeat 
+   * @param recurrence 
+   * @param taskName 
+   */
   validateDates(day, startDay, endTime, repeat, recurrence, taskName) {
 
     if (this.searchTerm !== "") {
@@ -488,7 +547,16 @@ export class HomePage {
     return result;
   }
 
-
+  /**
+   * Validates task date for admin panel
+   * @param day 
+   * @param startDay 
+   * @param endTime 
+   * @param repeat 
+   * @param recurrence 
+   * @param taskName 
+   * @param responsable 
+   */
   validateDates2(day, startDay, endTime, repeat, recurrence, taskName, responsable) {
 
 
@@ -551,32 +619,65 @@ export class HomePage {
     return result;
   }
 
-  complete(key, status, permissons, name) {
+  /**
+   * Complete a task, change status in DB
+   * @param key 
+   * @param status 
+   * @param permissons 
+   * @param name 
+   * @param alarm 
+   * @param responsable 
+   */
+  complete(key, status, permissons, name, alarm, responsable) {
 
     if (status == 0) {
 
-
-      /*let chooseModal = this.modalCtrl.create(AlarmSelectorPage);
+      let chooseModal = this.modalCtrl.create(AlarmSelectorPage);
       chooseModal.onDidDismiss(data => {
+        var alarmAux = alarm.split(":");
+        var newAlarm = moment();
+        newAlarm.hours(alarmAux[0]);
+        newAlarm.minutes(alarmAux[1]);
 
-        let task = this.af.database.object(`/userProfile/${this.profileData.currentUser.uid}/tasks/${key}`).set({alarm1:""});
+        var newAlarm2 = moment();
+        newAlarm2.hours(alarmAux[0]);
+        newAlarm2.minutes(alarmAux[1]);
 
+        var newAlarm3 = moment();
+        newAlarm3.hours(alarmAux[0]);
+        newAlarm3.minutes(alarmAux[1]);
 
+        var aux;
+        aux = data[0].split("-");
+        newAlarm = newAlarm.subtract(parseInt(aux[0]), aux[1]);
 
-        this.addPermissonsToList(data);
+        aux = data[1].split("-");
+        newAlarm2 = newAlarm2.subtract(parseInt(aux[0]), aux[1]);
+
+        aux = data[2].split("-");
+        newAlarm3 = newAlarm3.subtract(parseInt(aux[0]), aux[1]);
+
+        console.log("alarm")
+        console.log(newAlarm.format("HH:mm") + newAlarm2.format("HH:mm") + newAlarm3.format("HH:mm"))
+        this.taskProvider.editTask(key, permissons, responsable, "alarm1", newAlarm.format("HH:mm"), "delegatedTasks")
+        this.taskProvider.editTask(key, permissons, responsable, "alarm2", newAlarm2.format("HH:mm"), "delegatedTasks")
+        this.taskProvider.editTask(key, permissons, responsable, "alarm3", newAlarm3.format("HH:mm"), "delegatedTasks")
+
+        this.taskProvider.updateStatus(key, 1, permissons);
+
+        permissons.forEach((user) => {
+          if (user !== this.profileData.currentUser.email) {
+            this.profileData.insertNotification(user, "Accepted task", name, "Accepted",
+              this.profileData.currentUser.uid, key, "");
+          }
+        });
+
       });
-      chooseModal.present();*/
+      chooseModal.present();
 
 
 
-      this.taskProvider.updateStatus(key, 1, permissons);
 
-      permissons.forEach((user) => {
-        if (user !== this.profileData.currentUser.email) {
-          this.profileData.insertNotification(user, "Accepted task", name, "Accepted",
-            this.profileData.currentUser.uid, key, "");
-        }
-      });
     }
     else {
       this.taskProvider.updateStatus(key, 4, permissons);
@@ -584,6 +685,13 @@ export class HomePage {
 
   }
 
+  /**
+   * Update a task, change status in DB
+   * @param key 
+   * @param status 
+   * @param permissons 
+   * @param taskName 
+   */
   update(key, status, permissons, taskName) {
 
     if (status == 0) {
@@ -681,6 +789,11 @@ export class HomePage {
     }
   }
 
+  /**
+   * View task details
+   * @param key 
+   * @param permissons 
+   */
   view(key, permissons) {
     this.nav.push(TaskDetailPage, {
       key: key,
@@ -688,17 +801,33 @@ export class HomePage {
     })
   }
 
-  edit(key, permissons) {
+  /**
+   * Edit some parameters of the task
+   * @param key 
+   * @param permissons 
+   * @param name 
+   */
+  edit(key, permissons, name) {
     this.nav.push(EditTaskPage, {
       key: key,
-      permissons: permissons
+      permissons: permissons,
+      name: name
     })
   }
 
+  /**
+   * End a task, delete from DB (admin)
+   * @param key
+   * @param permissons 
+   * @param responsable 
+   */
   end(key, permissons, responsable) {
     this.taskProvider.endTask(key, permissons, responsable);
   }
 
+  /**
+   * Just charge own task for normal panel
+   */
   showOwnTasks() {
     this.taskSegment = true;
     if (this.datesList.length > 0) {
@@ -709,21 +838,39 @@ export class HomePage {
     }
   }
 
+  /**
+   * Shown other task for admin panel
+   */
   showOtherTasks() {
     this.taskSegment = false;
     this.title = this.getDateTitle2(this.actualSlide2);
   }
 
+  /**
+   * Search function for normal panel
+   * @param taskName 
+   */
   searchOwnTask(taskName) {
     return (taskName.indexOf(this.searchTerm) !== -1);
 
   }
 
+  /**
+   * Search function for admin panel
+   * @param taskName 
+   * @param responsable 
+   */
   searchDelegatedTask(taskName, responsable) {
     return ((taskName.indexOf(this.searchTerm) !== -1) || (responsable.indexOf(this.searchTerm) !== -1));
 
   }
 
+  /**
+   * Choose a color for task in admin panel depending of the day and status
+   * @param endTime 
+   * @param status 
+   * @param recurrence 
+   */
   chooseColor(endTime, status, recurrence) {
 
 
@@ -747,14 +894,32 @@ export class HomePage {
 
 
 
+  /**
+   * Change task alarms
+   * @param key 
+   * @param permissons 
+   * @param responsable 
+   * @param alarm1 
+   * @param alarm2 
+   * @param alarm3 
+   * @param name 
+   */
+  postpone(key, permissons, responsable, alarm1, alarm2, alarm3,name) {
 
-  postpone(key, permissons, responsable, alarm) {
-
-    var alarmAux = alarm.split(":");
+    var alarmAux = alarm1.split(":");
     var newAlarm = moment();
     newAlarm.hours(alarmAux[0]);
     newAlarm.minutes(alarmAux[1]);
 
+    var alarmAux = alarm2.split(":");
+    var newAlarm2 = moment();
+    newAlarm2.hours(alarmAux[0]);
+    newAlarm2.minutes(alarmAux[1]);
+
+    var alarmAux = alarm1.split(":");
+    var newAlarm3 = moment();
+    newAlarm3.hours(alarmAux[0]);
+    newAlarm3.minutes(alarmAux[1]);
 
 
     let actionSheet = this.actionSheetCtrl.create({
@@ -764,14 +929,28 @@ export class HomePage {
           text: '1 H.',
           handler: () => {
             newAlarm = newAlarm.add(1, "hours");
-            this.taskProvider.editTask(key, permissons, responsable, "alarm", newAlarm.format("HH:mm"), "delegatedTasks")
+            newAlarm2 = newAlarm2.add(1, "hours");
+            newAlarm3 = newAlarm3.add(1, "hours");
+            this.taskProvider.editTask(key, permissons, responsable, "alarm1", newAlarm.format("HH:mm"), "delegatedTasks")
+            this.taskProvider.editTask(key, permissons, responsable, "alarm2", newAlarm2.format("HH:mm"), "delegatedTasks")
+            this.taskProvider.editTask(key, permissons, responsable, "alarm3", newAlarm3.format("HH:mm"), "delegatedTasks")
+
+            if (responsable !== this.profileData.currentUser.email) {
+              this.profileData.insertNotification(responsable, "Alarm postponed", name, "CambioData",
+                this.profileData.currentUser.uid, key, "");
+            }
+
           }
         },
         {
           text: '30 M.',
           handler: () => {
             newAlarm = newAlarm.add(30, "minutes");
-            this.taskProvider.editTask(key, permissons, responsable, "alarm", newAlarm.format("HH:mm"), "delegatedTasks")
+            newAlarm2 = newAlarm2.add(30, "minutes");
+            newAlarm3 = newAlarm3.add(30, "minutes");
+            this.taskProvider.editTask(key, permissons, responsable, "alarm1", newAlarm.format("HH:mm"), "delegatedTasks")
+            this.taskProvider.editTask(key, permissons, responsable, "alarm2", newAlarm2.format("HH:mm"), "delegatedTasks")
+            this.taskProvider.editTask(key, permissons, responsable, "alarm3", newAlarm3.format("HH:mm"), "delegatedTasks")
           }
         },
         {
@@ -784,7 +963,10 @@ export class HomePage {
 
   }
 
-
+  /**
+   * Open task chat
+   * @param key 
+   */
   chat(key) {
     this.nav.push(TaskChatPage, {
       key: key,

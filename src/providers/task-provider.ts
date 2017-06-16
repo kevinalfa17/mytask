@@ -71,6 +71,9 @@ export class TaskProvider {
       status: 0,
       haveImage: haveImage,
       alarm: alarm,
+      alarm1: alarm,
+      alarm2: alarm,
+      alarm3: alarm,
       phone: 0
 
     };
@@ -87,6 +90,9 @@ export class TaskProvider {
       endTime: endTime,
       status: 0,
       alarm: alarm,
+      alarm1: alarm,
+      alarm2: alarm,
+      alarm3: alarm,
       phone: 0
     };
 
@@ -96,8 +102,8 @@ export class TaskProvider {
       var key = this.af.database.list(`/tasks`).push(task).key;
       this.up.insertTask(user, key, "tasks", task);
 
-      if(user !== this.up.currentUser.email){
-        this.up.insertNotification(user, comments, taskname,"new", this.up.currentUser.uid, key, "");
+      if (user !== this.up.currentUser.email) {
+        this.up.insertNotification(user, comments, taskname, "new", this.up.currentUser.uid, key, "");
       }
 
       delegatedTask.responsable = user;
@@ -234,6 +240,15 @@ export class TaskProvider {
     });
   };
 
+  updateStatus2(key, newStatus, permissons,responsable) {
+
+    this.up.updateStatus(responsable, key, newStatus)
+
+    permissons.forEach((user2) => {
+      this.up.updateStatus(user2, key, newStatus)
+    });
+  };
+
 
   endTask(key, permissons, responsable) {
 
@@ -245,12 +260,12 @@ export class TaskProvider {
   };
 
 
-  editTask(key, permissons, responsable, field, value ,subnode) {
+  editTask(key, permissons, responsable, field, value, subnode) {
 
-   // this.af.database.list(`/userProfile/${this.up.currentUser.uid}/tasks`).update(key, { comments: value });
-    this.up.updateComment(responsable,key,value,field,"tasks");
+    // this.af.database.list(`/userProfile/${this.up.currentUser.uid}/tasks`).update(key, { comments: value });
+    this.up.updateComment(responsable, key, value, field, "tasks");
     permissons.forEach((user2) => {
-      this.up.updateComment(user2,key,value,field,subnode);
+      this.up.updateComment(user2, key, value, field, subnode);
     });
 
   };

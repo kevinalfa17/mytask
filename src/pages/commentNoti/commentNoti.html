@@ -30,7 +30,7 @@
     <ion-item-group>
       <ion-item>
         <ion-label>Start Date</ion-label>
-        <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="DD MMM YYYY" [(ngModel)]="Event.startDate"></ion-datetime>
+        <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="DD MMM YYYY" [(ngModel)]="Event.startDate" min="{{minDate}}"></ion-datetime>
       </ion-item>
 
       <ion-item>
@@ -40,7 +40,7 @@
 
       <ion-item>
         <ion-label>End Date</ion-label>
-        <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="DD MMM YYYY" [(ngModel)]="Event.endDate"></ion-datetime>
+        <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="DD MMM YYYY" [(ngModel)]="Event.endDate" min="{{minDate}}"></ion-datetime>
       </ion-item>
 
       <ion-item>

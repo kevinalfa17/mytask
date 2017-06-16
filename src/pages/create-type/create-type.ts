@@ -18,6 +18,13 @@ export class CreateTypePage {
   subtypeDisable: boolean;
   typeDisable: boolean;
 
+  /**
+   * Constructor
+   * @param navCtrl 
+   * @param navParams 
+   * @param translate 
+   * @param typesProvider 
+   */
   constructor(public navCtrl: NavController, public navParams: NavParams, public translate: TranslateService,
     public typesProvider: TypesProvider) {
 
@@ -27,11 +34,18 @@ export class CreateTypePage {
     this.subtypeDisable = true;
   }
 
+  /**
+   * Delete subtype from subtypes list
+   * @param i 
+   */
   deleteSubtype(i) {
     this.subtypes.splice(i, 1);
 
   }
 
+  /**
+   * Add new subtype
+   */
   addSubtype() {
 
     this.subtypes.push(this.subtypeName);
@@ -39,6 +53,9 @@ export class CreateTypePage {
     this.checkChanges();
   }
 
+  /**
+   * Create new type with subtypes
+   */
   createType() {
     //Add type
     this.typesProvider.addNewType(this.typeName);
@@ -52,6 +69,7 @@ export class CreateTypePage {
     this.navCtrl.pop();
   }
 
+  //Callbacks that checks if the name of type and subtype is filled
   checkChanges() {
     this.typeDisable = (this.typeName == "");
     this.subtypeDisable = (this.subtypeName == "");

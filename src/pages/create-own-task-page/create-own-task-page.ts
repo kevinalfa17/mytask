@@ -44,6 +44,19 @@ export class CreateOwnTaskPage {
   minDate: string;
   files: Array<any>;
 
+  /**
+   * Constructor
+   * @param navCtrl 
+   * @param navParams 
+   * @param typesProvider 
+   * @param af 
+   * @param translate 
+   * @param modalCtrl 
+   * @param taskProvider 
+   * @param up 
+   * @param actionSheetCtrl 
+   * @param mediaProvider 
+   */
   constructor(public navCtrl: NavController, public navParams: NavParams, public typesProvider: TypesProvider,
     public af: AngularFire, public translate: TranslateService, public modalCtrl: ModalController,
     public taskProvider: TaskProvider, public up: ProfileData, public actionSheetCtrl: ActionSheetController,
@@ -72,16 +85,27 @@ export class CreateOwnTaskPage {
 
   }
 
+  /**
+   * Load all subtypes from data base depending of the actual type
+   * @param selectedType 
+   */
   loadSubtypes(selectedType) {
     this.type = selectedType;
     this.subtypes = this.typesProvider.getSubtypesRef(selectedType);
 
   }
-
+  /**
+   * Catch selected subtype
+   * @param selectedSubtype 
+   */
   selectSubtype(selectedSubtype) {
     this.subtype = selectedSubtype;
   }
 
+  /**
+   * Catch selected recurrente
+   * @param selectedRecurrence 
+   */
   selectRecurrence(selectedRecurrence) {
     this.recurrence = selectedRecurrence;
   }
@@ -92,7 +116,9 @@ export class CreateOwnTaskPage {
   }
 
 
-
+  /**
+   * Add new user (contact) and insert in permissons
+   */
   newUserPermissons() {
     this.navCtrl.push(NewContactPage,
       {
@@ -100,6 +126,9 @@ export class CreateOwnTaskPage {
       });
   }
 
+  /**
+   * Add existing contact to permissons
+   */
   addUserPermissons() {
     let chooseModal = this.modalCtrl.create(ContactListPage);
     chooseModal.onDidDismiss(data => {
@@ -108,6 +137,9 @@ export class CreateOwnTaskPage {
     chooseModal.present();
   }
 
+  /**
+   * Retrieve all permissons in a list
+   */
   getDataPermissons = (data) => {
     return new Promise((resolve, reject) => {
       this.data = data;
@@ -116,23 +148,34 @@ export class CreateOwnTaskPage {
     });
   };
 
-
+  /**
+   * Remove permisson from list
+   * @param i Permisson index
+   */
   quitUserPermissons(i) {
     this.permissons.splice(i, 1);
 
   }
-
+  /**
+   * Remove file from list
+   * @param i file index
+   */
   quitFile(i) {
     this.files.splice(i, 1);
 
   }
 
-
+  /**
+   * Add new permisson to list
+   * @param name 
+   */
   addPermissonsToList(name) {
     this.permissons.push(name);
   }
 
-
+  /**
+   * Add task to database
+   */
   addTask() {
 
     if (typeof this.subtype == 'undefined') {
@@ -175,7 +218,9 @@ export class CreateOwnTaskPage {
     this.navCtrl.pop();
   }
 
-
+  /**
+   * Show different types of files
+   */
   showFilesOptionsSheet() {
     console.log("Option sheet");
     let actionSheet = this.actionSheetCtrl.create({
@@ -218,7 +263,7 @@ export class CreateOwnTaskPage {
           handler: () => {
             console.log("file");
             var link: string = "";
-            link = this.mediaProvider.captureFile(this.up.currentUser.uid);
+            this.mediaProvider.captureFile(this.up.currentUser.uid);
             console.log("reeeeesult out")
             console.log(link);
             var aux = link.split("/");

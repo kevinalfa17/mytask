@@ -12,29 +12,24 @@ import { ChatViewPage } from '../chat-view/chat-view';
 })
 export class ChatPage {
     chats: Observable<any[]>;
+
+    /**
+     * Constructor
+     * @param chatProvider 
+     * @param profileData 
+     * @param af 
+     * @param nav 
+     */
     constructor(public chatProvider: ChatProvider,
         public profileData: ProfileData,
         public af: AngularFire,
         public nav: NavController) {
-
-        //this.chats = this.chatProvider.getChats().map(users => {
-          //  return users.map(user => {
-            //    user.info = this.af.database.object(`/userProfile/${user.$key}`);
-              //  return user;
-           // });
-        //});
-
-
-        /*this.chatProvider.getChats().then(chats => {
-            this.chats = chats.map(users => {
-                return users.map(user => {
-                    user.info = this.af.database.object(`/users/${user.$key}`);
-                    return user;
-                });
-            });
-        });*/
     }
 
+    /**
+     * Open a chat window with the specific locutor key
+     * @param key 
+     */
     openChat(key) {
         let param = { uid: this.profileData.currentUser.uid, interlocutor: key };
         this.nav.push(ChatViewPage, param);

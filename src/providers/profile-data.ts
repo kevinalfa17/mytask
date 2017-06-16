@@ -277,8 +277,23 @@ export class ProfileData {
           else if (field == "alarm") {
             this.af.database.list(`/userProfile/${snapshot.key}/${subnode}`).update(key, { alarm: value })
           }
+          else if (field == "alarm1") {
+            this.af.database.list(`/userProfile/${snapshot.key}/${subnode}`).update(key, { alarm1: value })
+          }
+          else if (field == "alarm2") {
+            this.af.database.list(`/userProfile/${snapshot.key}/${subnode}`).update(key, { alarm2: value })
+          }
+          else if (field == "alarm3") {
+            this.af.database.list(`/userProfile/${snapshot.key}/${subnode}`).update(key, { alarm3: value })
+          }
           else if (field == "endTime") {
             this.af.database.list(`/userProfile/${snapshot.key}/${subnode}`).update(key, { endTime: value })
+          }
+          else if (field == "startDay") {
+            this.af.database.list(`/userProfile/${snapshot.key}/${subnode}`).update(key, { startDay: value })
+          }
+          else if (field == "startTime") {
+            this.af.database.list(`/userProfile/${snapshot.key}/${subnode}`).update(key, { startTime: value })
           }
 
           subscription.unsubscribe();

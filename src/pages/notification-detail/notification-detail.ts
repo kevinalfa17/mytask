@@ -51,12 +51,40 @@ export class NotificationDetailPage {
   /**
    * Function used to accept the task of the notification
    */
-  accept(taskid) {
+  accept(taskid, comment) {
     if (this.currentNotification.Name == "null") {
 
     } if (this.currentNotification.type == "Rejected") {
-      //AQUI PONER EL CODIGO
 
+      console.log(comment)
+      var aux = comment.split(" ");
+      console.log(aux[2])
+      console.log(aux[11])
+      console.log(aux[5])
+      console.log(aux[8])
+
+      var newStartDay = aux[2];
+      let task = this.af.database.object(`/userProfile/${this.profileData.currentUser.uid}/delegatedTasks/${taskid}`)
+        .subscribe(snapshot => {
+          //snapshot.permissons.forEach((user) => {
+
+          this.taskProvider.editTask(taskid, snapshot.permissons, snapshot.responsable, "startDay", aux[2], "delegatedTasks")
+          this.taskProvider.editTask(taskid, snapshot.permissons, snapshot.responsable, "startTime", aux[5], "delegatedTasks")
+          this.taskProvider.editTask(taskid, snapshot.permissons, snapshot.responsable, "endTime", aux[8], "delegatedTasks")
+          this.taskProvider.editTask(taskid, snapshot.permissons, snapshot.responsable, "alarm", aux[11], "delegatedTasks")
+          this.taskProvider.updateStatus2(taskid,0,snapshot.permissons,snapshot.responsable);
+
+          //let task2 = this.af.database.object(`/userProfile/${user}/delegatedTasks/${taskid}`)
+          //task2.update({startDay:newStartDay});
+          /*task2 = this.af.database.object(`/userProfile/${user}/delegatedTasks/${taskid}`)
+          .update({endTime:aux[8]});*/
+
+          //.update({startDay:aux[1],endTime:aux[8],startTime:aux[4],alarm:aux[9]});
+
+          //});
+          //task.unsubscribe();
+
+        });
       this.notificationData.deleteNotificationTemp(this.currentNotification.id, this.currentUser);
       this.nav.pop();
     } else {

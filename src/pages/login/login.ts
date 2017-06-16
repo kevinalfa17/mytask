@@ -31,11 +31,23 @@ export class LoginPage {
   userProfile: any = null; // Var where is the userProfile of firebase
   email: any; // The site where is saved the email gived for the user
   password: any; // The site where is saved the password gived for the user
-
   zone: NgZone; // Variable to keep the NgZone
   public loginForm; // Where is saved the information of the form filled
   loading: any; // Variable of loading
 
+  /**
+   * Constructor
+   * @param platform 
+   * @param nav 
+   * @param translate 
+   * @param googlePlus 
+   * @param facebook 
+   * @param angfire 
+   * @param authData 
+   * @param formBuilder 
+   * @param alertCtrl 
+   * @param loadingCtrl 
+   */
   constructor(public platform: Platform, public nav: NavController, public translate: TranslateService, public googlePlus: GooglePlus, private facebook: Facebook,
     public angfire: AngularFire, public authData: AuthData, public formBuilder: FormBuilder, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
     this.translate.setDefaultLang('es');

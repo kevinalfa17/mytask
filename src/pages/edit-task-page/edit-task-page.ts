@@ -4,6 +4,10 @@ import { TranslateService } from 'ng2-translate';
 import { ContactsProvider } from '../../providers/contacts-provider';
 import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
 import { TaskProvider } from '../../providers/task-provider';
+import { NotificationData } from '../../providers/notification-provider';
+import { ProfileData } from '../../providers/profile-data';
+
+
 
 
 @IonicPage()
@@ -20,11 +24,28 @@ export class EditTaskPage {
   oldComment: string;
   key: string;
   permissons: Array<string>;
+  name:string;
 
-  constructor(public viewCtrl: ViewController, public navCtrl: NavController, public navParams: NavParams, public contactsProvider: ContactsProvider,
-    public af: AngularFire, public translate: TranslateService, public taskProvider: TaskProvider) {
+  /**
+   * Constructor
+   * @param viewCtrl 
+   * @param navCtrl 
+   * @param navParams 
+   * @param contactsProvider 
+   * @param af 
+   * @param translate 
+   * @param taskProvider 
+   * @param notificationData 
+   * @param profileData 
+   */
+  constructor(public viewCtrl: ViewController, public navCtrl: NavController,
+    public navParams: NavParams, public contactsProvider: ContactsProvider,
+    public af: AngularFire, public translate: TranslateService, public taskProvider: TaskProvider,
+    public notificationData: NotificationData, public profileData: ProfileData) {
+
     this.translate.setDefaultLang('es');
     this.key = navParams.get("key");
+    this.name= navParams.get("name");
     this.permissons = navParams.get("permissons");
     this.task = taskProvider.getTask(navParams.get("key"));
     this.newComment = "";
@@ -43,7 +64,10 @@ export class EditTaskPage {
 
   }*/
 
-
+  /**
+   * Change a date in task
+   * @param responsable 
+   */
   changeDate(responsable) {
 
     if (this.endTime !== "") {
@@ -52,8 +76,18 @@ export class EditTaskPage {
     if (this.endDate !== "") {
       this.taskProvider.editTask(this.key, this.permissons, responsable, "endTime", this.endDate, "delegatedTasks");
     }
+      if (responsable !== this.profileData.currentUser.email) {
+        this.profileData.insertNotification(responsable, "Date Changed", this.name, "CambioData",
+          this.profileData.currentUser.uid, this.key, "");
+      }
+
   }
 
+  /**
+   * Add new admin comment
+   * @param responsable 
+   * @param oldComment 
+   */
   addComment(responsable, oldComment) {
 
     this.taskProvider.editTask(this.key, this.permissons, responsable, "comments", (oldComment + " \n  ->A: " + this.newComment), "delegatedTasks");

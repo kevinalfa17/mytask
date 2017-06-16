@@ -82,11 +82,11 @@
             </ion-item>
 
             <ion-item-options>
-              <button ion-button color="button1" (click)="postpone(task.$key,task.permissons,task.responsable,task.alarm)">
+              <button ion-button color="button1" (click)="postpone(task.$key,task.permissons,task.responsable,task.alarm1,task.alarm2,task.alarm3,task.taskName)">
           <ion-icon name="alarm"></ion-icon>
           {{'POSTPONE' | translate }}
         </button>
-              <button ion-button color="button2" (click)="edit(task.$key,task.permissons)">
+              <button ion-button color="button2" (click)="edit(task.$key,task.permissons,task.taskName)">
           <ion-icon name="create"></ion-icon>
           {{'EDIT' | translate }}
         </button>
@@ -155,8 +155,8 @@
         </button>
             </ion-item-options>
 
-            <ion-item-options side="left" (ionSwipe)="complete(task.$key,task.status,task.permissons,task.taskName)">
-              <button ion-button color="completeButton" expandable (click)="complete(task.$key,task.status,task.permissons,task.taskName)">
+            <ion-item-options side="left" (ionSwipe)="complete(task.$key,task.status,task.permissons,task.taskName,task.alarm,task.responsable)">
+              <button ion-button color="completeButton" expandable (click)="complete(task.$key,task.status,task.permissons,task.taskName,task.alarm,task.responsable)">
           <ion-icon name="checkmark-circle"></ion-icon>
           <div *ngIf="task.status==0">{{'STARTED' | translate }}</div>
           <div *ngIf="task.status==5">{{'STARTED' | translate }}</div>
