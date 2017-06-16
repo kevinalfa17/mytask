@@ -223,7 +223,7 @@ export class CreateOwnTaskPage {
               console.log("reeeeesult")
               console.log(link)
             });
-            console.log("reeeeesult out")
+            /*console.log("reeeeesult out")
             console.log(link);
             var aux = link.split("/");
             let file = {
@@ -233,7 +233,7 @@ export class CreateOwnTaskPage {
             }
             console.log(file);
             this.files.push(file);
-            console.log(this.files);
+            console.log(this.files);*/
 
           }
         },

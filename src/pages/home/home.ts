@@ -6,6 +6,7 @@ import { ViewChild } from '@angular/core';
 import { Slides } from 'ionic-angular';
 import { ActionSheetController } from 'ionic-angular';
 import firebase from 'firebase';
+import { ModalController } from 'ionic-angular';
 // Providers used
 import { NotificationData } from '../../providers/notification-provider';
 import { ProfileData } from '../../providers/profile-data';
@@ -59,7 +60,8 @@ export class HomePage {
 
   constructor(public nav: NavController, public translate: TranslateService,
     public actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController,
-    public notificationData: NotificationData, public taskProvider: TaskProvider, public profileData: ProfileData) {
+    public notificationData: NotificationData, public taskProvider: TaskProvider,
+    public profileData: ProfileData, public modalCtrl: ModalController) {
 
     this.translate.setDefaultLang('es');
 
@@ -550,6 +552,16 @@ export class HomePage {
   complete(key, status, permissons, name) {
 
     if (status == 0) {
+
+
+      /*let chooseModal = this.modalCtrl.create(ContactListPage);
+      chooseModal.onDidDismiss(data => {
+        this.addPermissonsToList(data);
+      });
+      chooseModal.present();*/
+
+
+
       this.taskProvider.updateStatus(key, 1, permissons);
 
       permissons.forEach((user) => {

@@ -14,7 +14,7 @@ export class AlarmSelectorPage {
   alarm2: string;
   alarm3: string;
 
-  constructor(public viewCtrl: ViewController,public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public viewCtrl: ViewController, public navCtrl: NavController, public navParams: NavParams) {
     this.alarm1 = "";
     this.alarm2 = "";
     this.alarm3 = "";
@@ -39,8 +39,9 @@ export class AlarmSelectorPage {
 
   }
 
-   addAlarms() {
-    //this.viewCtrl.dismiss(user);
+  addAlarms() {
+    var aux = [this.alarm1,this.alarm2,this.alarm3]
+    this.viewCtrl.dismiss(aux);
   }
 
 }
