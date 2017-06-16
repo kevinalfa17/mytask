@@ -39,8 +39,6 @@ export class Notifications {
     ionViewWillEnter() {
         this.currentUser = this.profiledata.currentUser.uid;
         //this.notificationData.getNotifications(this.currentUser);
-        console.log('aqui');
-        console.log(this.currentUser);
         this.notificationsList = this.notificationData.getNotificationsList(this.currentUser);
     }
 

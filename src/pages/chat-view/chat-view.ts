@@ -65,7 +65,6 @@ export class ChatViewPage {
         targetWidth: 500,
         targetHeight: 500
       }).then((imagen) => {
-        console.log(imagen);
         this.image = "data:image/jpeg;base64," + imagen;
       }, (err) => {
         console.log(err);

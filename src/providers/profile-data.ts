@@ -179,7 +179,6 @@ export class ProfileData {
       snapshots.forEach(snapshot => {
 
         if (snapshot.key !== null) {
-          console.log("444");
           var yourRef = this.af.database.object(`/userProfile/${snapshot.key}/delegatedTasks/${key}`);
           yourRef.update({ status: newStatus })
           subscription.unsubscribe();
