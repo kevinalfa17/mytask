@@ -16,6 +16,8 @@ import { GoogleCalendar } from '../googleCalendar/googleCalendar';
 import { CreateTaskPage } from '../create-task/create-task';
 import { EditTaskPage } from '../edit-task-page/edit-task-page';
 import { CreateOwnTaskPage } from '../create-own-task-page/create-own-task-page';
+import { AlarmSelectorPage } from '../alarm-selector-pag/alarm-selector-pag';
+
 
 import { TaskDetailPage } from '../task-detail-page/task-detail-page';
 import { TaskChatPage } from '../task-chat-page/task-chat-page';
@@ -58,7 +60,7 @@ export class HomePage {
   public currentUser: any; // The uid of the current user
   public currentUserVal: any; // The values of the current user
 
-  constructor(public nav: NavController, public translate: TranslateService,
+  constructor(public af: AngularFire, public nav: NavController, public translate: TranslateService,
     public actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController,
     public notificationData: NotificationData, public taskProvider: TaskProvider,
     public profileData: ProfileData, public modalCtrl: ModalController) {
@@ -554,8 +556,13 @@ export class HomePage {
     if (status == 0) {
 
 
-      /*let chooseModal = this.modalCtrl.create(ContactListPage);
+      /*let chooseModal = this.modalCtrl.create(AlarmSelectorPage);
       chooseModal.onDidDismiss(data => {
+
+        let task = this.af.database.object(`/userProfile/${this.profileData.currentUser.uid}/tasks/${key}`).set({alarm1:""});
+
+
+
         this.addPermissonsToList(data);
       });
       chooseModal.present();*/

@@ -218,12 +218,8 @@ export class CreateOwnTaskPage {
           handler: () => {
             console.log("file");
             var link: string = "";
-            this.mediaProvider.captureFile(this.up.currentUser.uid).then((result: string) => {
-              link = result;
-              console.log("reeeeesult")
-              console.log(link)
-            });
-            /*console.log("reeeeesult out")
+            link = this.mediaProvider.captureFile(this.up.currentUser.uid);
+            console.log("reeeeesult out")
             console.log(link);
             var aux = link.split("/");
             let file = {
@@ -233,7 +229,7 @@ export class CreateOwnTaskPage {
             }
             console.log(file);
             this.files.push(file);
-            console.log(this.files);*/
+            console.log(this.files);
 
           }
         },

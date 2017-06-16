@@ -81,27 +81,23 @@ export class MediaData {
      * This function it's used to take and save a new file
      */
     captureFile(currentUser) {
+        var dat;
+        this.filecho.open().then((url) => {
 
-        var promise = new Promise(function (resolve, reject) {
-            var dat;
-            this.filecho.open().then((url) => {
+            (<any>window).FilePath.resolveNativePath(url, (result) => {
 
-                (<any>window).FilePath.resolveNativePath(url, (result) => {
-
-                    (<any>window).resolveLocalFileSystemURL(result, (res) => {
-                        res.file((resFile) => {
-                            dat = this.savedInStorage(result, currentUser, resFile.type);
-                            console.log("dat file");
-                            console.log(dat);
-                            resolve(dat);
-                        });
+                (<any>window).resolveLocalFileSystemURL(result, (res) => {
+                    res.file((resFile) => {
+                        dat = this.savedInStorage(result, currentUser, resFile.type);
+                        console.log("dat image1");
+                        console.log(dat);
                     });
-                })
-            });
-
+                });
+            })
         });
-
-        return promise;
+        console.log("dat image2");
+        console.log(dat);
+        return dat;
     }
 
     /**
@@ -142,13 +138,18 @@ export class MediaData {
                     contentType: mime
                 });
 
-                console.log("reeeeef0")
+                console.log("heeere1")
+                console.log(ref.getDownloadURL)
+
+                console.log("heeere2")
                 console.log(ref.getDownloadURL())
 
                 // firebase.database().ref("/userProfile").child(currentUser).child(type).child(newName).set(ref.getDownloadURL()); // Aqui PONER REF A TASK
 
+
             });
-            console.log("reeeeef")
+
+            console.log("heeere3")
             console.log(ref.getDownloadURL())
             return ref.getDownloadURL();
         }
