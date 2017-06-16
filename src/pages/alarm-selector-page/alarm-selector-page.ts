@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 
 
 
@@ -10,11 +10,37 @@ import { IonicPage, NavController, NavParams,ViewController } from 'ionic-angula
 })
 export class AlarmSelectorPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  alarm1: string;
+  alarm2: string;
+  alarm3: string;
+
+  constructor(public viewCtrl: ViewController,public navCtrl: NavController, public navParams: NavParams) {
+    this.alarm1 = "";
+    this.alarm2 = "";
+    this.alarm3 = "";
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AlarmSelectorPage');
+  }
+
+  select1(selected) {
+    this.alarm1 = selected;
+
+  }
+
+  select2(selected) {
+    this.alarm2 = selected;
+
+  }
+
+  select3(selected) {
+    this.alarm3 = selected;
+
+  }
+
+   addAlarms() {
+    //this.viewCtrl.dismiss(user);
   }
 
 }

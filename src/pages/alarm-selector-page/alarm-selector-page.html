@@ -23,50 +23,98 @@
   <ion-list>
     <ion-item>
       <ion-label>{{'ALARM' | translate}} 1</ion-label>
-      <ion-select>
-        <ion-option  value="1">
+      <ion-select (ionChange)="select1($event)">
+        <ion-option value="1">
           1 {{'MINUTE' | translate}}
         </ion-option>
-        <ion-option  value="2">
+        <ion-option value="2">
           5 {{'MINUTE' | translate}}s
         </ion-option>
-        <ion-option  value="3">
+        <ion-option value="3">
           10 {{'MINUTE' | translate}}s
         </ion-option>
-        <ion-option  value="4">
+        <ion-option value="4">
           30 {{'MINUTE' | translate}}s
         </ion-option>
-         <ion-option  value="5">
+        <ion-option value="5">
           1 {{'HOUR' | translate}}
         </ion-option>
-         <ion-option  value="6">
+        <ion-option value="6">
           2 {{'HOUR' | translate}}s
         </ion-option>
-        <ion-option  value="7">
+        <ion-option value="7">
           3 {{'HOUR' | translate}}s
         </ion-option>
-        <ion-option  value="8">
-          1 {{'DAY' | translate}}
+        <ion-option value="8">
+          5 {{'HOUR' | translate}}s
         </ion-option>
       </ion-select>
     </ion-item>
 
     <ion-item>
       <ion-label>{{'ALARM' | translate}} 2</ion-label>
-      <ion-select>
-        <ion-option *ngFor="let type of types | async" value="{{type.typeName}}">
-          {{type.typeName}}
+      <ion-select (ionChange)="select2($event)">
+        <ion-option value="1">
+          1 {{'MINUTE' | translate}}
+        </ion-option>
+        <ion-option value="2">
+          5 {{'MINUTE' | translate}}s
+        </ion-option>
+        <ion-option value="3">
+          10 {{'MINUTE' | translate}}s
+        </ion-option>
+        <ion-option value="4">
+          30 {{'MINUTE' | translate}}s
+        </ion-option>
+        <ion-option value="5">
+          1 {{'HOUR' | translate}}
+        </ion-option>
+        <ion-option value="6">
+          2 {{'HOUR' | translate}}s
+        </ion-option>
+        <ion-option value="7">
+          3 {{'HOUR' | translate}}s
+        </ion-option>
+        <ion-option value="8">
+          5 {{'HOUR' | translate}}s
         </ion-option>
       </ion-select>
     </ion-item>
 
     <ion-item>
       <ion-label>{{'ALARM' | translate}} 3</ion-label>
-      <ion-select (ionChange)="loadSubtypes($event)">
-        <ion-option *ngFor="let type of types | async" value="{{type.typeName}}">
-          {{type.typeName}}
+      <ion-select (ionChange)="select3($event)">
+        <ion-option value="1">
+          1 {{'MINUTE' | translate}}
+        </ion-option>
+        <ion-option value="2">
+          5 {{'MINUTE' | translate}}s
+        </ion-option>
+        <ion-option value="3">
+          10 {{'MINUTE' | translate}}s
+        </ion-option>
+        <ion-option value="4">
+          30 {{'MINUTE' | translate}}s
+        </ion-option>
+        <ion-option value="5">
+          1 {{'HOUR' | translate}}
+        </ion-option>
+        <ion-option value="6">
+          2 {{'HOUR' | translate}}s
+        </ion-option>
+        <ion-option value="7">
+          3 {{'HOUR' | translate}}s
+        </ion-option>
+        <ion-option value="8">
+          5 {{'HOUR' | translate}}s
         </ion-option>
       </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <button ion-button block (click)="addAlarms()">
+            OK
+      </button>
     </ion-item>
 
   </ion-list>

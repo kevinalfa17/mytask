@@ -217,8 +217,13 @@ export class CreateOwnTaskPage {
           text: 'File',
           handler: () => {
             console.log("file");
-            var link: string;
-            link = this.mediaProvider.captureFile(this.up.currentUser.uid);
+            var link: string = "";
+            this.mediaProvider.captureFile(this.up.currentUser.uid).then((result: string) => {
+              link = result;
+              console.log("reeeeesult")
+              console.log(link)
+            });
+            console.log("reeeeesult out")
             console.log(link);
             var aux = link.split("/");
             let file = {
@@ -239,9 +244,9 @@ export class CreateOwnTaskPage {
             link = this.mediaProvider.captureAudio(this.up.currentUser.uid);
             var aux = link.split("/");
             let file = {
-              link:link,
-              name:aux[aux.length-1],
-              type:"audio"
+              link: link,
+              name: aux[aux.length - 1],
+              type: "audio"
             }
             this.files.push(file);
           }

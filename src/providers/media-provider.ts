@@ -81,21 +81,27 @@ export class MediaData {
      * This function it's used to take and save a new file
      */
     captureFile(currentUser) {
-        var dat;
-        this.filecho.open().then((url) => {
 
-            (<any>window).FilePath.resolveNativePath(url, (result) => {
+        var promise = new Promise(function (resolve, reject) {
+            var dat;
+            this.filecho.open().then((url) => {
 
-                (<any>window).resolveLocalFileSystemURL(result, (res) => {
-                    res.file((resFile) => {
-                        dat = this.savedInStorage(result, currentUser, resFile.type);
-                        console.log("dat file");
-                        console.log(dat);
+                (<any>window).FilePath.resolveNativePath(url, (result) => {
+
+                    (<any>window).resolveLocalFileSystemURL(result, (res) => {
+                        res.file((resFile) => {
+                            dat = this.savedInStorage(result, currentUser, resFile.type);
+                            console.log("dat file");
+                            console.log(dat);
+                            resolve(dat);
+                        });
                     });
-                });
-            })
+                })
+            });
+
         });
-        return dat;
+
+        return promise;
     }
 
     /**
@@ -127,19 +133,24 @@ export class MediaData {
             //     content: '...'
             // });
             // loading.present();
-
+            let ref;
             this.tools.makeFileIntoBlob(data, ext, mime).then((fileblob) => {
                 var newName = this.tools.randomString(10);
 
-                let ref = firebase.storage().ref('/' + type + '/' + newName + '.' + ext);
+                ref = firebase.storage().ref('/' + type + '/' + newName + '.' + ext);
                 ref.put(fileblob, {
                     contentType: mime
                 });
 
+                console.log("reeeeef0")
+                console.log(ref.getDownloadURL())
+
                 // firebase.database().ref("/userProfile").child(currentUser).child(type).child(newName).set(ref.getDownloadURL()); // Aqui PONER REF A TASK
-                return ref.getDownloadURL();
 
             });
+            console.log("reeeeef")
+            console.log(ref.getDownloadURL())
+            return ref.getDownloadURL();
         }
     }
 
