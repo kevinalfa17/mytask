@@ -7,16 +7,6 @@
 
 
 <ion-content padding>
-  <button ion-button icon-only (click)="addLocalnoti()">
-        <ion-icon name="alarm"></ion-icon>
-    </button>
-
-    <button ion-button icon-only (click)="cancelLocalNotification()">
-        <ion-icon name="close"></ion-icon>
-    </button>
-    <button primary (click)="send()">Send Google Calendar Invite
-    </button>
-
   <ion-list>
     <ion-item *ngFor="let noti of notificationsList" color="{{noti?.type}}" (click)="goToNotificationDetail(noti.id)">
       <h2>{{noti?.Name}}</h2>

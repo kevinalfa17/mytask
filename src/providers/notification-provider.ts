@@ -46,7 +46,7 @@ export class NotificationData {
         var tempname: string;
         var tem = this.userProfile.child(currentUser).child('notifications');
 
-        tem.child(notificationtId).orderByChild('Type').on('value', snapshot => {
+        tem.child(notificationtId).orderByChild('type').on('value', snapshot => {
             tempname = snapshot.val().Name;
         });
 
@@ -111,7 +111,7 @@ export class NotificationData {
                         id: snap.key,
                         Name: snap.val().Name,
                         Description: snap.val().Description,
-                        Type: snap.val().Type,
+                        type: snap.val().type,
                         From: snap.val().From,
                         Condition: snap.val().Condition,
                         DateSended: snap.val().DateSended,

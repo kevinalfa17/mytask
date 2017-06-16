@@ -198,8 +198,7 @@ export class ProfileData {
    * @param name The name used for the task
    * @param type The type of task 
    * @param creatorid The id of the creator user 
-   * @param key The key of the new notification for put it in the user data
-   * @param keyT The key of the task for use it later
+   * @param key The key of the task for use it later
    */
   insertNotification(email, description, name, type, creatorid, key, comment) {
 
@@ -218,7 +217,7 @@ export class ProfileData {
           let noti = {
             Name: name,
             Description: description,
-            
+            type: type,
             Read: "false",
             Creatoremail: this.currentUser.email,
             taskid: key,
