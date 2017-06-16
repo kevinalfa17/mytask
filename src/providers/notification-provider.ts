@@ -130,7 +130,7 @@ export class NotificationData {
      * @param currentUser The uid of the currrent user
      */
     acceptNotification(Noti, currentUser) {
-        this.pd.insertNotification(Noti.From, "Task Accepted", Noti.Name, 'Accepted', currentUser.uid, Noti.id, Noti.taskid, Noti.comment);
+        this.pd.insertNotification(Noti.From, "Task Accepted", Noti.Name, 'Accepted', currentUser.uid, Noti.taskid, Noti.comment);
 
         this.userProfile.child('taskManage').child('Accept').push({
             Name: Noti.Name,
@@ -146,7 +146,7 @@ export class NotificationData {
      * @param currentUser The uid of the currrent user
      */
     rejectNotification(Noti, currentUser) {
-        this.pd.insertNotification(Noti.From, "Task Rejected", Noti.Name, "Rejected", currentUser.uid, Noti.id, Noti.taskid, Noti.comment);
+        this.pd.insertNotification(Noti.From, "Task Rejected", Noti.Name, "Rejected", currentUser.uid, Noti.taskid, Noti.comment);
 
         this.userProfile.child('taskManage').child('Rejected').push({
             Name: Noti.Name,
