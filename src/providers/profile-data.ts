@@ -218,7 +218,7 @@ export class ProfileData {
           let noti = {
             Name: name,
             Description: description,
-            Condition: "Pending",
+            
             Read: "false",
             Creatoremail: this.currentUser.email,
             taskid: key,

@@ -18,11 +18,11 @@
     </button>
 
   <ion-list>
-    <ion-item *ngFor="let noti of notificationsList" color="{{noti?.Type}}" (click)="goToNotificationDetail(noti.id)">
+    <ion-item *ngFor="let noti of notificationsList" color="{{noti?.type}}" (click)="goToNotificationDetail(noti.id)">
       <h2>{{noti?.Name}}</h2>
       <p><strong>{{"WORDNAME" | translate}}:</strong> {{noti?.Name}}</p>
       <p><strong>{{"WORDDESCRIPTION" | translate}}:</strong> {{noti?.Description}}</p>
-      <p><strong>{{"WORDCONDITION" | translate}}: </strong>{{noti?.Condition}}</p>
+      <p><strong>{{"WORDTYPE" | translate}}: </strong>{{noti?.type}}</p>
     </ion-item>
   </ion-list>
 

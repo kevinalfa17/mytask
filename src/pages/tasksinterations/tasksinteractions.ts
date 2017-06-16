@@ -15,6 +15,7 @@ import { ProfileData } from '../../providers/profile-data';
 export class Tasksinteractions {
     public tasksAcceptList: any; // List of accepted tasks
     public tasksRejectedList: any; // List of rejected task
+    public tasksRejectedToMeList: any; // List of task rejected to me
 
     public tasksAcceptReference: firebase.database.Reference; // The reference to the node of accepted tasks in the userProfile
     public tasksRejectedReference: firebase.database.Reference; // The reference to the node of rejected tasks in the userProfile
@@ -41,6 +42,7 @@ export class Tasksinteractions {
                     id: snap.key,
                     Name: snap.val().Name,
                     Description: snap.val().Description,
+                    From: snap.val().From,
                 });
                 return false
             })
@@ -59,12 +61,23 @@ export class Tasksinteractions {
         this.tasksRejectedReference.on('value', snapshot => {
 
             let rawList = [];
+            let rawList2 = [];
             snapshot.forEach(snap => {
-                rawList.push({
-                    id: snap.key,
-                    Name: snap.val().Name,
-                    Description: snap.val().Description,
-                });
+                if (snap.val().Creatorid == this.currentUser.uid) {
+                    rawList2.push({
+                        id: snap.key,
+                        Name: snap.val().Name,
+                        Description: snap.val().Description,
+                        From: snap.val().From,
+                    });
+                } else {
+                    rawList.push({
+                        id: snap.key,
+                        Name: snap.val().Name,
+                        Description: snap.val().Description,
+                        From: snap.val().From,
+                    });
+                }
                 return false
             })
             if (rawList.length == 0) {
@@ -74,7 +87,9 @@ export class Tasksinteractions {
                     Description: "Vacio",
                 });
                 this.tasksRejectedList = rawList;
+                this.tasksRejectedToMeList = rawList;
             } else {
+                this.tasksRejectedToMeList = rawList2;
                 this.tasksRejectedList = rawList;
             }
 

@@ -36,9 +36,13 @@ $colors: (
   face: blue,
 
 
-  Date:blue,
-  Homework:red,
-  call: green,
+  onHold:yellow,
+  complete: green,
+  inProgress: orange,
+  changeState: gray,
+  new: blue,
+  Rejected: black,
+  Accepted: white,
 
   completeButton: #32db64,
   button1: #387ef5,

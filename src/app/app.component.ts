@@ -8,6 +8,8 @@ import { Component, NgZone } from '@angular/core';
 import firebase from 'firebase';
 import { Push, PushObject, PushOptions } from '@ionic-native/push';
 import { LocalNotifications } from '@ionic-native/local-notifications';
+import moment from 'moment';
+
 //Pages
 import { LoginPage } from '../pages/login/login';
 import { Notifications } from '../pages/notifications/notifications'
@@ -111,6 +113,21 @@ export class MyApp {
               text: 'Cancel',
               handler: () => {
                 this.localNotifications.cancel(notification.id);
+              }
+            },
+            {
+              text: 'Posp',
+              handler: () => {
+                var localNotiN = {
+                  id: moment.now(),
+                  title: notification.title,
+                  text: notification.text,
+                  sound: notification.sound,
+                  at: new Date(new Date().getTime() + 1800 * 1000),
+                  icon: notification.icon
+                };
+
+                this.localNotifications.schedule(localNotiN);
               }
             }]
         });
