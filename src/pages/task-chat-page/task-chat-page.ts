@@ -19,6 +19,16 @@ export class TaskChatPage {
   admin:boolean;
 
   @ViewChild(Content) content: Content;
+  /**
+   * Constructor
+   * @param nav 
+   * @param params 
+   * @param chatProvider 
+   * @param af 
+   * @param profileData 
+   * @param camera 
+   * @param platform 
+   */
   constructor(public nav:NavController, 
   params:NavParams, 
   public chatProvider:ChatProvider, 
@@ -41,6 +51,9 @@ export class TaskChatPage {
   }
 
 
+  /**
+   * Insert message in task chat
+   */
   sendMessage() {
     var messageAux = "";
     
@@ -61,6 +74,9 @@ export class TaskChatPage {
       }
   };
   
+  /**
+   * Insert picture in task chat
+   */
   sendPicture() {
       //let chat = {from: this.uid, type: 'picture', picture:null};
       /*this.userProvider.getPicture()

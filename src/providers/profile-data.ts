@@ -166,6 +166,12 @@ export class ProfileData {
 
   }
 
+  /**
+   * Update status for user and all its delegated admins
+   * @param email 
+   * @param key 
+   * @param newStatus 
+   */
   updateStatus(email, key, newStatus) {
 
     var userkey;
@@ -234,6 +240,12 @@ export class ProfileData {
 
   }
 
+  /**
+   * Delete task for user and all its delegated admins
+   * @param email 
+   * @param key 
+   * @param subnode 
+   */
   endTask(email, key, subnode) {
 
     var userkey;
@@ -257,7 +269,14 @@ export class ProfileData {
 
   }
 
-
+  /**
+   * Update comment for user and all its delegated admins
+   * @param email 
+   * @param key 
+   * @param value 
+   * @param field 
+   * @param subnode 
+   */
   updateComment(email, key, value, field, subnode) {
 
     var userkey;

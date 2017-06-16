@@ -21,11 +21,18 @@ export class TaskProvider {
 
   contactsList: FirebaseListObservable<any[]>;
 
+  /**
+   * Constructor
+   * @param af 
+   * @param up 
+   */
   constructor(public af: AngularFire, public up: ProfileData) {
     console.log('Hello TaskProvider Provider');
   }
 
-
+  /**
+   * Get all task of specific user
+   */
   getTasks() {
     let tasks = this.af.database.list(`/userProfile/${this.up.currentUser.uid}/tasks`, {
       query: {
@@ -35,19 +42,43 @@ export class TaskProvider {
     return tasks;
   }
 
-
+  /**
+   * Get specific task
+   * @param key 
+   */
   getTask(key) {
     let task = this.af.database.object(`/userProfile/${this.up.currentUser.uid}/tasks/${key}`);
     return task
   }
 
+  /**
+   * Get all task in which user is admin
+   */
   getDelegatedTasks() {
 
     let delegatedTasks = this.af.database.list(`/userProfile/${this.up.currentUser.uid}/delegatedTasks`, );
     return delegatedTasks;
   }
 
-
+  /**
+   * Create a new task in DB
+   * @param responsable 
+   * @param taskname 
+   * @param type 
+   * @param subtype 
+   * @param startDate 
+   * @param startTime 
+   * @param repeat 
+   * @param recurrence 
+   * @param endTime 
+   * @param priority 
+   * @param notifications 
+   * @param files 
+   * @param comments 
+   * @param permissons 
+   * @param haveImage 
+   * @param alarm 
+   */
   addNewTask(responsable, taskname, type, subtype, startDate, startTime, repeat,
     recurrence, endTime, priority, notifications, files, comments, permissons, haveImage, alarm) {
     permissons.push(this.up.currentUser.email);
@@ -231,6 +262,13 @@ export class TaskProvider {
     }
     return true;
   }
+
+  /**
+   * Update task status
+   * @param key 
+   * @param newStatus 
+   * @param permissons 
+   */
   updateStatus(key, newStatus, permissons) {
 
     this.af.database.list(`/userProfile/${this.up.currentUser.uid}/tasks`).update(key, { status: newStatus });
@@ -240,6 +278,13 @@ export class TaskProvider {
     });
   };
 
+  /**
+   * Update task status (with responsable)
+   * @param key 
+   * @param newStatus 
+   * @param permissons 
+   * @param responsable 
+   */
   updateStatus2(key, newStatus, permissons,responsable) {
 
     this.up.updateStatus(responsable, key, newStatus)
@@ -249,7 +294,12 @@ export class TaskProvider {
     });
   };
 
-
+  /**
+   * End/delete a task
+   * @param key 
+   * @param permissons 
+   * @param responsable 
+   */
   endTask(key, permissons, responsable) {
 
     this.up.endTask(responsable, key, "tasks");
@@ -259,7 +309,15 @@ export class TaskProvider {
     });
   };
 
-
+  /**
+   * Edit an existing task in DB
+   * @param key 
+   * @param permissons 
+   * @param responsable 
+   * @param field 
+   * @param value 
+   * @param subnode 
+   */
   editTask(key, permissons, responsable, field, value, subnode) {
 
     // this.af.database.list(`/userProfile/${this.up.currentUser.uid}/tasks`).update(key, { comments: value });

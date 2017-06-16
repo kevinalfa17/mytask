@@ -9,12 +9,19 @@ export class ContactsProvider {
 
   contactsList: FirebaseListObservable<any[]>;
 
+  /**
+   * Constructor
+   * @param af 
+   * @param up 
+   */
   constructor(public af: AngularFire, public up: ProfileData) {
     console.log('Hello ContactsProvider Provider');
   }
 
 
-
+  /**
+   * Get contacts from DB
+   */
   getContactsRef() {
     return this.af.database.list('contacts', {
       query: {
@@ -25,11 +32,18 @@ export class ContactsProvider {
 
   }
 
+  /**
+   * Get an array with all emails
+   */
   getContactsEmail() {
     return this.getEmailArray(this.af,this.up);
   }
 
-
+  /**
+   * Promise function to get the emails
+   * @param af 
+   * @param up 
+   */
   getEmailArray(af:AngularFire,up: ProfileData) {
 
     let promise = new Promise(function (resolve, reject) {
@@ -56,8 +70,12 @@ export class ContactsProvider {
 
   }
 
-
-
+  /**
+   * Add user to contacts list of another user
+   * @param cName 
+   * @param cEmail 
+   * @param cPhone 
+   */
   addNewContact(cName, cEmail, cPhone) {
 
     let contact = {

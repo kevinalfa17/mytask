@@ -20,6 +20,13 @@ export class EditTypePage {
   subtypeDisable: boolean;
   typeDisable:boolean;
 
+  /**
+   * Constructor
+   * @param navCtrl 
+   * @param navParams 
+   * @param translate 
+   * @param typesProvider 
+   */
   constructor(public navCtrl: NavController, public navParams: NavParams, public translate: TranslateService,
     public typesProvider: TypesProvider) {
 
@@ -33,22 +40,35 @@ export class EditTypePage {
 
   }
 
+  /**
+   * Delete subtype from list
+   * @param key 
+   */
   deleteSubtype(key) {
     this.typesProvider.removeSubtype(key);
 
   }
 
+  /**
+   * Add new subtype
+   */
   addSubtype() {
     this.typesProvider.addNewSubtype(this.typeName, this.subtypeName);
     this.subtypeName = "";
     this.checkChanges();
   }
 
+  /**
+   * Edit an existing type
+   */
   editType() {
     this.typesProvider.editType(this.key, this.typeName);
     this.navCtrl.pop();
   }
 
+  /**
+   * Wait for changes in inputs
+   */
   checkChanges() {
     this.typeDisable = (this.typeName == "");
     this.subtypeDisable = (this.subtypeName == "");

@@ -18,6 +18,16 @@ export class TaskDetailPage {
   key:string;
   permissons:Array<string>;
 
+  /**
+   * Constructor
+   * @param viewCtrl 
+   * @param navCtrl 
+   * @param navParams 
+   * @param contactsProvider 
+   * @param af 
+   * @param translate 
+   * @param taskProvider 
+   */
   constructor(public viewCtrl: ViewController, public navCtrl: NavController, public navParams: NavParams, public contactsProvider: ContactsProvider,
     public af: AngularFire, public translate: TranslateService, public taskProvider: TaskProvider) {
     this.translate.setDefaultLang('es');
@@ -31,6 +41,11 @@ export class TaskDetailPage {
     console.log('ionViewDidLoad TaskDetailPage');
   }
 
+  /**
+   * Add user comment
+   * @param responsable 
+   * @param oldComment 
+   */
   addComment(responsable, oldComment) {
 
     this.taskProvider.editTask(this.key, this.permissons, responsable, "comments", (oldComment + " \n  ->R: " + this.newComment), "delegatedTasks");
