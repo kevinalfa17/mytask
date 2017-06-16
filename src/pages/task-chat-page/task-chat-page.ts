@@ -5,15 +5,19 @@ import { ProfileData } from '../../providers/profile-data';
 import { ChatProvider } from '../../providers/chat-provider';
 import { Camera } from '@ionic-native/camera';
 import { Platform } from 'ionic-angular';
+
 @Component({
-  templateUrl: 'chat-view.html',
+  selector: 'page-task-chat-page',
+  templateUrl: 'task-chat-page.html',
 })
-export class ChatViewPage {
+export class TaskChatPage {
   message: string;
   uid:string;
-  interlocutor:string;
   chats:FirebaseListObservable<any>;  
   image: string;
+  key:string;
+  admin:boolean;
+
   @ViewChild(Content) content: Content;
   constructor(public nav:NavController, 
   params:NavParams, 
@@ -21,11 +25,12 @@ export class ChatViewPage {
   public af:AngularFire, 
   public profileData:ProfileData, public camera: Camera, public platform: Platform) {
     
-    this.uid = params.data.uid;
-    this.interlocutor = params.data.interlocutor;
-    
+    this.uid = profileData.currentUser.uid;
+    this.key = params.get("key");
+    this.admin = params.get("admin");
+
     // Get Chat Reference
-    chatProvider.getChatRef(this.uid, this.interlocutor)
+    chatProvider.getTaskChatRef(this.key)
     .then((chatRef:any) => {  
         this.chats = this.af.database.list(chatRef);
     });
@@ -37,10 +42,18 @@ export class ChatViewPage {
 
 
   sendMessage() {
+    var messageAux = "";
+    
+    if(this.admin == true){
+      messageAux = this.profileData.currentUser.email +" (Admin): "+ this.message;
+    }
+    else{
+      messageAux = this.profileData.currentUser.email +": "+ this.message
+    }
       if(this.message) {
           let chat = {
               from: this.uid,
-              message: this.profileData.currentUser.email +" "+ this.message,
+              message: messageAux,
               type: 'message'
           };
           this.chats.push(chat);

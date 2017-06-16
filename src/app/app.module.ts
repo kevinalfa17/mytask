@@ -22,6 +22,9 @@ import {NewContactPage} from '../pages/new-contact/new-contact';
 import {ContactListPage} from '../pages/contact-list/contact-list';
 import {TaskDetailPage} from '../pages/task-detail-page/task-detail-page';
 import { CommentNoti } from '../pages/commentNoti/commentNoti';
+import {EditTaskPage} from '../pages/edit-task-page/edit-task-page';
+import {TaskChatPage} from '../pages/task-chat-page/task-chat-page';
+
 
 //Providers
 import { Camera } from '@ionic-native/camera';
@@ -77,7 +80,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     NotificationDetailPage,
     TaskDetailPage,
     CreateOwnTaskPage,
-    CommentNoti
+    CommentNoti,
+    EditTaskPage,
+    TaskChatPage
   ],
   imports: [
     BrowserModule,
@@ -124,7 +129,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     NotificationDetailPage,
     TaskDetailPage,
     CreateOwnTaskPage,
-    CommentNoti
+    CommentNoti,
+    EditTaskPage,
+    TaskChatPage
   ],
   providers: GetProviders()
 })

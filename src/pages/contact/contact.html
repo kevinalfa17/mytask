@@ -1,7 +1,7 @@
 <ion-header>
     <ion-navbar color="primary">
         <ion-title>
-          Contacts
+          {{'CONTACTS' | translate}}
         </ion-title>
         <ion-buttons end>
             <ion-spinner color="light" *ngIf="!(users | async)"></ion-spinner>
@@ -12,7 +12,7 @@
 <ion-content>
     <ion-list>
       <span *ngFor="let user of users | async">
-        <a ion-item (click)="openChat(user.$key)" *ngIf="user.$key !== uid">
+        <a ion-item (click)="openChat(user.$key)" *ngIf="validateContacts(user.$key,user.email)">
              <ion-avatar item-left>
                 <!--<img *ngIf="!user.picture" src="assets/images/default.jpg">
                 <img *ngIf="user.picture" src="{{user.picture}}">-->

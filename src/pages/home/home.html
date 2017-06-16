@@ -48,10 +48,10 @@
   <ion-toolbar no-border-top>
     <ion-segment [(ngModel)]="taskOwner">
       <ion-segment-button value="me" (ionSelect)="showOwnTasks()">
-        Yo
+        {{'ME' | translate }}
       </ion-segment-button>
       <ion-segment-button value="Others" (ionSelect)="showOtherTasks()">
-        Otros
+        {{'OTHERS' | translate }}
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
@@ -62,43 +62,47 @@
 
         <div *ngFor="let task of delegatedTaskList | async">
           <ion-item-sliding *ngIf="validateDates2(day,task.startDay,task.endTime,task.repeat,task.recurrence,task.taskName,task.responsable)">
-          <!--<ion-item-sliding >-->
+            <!--<ion-item-sliding >-->
 
-          <ion-item color="{{chooseColor(task.endTime,task.status,task.recurrence)}}">
-            <ion-avatar item-left>
-              <img src="assets/img/logo2.jpg">
+            <ion-item color="{{chooseColor(task.endTime,task.status,task.recurrence)}}">
+              <ion-avatar item-left>
+                <img src="assets/img/logo2.jpg">
 
-            </ion-avatar>
-            <h2>{{task.taskName}}</h2>
-            <p>{{task.responsable}}</p>
-            <ion-note item-right>
-              <ion-icon *ngIf="task.haveImage" name="attach"></ion-icon>
-              {{task.endTime}}
-            </ion-note>
-          </ion-item>
+              </ion-avatar>
+              <h2>{{task.taskName}}</h2>
+              <p>{{task.responsable}}</p>
+              <ion-note item-right *ngIf="task.repeat==false">
+                <ion-icon *ngIf="task.haveImage" name="attach"></ion-icon>
+                {{task.endTime}}
+              </ion-note>
 
-          <ion-item-options>
-            <button ion-button color="button1" (click)="postpone(task.$key)">
+              <ion-note item-right *ngIf="task.repeat==true">
+                <ion-icon *ngIf="task.haveImage" name="attach"></ion-icon>
+              </ion-note>
+            </ion-item>
+
+            <ion-item-options>
+              <button ion-button color="button1" (click)="postpone(task.$key,task.permissons,task.responsable,task.alarm)">
           <ion-icon name="alarm"></ion-icon>
-          Postpone
+          {{'POSTPONE' | translate }}
         </button>
-            <button ion-button color="button2" (click)="changeDate(task.$key)">
+              <button ion-button color="button2" (click)="edit(task.$key,task.permissons)">
           <ion-icon name="create"></ion-icon>
-          Edit
+          {{'EDIT' | translate }}
         </button>
-            <button ion-button color="completeButton" (click)="call(task.phone)">
+              <button ion-button color="completeButton" (click)="contact(task.phone,task.$key)">
           <ion-icon name="call"></ion-icon>
-          Call
+          {{'CONTACT' | translate }}
         </button>
-          </ion-item-options>
+            </ion-item-options>
 
-          <ion-item-options side="left" (ionSwipe)="end(task.$key)">
-            <button ion-button color="button3" expandable (click)="end(task.$key)">
+            <ion-item-options side="left" (ionSwipe)="end(task.$key,task.permissons,task.responsable)">
+              <button ion-button color="button3" expandable (click)="end(task.$key,task.permissons,task.responsable)">
           <ion-icon name="checkmark-circle"></ion-icon>
-          <div>Finished</div>
+          <div>{{'FINISHED' | translate }}</div>
           <ion-spinner id="archive-spinner"></ion-spinner>
         </button>
-          </ion-item-options>
+            </ion-item-options>
           </ion-item-sliding>
         </div>
 
@@ -125,16 +129,20 @@
               </ion-avatar>
               <h2>{{task.taskName}}</h2>
               <p>{{task.type}}</p>
-              <ion-note item-right>
+              <ion-note item-right *ngIf="task.repeat==false">
                 <ion-icon *ngIf="task.haveImage" name="attach"></ion-icon>
                 {{task.endTime}}
+              </ion-note>
+
+              <ion-note item-right *ngIf="task.repeat==true">
+                <ion-icon *ngIf="task.haveImage" name="attach"></ion-icon>
               </ion-note>
             </ion-item>
 
             <ion-item-options>
-              <button ion-button color="button1" (click)="view(task.$key)">
+              <button ion-button color="button1" (click)="view(task.$key,task.permissons)">
           <ion-icon name="eye"></ion-icon>
-          View
+          {{'VIEW' | translate }}
         </button>
               <button ion-button color="button2" (click)="chat(task.$key)">
           <ion-icon name="chatbubbles"></ion-icon>
@@ -142,15 +150,15 @@
         </button>
               <button ion-button color="button3" (click)="update(task.$key,task.status,task.permissons)">
           <ion-icon name="flag"></ion-icon>
-          Update
+          {{'UPDATE' | translate }}
         </button>
             </ion-item-options>
 
             <ion-item-options side="left" (ionSwipe)="complete(task.$key,task.status,task.permissons)">
               <button ion-button color="completeButton" expandable (click)="complete(task.$key,task.status,task.permissons)">
           <ion-icon name="checkmark-circle"></ion-icon>
-          <div *ngIf="task.status==0">Started</div>
-          <div *ngIf="task.status!==0">Completed</div>
+          <div *ngIf="task.status==0">{{'STARTED' | translate }}</div>
+          <div *ngIf="task.status!==0">{{'COMPLETED' | translate }}</div>
           <ion-spinner id="archive-spinner"></ion-spinner>
         </button>
             </ion-item-options>
@@ -160,7 +168,7 @@
       </ion-list>
     </ion-slide>
   </ion-slides>
-  
+
   <ion-fab right bottom>
     <button ion-fab color="danger" (click)="newTaskActionSheet()">
       <ion-icon name="add"></ion-icon>

@@ -13,9 +13,11 @@ import { ProfileData } from '../../providers/profile-data';
 import { Notifications } from '../notifications/notifications';
 import { GoogleCalendar } from '../googleCalendar/googleCalendar';
 import { CreateTaskPage } from '../create-task/create-task';
+import { EditTaskPage } from '../edit-task-page/edit-task-page';
 import { CreateOwnTaskPage } from '../create-own-task-page/create-own-task-page';
 
 import { TaskDetailPage } from '../task-detail-page/task-detail-page';
+import { TaskChatPage } from '../task-chat-page/task-chat-page';
 import { TaskProvider } from '../../providers/task-provider';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import * as moment from 'moment';
@@ -76,8 +78,12 @@ export class HomePage {
     this.delegatedTaskList = taskProvider.getDelegatedTasks();
     this.datesList = [];
     this.datesList2 = [0, 1, 2];
-    this.taskSegment = true;
     this.searchTerm = "";
+
+    if (this.taskOwner == "me") {
+      this.taskSegment = true;
+    }
+
 
 
     this.taskList.map(list => list.length).subscribe(length => {
@@ -87,15 +93,25 @@ export class HomePage {
           var maxDate = new Date(Math.max.apply(null, dates));
           var minDate = new Date(Math.min.apply(null, dates));
 
+
           this.datesList = [];
-          this.datesList = this.getDateRange(new Date(), maxDate);
+          this.datesList = this.getDateRange(new Date(moment().format("YYYY-MM-DD")), maxDate);
+
+          if (this.datesList.length == 1) {
+            this.lastSlide = true;
+          }
 
 
           this.actualSlide = 0;
           this.actualSlide2 = 0;
-          this.title = this.getDateTitle(this.datesList[this.actualSlide]);
+          if (this.datesList.length > 0 && this.taskSegment == true) {
+            this.title = this.getDateTitle(this.datesList[this.actualSlide]);
+          }
 
         });
+      }
+      else {
+        this.lastSlide = true;
       }
 
     });
@@ -239,6 +255,35 @@ export class HomePage {
     actionSheet.present();
   }
 
+  contact(phone, key) {
+
+    let actionSheet = this.actionSheetCtrl.create({
+      title: '',
+      buttons: [
+        {
+          text: 'Chat',
+          handler: () => {
+            this.nav.push(TaskChatPage, {
+              key: key,
+              admin: true
+            })
+          }
+        },
+        {
+          text: 'Call',
+          handler: () => {
+            this.call(phone);
+          }
+        },
+        {
+          text: 'Back',
+          role: 'cancel',
+        }
+      ]
+    });
+    actionSheet.present();
+
+  }
 
   call(passedNumber) {
     passedNumber = encodeURIComponent(passedNumber);
@@ -298,6 +343,7 @@ export class HomePage {
   }
 
   getDateRange(startDate, endDate) {
+
     var dates = [],
       currentDate: Date = startDate,
       addDays = function (days) {
@@ -305,10 +351,18 @@ export class HomePage {
         date.setDate(date.getDate() + days);
         return date;
       };
-    while (currentDate <= endDate) {
-      dates.push(moment(currentDate).format('YYYY-MM-DD'));
-      currentDate = addDays.call(currentDate, 1);
+
+    if (moment(currentDate).format('YYYY-MM-DD') == moment(endDate).format('YYYY-MM-DD')) {
+      dates.push(moment.utc(endDate).format('YYYY-MM-DD'));
     }
+    else {
+      while (currentDate <= endDate) {
+        dates.push(moment.utc(currentDate).format('YYYY-MM-DD'));
+        currentDate = addDays.call(currentDate, 1);
+      }
+
+    }
+
     return dates;
   };
 
@@ -570,16 +624,31 @@ export class HomePage {
     }
   }
 
-  view(key) {
+  view(key, permissons) {
     this.nav.push(TaskDetailPage, {
-      key: key
+      key: key,
+      permissons: permissons
     })
+  }
+
+  edit(key, permissons) {
+    this.nav.push(EditTaskPage, {
+      key: key,
+      permissons: permissons
+    })
+  }
+
+  end(key, permissons, responsable) {
+    this.taskProvider.endTask(key, permissons, responsable);
   }
 
   showOwnTasks() {
     this.taskSegment = true;
     if (this.datesList.length > 0) {
       this.title = this.getDateTitle(this.datesList[this.actualSlide]);
+    }
+    else {
+      this.title = "";
     }
   }
 
@@ -600,7 +669,6 @@ export class HomePage {
 
   chooseColor(endTime, status, recurrence) {
 
-    console.log("Choose");
 
     var maxDate = moment(endTime, 'YYYY-MM-DD');
     var currentDate = moment().subtract(1, "days");
@@ -618,11 +686,53 @@ export class HomePage {
       }
     }
 
+  }
 
 
 
+
+  postpone(key, permissons, responsable, alarm) {
+
+    var alarmAux = alarm.split(":");
+    var newAlarm = moment();
+    newAlarm.hours(alarmAux[0]);
+    newAlarm.minutes(alarmAux[1]);
+
+
+
+    let actionSheet = this.actionSheetCtrl.create({
+      title: '',
+      buttons: [
+        {
+          text: '1 H.',
+          handler: () => {
+            newAlarm = newAlarm.add(1, "hours");
+            this.taskProvider.editTask(key, permissons, responsable, "alarm", newAlarm.format("HH:mm"), "delegatedTasks")
+          }
+        },
+        {
+          text: '30 M.',
+          handler: () => {
+            newAlarm = newAlarm.add(30, "minutes");
+            this.taskProvider.editTask(key, permissons, responsable, "alarm", newAlarm.format("HH:mm"), "delegatedTasks")
+          }
+        },
+        {
+          text: 'Back',
+          role: 'cancel',
+        }
+      ]
+    });
+    actionSheet.present();
 
   }
 
+
+  chat(key) {
+    this.nav.push(TaskChatPage, {
+      key: key,
+      admin: false
+    })
+  }
 
 }

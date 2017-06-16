@@ -11,7 +11,7 @@
 <ion-content>
 
   <ion-list ng-for>
-     <ion-item>
+    <ion-item>
       {{(task | async)?.taskName}}
     </ion-item>
     <ion-item *ngIf="!(task | async)?.repeat">
@@ -33,13 +33,20 @@
     </ion-item>
 
     <ion-item>
-      <ion-icon name="attach"></ion-icon>
-      {{'FILES' | translate}}
-      <ion-list>
-        <ion-item *ngFor="let file of (task | async)?.files">
-          {{file}}}
-        </ion-item>
-      </ion-list>
+      <ion-label>{{'NEWENDSDATE' | translate}}</ion-label>
+      <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="endDate" [disabled]="((task | async)?.repeat)" min="{{(task | async)?.endTime}}"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>{{'NEWENDSTIME' | translate}}</ion-label>
+      <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="endTime" [disabled]="((task | async)?.repeat)"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <input #aux1 style="display: none" type="text" value="{{ (task | async)?.responsable }}">
+      <button ion-button (click)="changeDate(aux1.value)" [disabled]="((task | async)?.repeat)">
+      {{'CHANGEDATETIME' | translate}}
+    </button>
     </ion-item>
 
     <ion-item>
@@ -48,7 +55,6 @@
     </ion-item>
 
     <ion-item>
-      <input #aux1 style="display: none" type="text" value="{{ (task | async)?.responsable }}">
       <input #aux2 style="display: none" type="text" value="{{(task | async)?.comments}}">
       <button ion-button (click)="addComment(aux1.value,aux2.value)">
       {{'ADDCOMMENT' | translate}}

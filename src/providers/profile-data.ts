@@ -145,7 +145,7 @@ export class ProfileData {
    */
   insertTask(email, key, subnode, task) {
     var userkey;
-    this.af.database.list('/userProfile', {
+    let subscription = this.af.database.list('/userProfile', {
       query: {
         orderByChild: 'email',
         equalTo: email
@@ -158,6 +158,7 @@ export class ProfileData {
           var yourRef = this.af.database.list(`/userProfile/${snapshot.key}/${subnode}`);
           task.phone = snapshot.val().phone;
           yourRef.update(key, task);
+          subscription.unsubscribe();
         }
 
       });
@@ -168,7 +169,7 @@ export class ProfileData {
   updateStatus(email, key, newStatus) {
 
     var userkey;
-    this.af.database.list('/userProfile', {
+    let subscription = this.af.database.list('/userProfile', {
       query: {
         orderByChild: 'email',
         equalTo: email
@@ -178,9 +179,9 @@ export class ProfileData {
       snapshots.forEach(snapshot => {
 
         if (snapshot.key !== null) {
-          console.log("444");
           var yourRef = this.af.database.object(`/userProfile/${snapshot.key}/delegatedTasks/${key}`);
           yourRef.update({ status: newStatus })
+          subscription.unsubscribe();
         }
 
       });
@@ -203,7 +204,7 @@ export class ProfileData {
   insertNotification(email, description, name, type, creatorid, key, keyT, comment) {
 
     var userkey;
-    this.af.database.list('/userProfile', {
+    let subscription = this.af.database.list('/userProfile', {
       query: {
         orderByChild: 'email',
         equalTo: email
@@ -226,6 +227,7 @@ export class ProfileData {
             HourSended: moment().format('h:mm:s a'),
             comment: comment
           });
+          subscription.unsubscribe();
         }
       });
     })
@@ -235,7 +237,7 @@ export class ProfileData {
   endTask(email, key, subnode) {
 
     var userkey;
-    this.af.database.list('/userProfile', {
+    let subscription = this.af.database.list('/userProfile', {
       query: {
         orderByChild: 'email',
         equalTo: email
@@ -247,11 +249,46 @@ export class ProfileData {
         if (snapshot.key !== null) {
           var yourRef = this.af.database.object(`/userProfile/${snapshot.key}/${subnode}/${key}`);
           yourRef.remove();
+          subscription.unsubscribe();
         }
 
       });
     })
 
   }
+
+
+  updateComment(email, key, value, field, subnode) {
+
+    var userkey;
+    let subscription = this.af.database.list('/userProfile', {
+      query: {
+        orderByChild: 'email',
+        equalTo: email
+      },
+      preserveSnapshot: true
+    }).subscribe(snapshots => {
+      snapshots.forEach(snapshot => {
+
+        if (snapshot.key !== null) {
+          if (field == "comments") {
+            this.af.database.list(`/userProfile/${snapshot.key}/${subnode}`).update(key, { comments: value })
+          }
+          else if (field == "alarm") {
+            this.af.database.list(`/userProfile/${snapshot.key}/${subnode}`).update(key, { alarm: value })
+          }
+          else if (field == "endTime") {
+            this.af.database.list(`/userProfile/${snapshot.key}/${subnode}`).update(key, { endTime: value })
+          }
+
+          subscription.unsubscribe();
+        }
+
+      });
+    })
+    //subscription.unsubscribe();
+
+  }
+
 
 }

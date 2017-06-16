@@ -126,9 +126,6 @@ export class CreateOwnTaskPage {
      if(typeof this.subtype == 'undefined') {
         this.subtype = "";
     }
-
-    console.log("this.type");
-    console.log(this.subtype);
     
 
     if (this.startDate == "") {

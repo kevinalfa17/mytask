@@ -104,7 +104,7 @@ export class TaskProvider {
       Read: 'false',
       taskid: "",
     };
-    
+
 
     responsable.forEach((user) => {
 
@@ -247,20 +247,32 @@ export class TaskProvider {
   updateStatus(key, newStatus, permissons) {
 
     this.af.database.list(`/userProfile/${this.up.currentUser.uid}/tasks`).update(key, { status: newStatus });
-    
+
     permissons.forEach((user2) => {
       this.up.updateStatus(user2, key, newStatus)
     });
   };
-  
 
-  endTask(key, permissons , responsable){
 
-    this.up.endTask(responsable,key,"tasks");
-    
-    permissons.forEach((user2) => {
-      this.up.endTask(user2,key,"delegatedTasks");
+  endTask(key, permissons, responsable) {
+
+    this.up.endTask(responsable, key, "tasks");
+
+    permissons.forEach((user) => {
+      this.up.endTask(user, key, "delegatedTasks");
     });
   };
+
+
+  editTask(key, permissons, responsable, field, value ,subnode) {
+
+   // this.af.database.list(`/userProfile/${this.up.currentUser.uid}/tasks`).update(key, { comments: value });
+    this.up.updateComment(responsable,key,value,field,"tasks");
+    permissons.forEach((user2) => {
+      this.up.updateComment(user2,key,value,field,subnode);
+    });
+
+  };
+
 
 }

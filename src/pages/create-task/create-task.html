@@ -2,7 +2,7 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-title>CreateTask</ion-title>
+    <ion-title>{{'CREATETASK' | translate}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -14,12 +14,12 @@
     <ion-list>
 
       <ion-item>
-        <ion-label stacked>Tarea</ion-label>
-        <ion-input [(ngModel)]="taskName" type="text" placeholder="Nombre de la tarea"></ion-input>
+        <ion-label stacked>{{'TASK' | translate}}</ion-label>
+        <ion-input [(ngModel)]="taskName" type="text" placeholder="{{'TASKNAME' | translate}"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label>Tipo</ion-label>
+        <ion-label>{{'TYPE' | translate}}</ion-label>
         <ion-select (ionChange)="loadSubtypes($event)">
           <ion-option *ngFor="let type of types | async" value="{{type.typeName}}">
             {{type.typeName}}
@@ -28,7 +28,7 @@
       </ion-item>
 
       <ion-item>
-        <ion-label>Subtipo</ion-label>
+        <ion-label>{{'SUBTYPE' | translate}}</ion-label>
         <ion-select (ionChange)="selectSubtype($event)">
           <ion-option *ngFor="let subtype of subtypes | async" value="{{subtype.subtypeName}}">
             {{ subtype.subtypeName }}
@@ -41,7 +41,7 @@
 
   <div style="background-color:white">
 
-    <ion-label stacked>Users</ion-label>
+    <ion-label stacked>{{'USERS' | translate}}</ion-label>
     <div style="float:left;width:30%; border-right:1px solid #8B3A3A">
 
       <ion-item style="padding-right:10px">
@@ -76,43 +76,43 @@
   <div style="margin-top:147px">
     <ion-list>
       <ion-item>
-        <ion-label>Start Date</ion-label>
+        <ion-label>{{'STARTDATE' | translate}}</ion-label>
         <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="startDate" min="{{minDate}}"></ion-datetime>
       </ion-item>
 
 
       <ion-item>
-        <ion-label>Start Time</ion-label>
+        <ion-label>{{'STARTTIME' | translate}}</ion-label>
         <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="startTime"></ion-datetime>
       </ion-item>
 
       <ion-item>
-        <ion-label> Repeat</ion-label>
+        <ion-label>{{'REPEAT' | translate}}</ion-label>
         <ion-toggle checked="false" [(ngModel)]="repeatToggle"></ion-toggle>
       </ion-item>
 
       <ion-item>
-        <ion-label>Recurrence</ion-label>
+        <ion-label>{{'RECURRENCE' | translate}}</ion-label>
         <ion-select (ionChange)="selectRecurrence($event)" [disabled]="!repeatToggle" [(ngModel)]="recurrence">
           <ion-option value="daily">
-            Daily
+            {{'DAILY' | translate}}
           </ion-option>
           <ion-option value="weekly">
-            Weekly
+            {{'WEEKLY' | translate}}
           </ion-option>
           <ion-option value="monthly">
-            Monthly
+            {{'MONTHLY' | translate}}
           </ion-option>
         </ion-select>
       </ion-item>
 
       <ion-item>
-        <ion-label>Ends Date</ion-label>
+        <ion-label>{{'ENDSDATE' | translate}}</ion-label>
         <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="endDate" [disabled]="repeatToggle" min="{{minDate}}"></ion-datetime>
       </ion-item>
 
       <ion-item>
-        <ion-label>Ends Time</ion-label>
+        <ion-label>{{'ENDSTIME' | translate}}</ion-label>
         <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="endTime"></ion-datetime>
       </ion-item>
 
@@ -123,7 +123,7 @@
   <div>
     <ion-list>
       <ion-item>
-        <ion-label stacked> Priority</ion-label>
+        <ion-label stacked>{{'PRIORITY' | translate}}</ion-label>
         <ion-range min="1" max="5" step="1" snaps="true" [(ngModel)]="priority" color="danger">
           <ion-icon range-left small color="danger" name="alert"></ion-icon>
           <ion-icon range-right color="danger" name="alert"></ion-icon>
@@ -131,12 +131,12 @@
       </ion-item>
 
       <ion-item>
-        <ion-label> Notifications</ion-label>
+        <ion-label>{{'NOTIFICATIONS' | translate}}</ion-label>
         <ion-toggle checked="true" [(ngModel)]="notificationsToggle"></ion-toggle>
       </ion-item>
 
       <ion-item>
-        <ion-label>Advanced options</ion-label>
+        <ion-label>{{'ADVANCEDOPTIONS' | translate}}</ion-label>
         <ion-toggle checked="false" [(ngModel)]="advancedToggle"></ion-toggle>
       </ion-item>
 
@@ -145,12 +145,12 @@
 
     <div style="background-color:white; margin-bottom: 40%" *ngIf="advancedToggle">
 
-      <ion-label stacked>Files</ion-label>
+      <ion-label stacked>{{'FILES' | translate}}</ion-label>
       <div style="float:left;width:50%; border-right:1px solid #8B3A3A;height:20vh; background-color:white">
 
         <button ion-item (click)="showFilesOptionsSheet()">
         <ion-icon item-left name="add"></ion-icon>
-        Add Files
+        {{'ADDFILES' | translate}}
       </button>
 
       </div>
@@ -187,7 +187,7 @@
 
     <ion-list *ngIf="advancedToggle">
       <ion-item>
-        <ion-label stacked>Comments</ion-label>
+        <ion-label stacked>{{'COMMENTS' | translate}}</ion-label>
         <ion-textarea [(ngModel)]="newComment" type="text" placeholder="Write a commentary"></ion-textarea>
       </ion-item>
 
@@ -195,7 +195,7 @@
 
 
     <div style="background-color:white" *ngIf="advancedToggle">
-      <ion-label stacked>User Permissons</ion-label>
+      <ion-label stacked>{{'USERPERMISSONS' | translate}}</ion-label>
       <div style="float:left;width:30%; border-right:1px solid #8B3A3A">
 
 
@@ -231,6 +231,6 @@
   </div>
 
     <button ion-button block (click)="addTask()" >
-    Create new Task
+    {{'CREATENEWTASK' | translate}
   </button>
 </ion-content>
