@@ -48,10 +48,10 @@
   <ion-toolbar no-border-top>
     <ion-segment [(ngModel)]="taskOwner">
       <ion-segment-button value="me" (ionSelect)="showOwnTasks()">
-        Yo
+        {{'ME' | translate }}
       </ion-segment-button>
       <ion-segment-button value="Others" (ionSelect)="showOtherTasks()">
-        Otros
+        {{'OTHERS' | translate }}
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
@@ -84,22 +84,22 @@
             <ion-item-options>
               <button ion-button color="button1" (click)="postpone(task.$key,task.permissons,task.responsable,task.alarm)">
           <ion-icon name="alarm"></ion-icon>
-          Postpone
+          {{'POSTPONE' | translate }}
         </button>
               <button ion-button color="button2" (click)="edit(task.$key,task.permissons)">
           <ion-icon name="create"></ion-icon>
-          Edit
+          {{'EDIT' | translate }}
         </button>
               <button ion-button color="completeButton" (click)="contact(task.phone,task.$key)">
           <ion-icon name="call"></ion-icon>
-          Contact
+          {{'CONTACT' | translate }}
         </button>
             </ion-item-options>
 
             <ion-item-options side="left" (ionSwipe)="end(task.$key,task.permissons,task.responsable)">
               <button ion-button color="button3" expandable (click)="end(task.$key,task.permissons,task.responsable)">
           <ion-icon name="checkmark-circle"></ion-icon>
-          <div>Finished</div>
+          <div>{{'FINISHED' | translate }}</div>
           <ion-spinner id="archive-spinner"></ion-spinner>
         </button>
             </ion-item-options>
@@ -142,7 +142,7 @@
             <ion-item-options>
               <button ion-button color="button1" (click)="view(task.$key,task.permissons)">
           <ion-icon name="eye"></ion-icon>
-          View
+          {{'VIEW' | translate }}
         </button>
               <button ion-button color="button2" (click)="chat(task.$key)">
           <ion-icon name="chatbubbles"></ion-icon>
@@ -150,15 +150,15 @@
         </button>
               <button ion-button color="button3" (click)="update(task.$key,task.status,task.permissons)">
           <ion-icon name="flag"></ion-icon>
-          Update
+          {{'UPDATE' | translate }}
         </button>
             </ion-item-options>
 
             <ion-item-options side="left" (ionSwipe)="complete(task.$key,task.status,task.permissons)">
               <button ion-button color="completeButton" expandable (click)="complete(task.$key,task.status,task.permissons)">
           <ion-icon name="checkmark-circle"></ion-icon>
-          <div *ngIf="task.status==0">Started</div>
-          <div *ngIf="task.status!==0">Completed</div>
+          <div *ngIf="task.status==0">{{'STARTED' | translate }}</div>
+          <div *ngIf="task.status!==0">{{'COMPLETED' | translate }}</div>
           <ion-spinner id="archive-spinner"></ion-spinner>
         </button>
             </ion-item-options>
