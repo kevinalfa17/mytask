@@ -16,7 +16,6 @@ import { ProfileData } from '../providers/profile-data';
 @Injectable()
 export class NotificationData {
     public userProfile: firebase.database.Reference; // Reference for the userProfile node in the database
-    public notificationListNode: firebase.database.Reference; // Reference for the notifications node in the database
     public ListNotifications: any; // List used to save somee information taken of the notification list
     public numberNewNotifications = 0; // The number of notifications doesn't read
     public notinull: any; // The reference to the null notification
@@ -26,8 +25,6 @@ export class NotificationData {
 
     constructor(public pd: ProfileData, public localNotifications: LocalNotifications, public alertCtrl: AlertController) {
         this.userProfile = firebase.database().ref('/userProfile');
-        this.notificationListNode = firebase.database().ref('notifications');
-        this.notinull = this.notificationListNode.child('0');
         this.ListNotifications = [];
         this.ListNotificationsForDelete = [];
         this.localNotificationsList = [];
@@ -57,13 +54,11 @@ export class NotificationData {
             alert("yyeeeaahhh");
             return this.notinull;
         } else {
+            
             tem.child(notificationtId).update({
                 Read: "true"
             });
-            this.notificationListNode.child(notificationtId).update({
-                Read: "true"
-            });
-            return this.notificationListNode.child(notificationtId);
+            return tem.child(notificationtId);
         }
     }
     /**
@@ -135,14 +130,7 @@ export class NotificationData {
      * @param currentUser The uid of the currrent user
      */
     acceptNotification(Noti, currentUser) {
-        var tem = this.userProfile.child(currentUser).child('notifications');
-
-        this.notificationListNode.child(Noti.id).update({
-            Condition: "Accepted",
-            comment: Noti.comment
-        });
-
-        this.pd.insertNotification(Noti.From, "Task Accepted", Noti.Name, Noti.Type, currentUser.uid, Noti.id, Noti.taskid, Noti.comment);
+        this.pd.insertNotification(Noti.From, "Task Accepted", Noti.Name, 'Accepted', currentUser.uid, Noti.id, Noti.taskid, Noti.comment);
 
         this.userProfile.child('taskManage').child('Accept').push({
             Name: Noti.Name,
@@ -158,13 +146,7 @@ export class NotificationData {
      * @param currentUser The uid of the currrent user
      */
     rejectNotification(Noti, currentUser) {
-        var tem = this.userProfile.child(currentUser).child('notifications');
-        this.notificationListNode.child(Noti.id).update({
-            Condition: "Rejected",
-            comment: Noti.comment
-        });
-
-        this.pd.insertNotification(Noti.From, "Task Rejected", Noti.Name, Noti.Type, currentUser.uid, Noti.id, Noti.taskid, Noti.comment);
+        this.pd.insertNotification(Noti.From, "Task Rejected", Noti.Name, "Rejected", currentUser.uid, Noti.id, Noti.taskid, Noti.comment);
 
         this.userProfile.child('taskManage').child('Rejected').push({
             Name: Noti.Name,
