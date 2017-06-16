@@ -4,9 +4,14 @@ import { NavController, NavParams } from 'ionic-angular';
 //Providers
 import { NotificationData } from '../../providers/notification-provider';
 import { ProfileData } from '../../providers/profile-data';
+import { TaskProvider } from '../../providers/task-provider';
+import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
+
+
 
 //Pages
 import { CommentNoti } from '../commentNoti/commentNoti';
+
 
 /**
  * This page it's used to show the information of one notification
@@ -20,7 +25,8 @@ export class NotificationDetailPage {
   public currentUser: any; // The current user to take the reference
 
   constructor(public nav: NavController, public navParams: NavParams,
-    public notificationData: NotificationData, public profileData: ProfileData) { }
+    public notificationData: NotificationData, public profileData: ProfileData,
+    public taskProvider: TaskProvider, public af: AngularFire) { }
 
   /**
   * Function used to reload and see the changing data and refresh the diferent params
@@ -45,7 +51,7 @@ export class NotificationDetailPage {
   /**
    * Function used to accept the task of the notification
    */
-  accept() {
+  accept(taskid) {
     if (this.currentNotification.Name == "null") {
 
     } if (this.currentNotification.type == "Rejected") {
@@ -54,23 +60,46 @@ export class NotificationDetailPage {
       this.notificationData.deleteNotificationTemp(this.currentNotification.id, this.currentUser);
       this.nav.pop();
     } else {
+
+      let task = this.af.database.object(`/userProfile/${this.profileData.currentUser.uid}/tasks/${taskid}`)
+        .subscribe(snapshot => {
+
+          this.taskProvider.updateStatus(taskid, 1, snapshot.permissons);
+
+          snapshot.permissons.forEach((user) => {
+            if (user !== this.profileData.currentUser.email) {
+              this.profileData.insertNotification(user, "Accepted task", snapshot.taskName, "Accepted",
+                this.profileData.currentUser.uid, taskid, "");
+            }
+          });
+          //task.unsubscribe();
+
+        });
+
+
       //this.nav.push(CommentNoti, { notification: this.currentNotification, currentUser: this.currentUser, type: "accept" });
       //this.nav.pop();
     }
+
+    this.delete();
   }
 
   /**
    * Function used to reject the task of the notification
    */
-  reject() {
+  reject(taskid) {
     if (this.currentNotification.Name == "null") {
     }
     if (this.currentNotification.type == "Rejected") {
-      //AQUI PONER EL CODIGO
-      
+      let task = this.af.database.object(`/userProfile/${this.profileData.currentUser.uid}/tasks/${taskid}`).remove();
       this.notificationData.deleteNotificationTemp(this.currentNotification.id, this.currentUser);
       this.nav.pop();
     } else {
+      let task = this.af.database.object(`/userProfile/${this.profileData.currentUser.uid}/tasks/${taskid}`)
+        .subscribe(snapshot => {
+          this.taskProvider.updateStatus(taskid, 1, snapshot.permissons);
+        });
+
       this.nav.push(CommentNoti, { notification: this.currentNotification, currentUser: this.currentUser, type: "reject" });
       this.nav.pop();
     }

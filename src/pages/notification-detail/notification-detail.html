@@ -18,10 +18,10 @@
       <p><strong>{{"TEXTHS" | translate}}: </strong>{{currentNotification?.HourSended}}</p>
       <p><strong>{{"WORDCOMMENT" | translate}}: </strong>{{currentNotification?.comment}}</p>
     </ion-card-content>
-    <button ion-button icon-only (click)="accept()">
+    <button ion-button icon-only (click)="accept(currentNotification?.taskid)">
         <ion-icon name="checkmark"></ion-icon>
     </button>
-    <button ion-button icon-only (click)="reject()">
+    <button ion-button icon-only (click)="reject(currentNotification?.taskid)">
         <ion-icon name="close"></ion-icon>
     </button>
     <button ion-button icon-only (click)="delete()">

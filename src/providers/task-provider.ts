@@ -99,7 +99,6 @@ export class TaskProvider {
       if(user !== this.up.currentUser.email){
         this.up.insertNotification(user, comments, taskname,"new", this.up.currentUser.uid, key, "");
       }
-      this.up.insertNotification(user, comments, taskname,"new", this.up.currentUser.uid, key, "");
 
       delegatedTask.responsable = user;
       //this.up.insertTask(this.up.currentUser.email, key, "delegatedTasks", delegatedTask);
