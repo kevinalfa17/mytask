@@ -30,17 +30,15 @@ export class MediaData {
      */
     captureImage(currentUser) {
         var options = { limit: 1 };
-        var dat;
+    
 
         this.mediaCapture.captureImage(options).then(
             (data: MediaFile[]) => {
-                dat = this.savedInStorage(data[0].fullPath, currentUser, "image");
-                console.log("dat image");
-                console.log(dat);
+               this.savedInStorage(data[0].fullPath, currentUser, "image");
             },
             (err: CaptureError) => console.error(err)
         );
-        return dat;
+        
     }
 
     /**
@@ -51,14 +49,14 @@ export class MediaData {
         const options: CaptureAudioOptions = {
             limit: 1, duration: 60
         };
-        var dat;
+  
         this.mediaCapture.captureAudio(options).then(
             (data: MediaFile[]) => {
-                dat = this.savedInStorage(data[0].fullPath, currentUser, "Audio");
+                this.savedInStorage(data[0].fullPath, currentUser, "Audio");
             },
             (err: CaptureError) => console.error(err)
         );
-        return dat;
+
     }
 
     /**
@@ -66,40 +64,32 @@ export class MediaData {
      * @param currentUser The user uid to keep the video
      */
     captureVideo(currentUser: any) {
-        var dat;
+     
         var options = { limit: 1, duration: 10 };
         this.mediaCapture.captureVideo(options).then(
             (data: MediaFile[]) => {
-                dat = this.savedInStorage(data[0].fullPath, currentUser, "Video");
+                this.savedInStorage(data[0].fullPath, currentUser, "Video");
             },
             (err: CaptureError) => console.error(err)
         );
-        return dat;
+
     }
 
     /**
      * This function it's used to take and save a new file
      */
     captureFile(currentUser) {
-        
-        /*
-        var dat;
         this.filecho.open().then((url) => {
 
             (<any>window).FilePath.resolveNativePath(url, (result) => {
 
                 (<any>window).resolveLocalFileSystemURL(result, (res) => {
                     res.file((resFile) => {
-                        dat = this.savedInStorage(result, currentUser, resFile.type);
-                        console.log("dat image1");
-                        console.log(dat);
+                        this.savedInStorage(result, currentUser, resFile.type);
                     });
                 });
             })
         });
-        console.log("dat image2");
-        console.log(dat);
-        return dat;*/
     }
 
     /**
@@ -131,6 +121,7 @@ export class MediaData {
             //     content: '...'
             // });
             // loading.present();
+
             this.tools.makeFileIntoBlob(data, ext, mime).then((fileblob) => {
                 var newName = this.tools.randomString(10);
 
@@ -139,20 +130,9 @@ export class MediaData {
                     contentType: mime
                 });
 
-                console.log("heeere1")
-                console.log(ref.getDownloadURL)
-
-                console.log("heeere2")
-                console.log(ref.getDownloadURL())
-
                 // firebase.database().ref("/userProfile").child(currentUser).child(type).child(newName).set(ref.getDownloadURL()); // Aqui PONER REF A TASK
 
-
             });
-
-            //console.log("heeere3")
-            //console.log(ref.getDownloadURL())
-            //return ref.getDownloadURL();
         }
     }
 

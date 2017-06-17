@@ -132,9 +132,6 @@
               <button ion-button item-right icon-only icon-right clear (click)="quitFile(i)">
                 <ion-icon name="md-close"></ion-icon>     
               </button>
-              <div *ngIf="file.type=='audio'">
-                <audio [src]="file.link" controls></audio>
-              </div>
             </ion-item>
           </ion-list>
         </ion-scroll>

@@ -178,6 +178,7 @@ export class CreateOwnTaskPage {
    */
   addTask() {
 
+
     if (typeof this.subtype == 'undefined') {
       this.subtype = "";
     }
@@ -212,6 +213,9 @@ export class CreateOwnTaskPage {
       }
     }
 
+    if (this.type == "meeting" || this.type == "Meeting") {
+      this.taskProvider.sendInvite(this.taskName, "Costa Rica", this.newComment, this.startDate, this.endDate, this.users);
+    }
     this.taskProvider.addNewTask(this.users, this.taskName, this.type, this.subtype, this.startDate, this.startTime, this.repeatToggle,
       this.recurrence, this.endDate, parseInt(this.priority), this.notificationsToggle, [], this.newComment, this.permissons, this.haveImage, this.endTime)
 
@@ -229,30 +233,22 @@ export class CreateOwnTaskPage {
         {
           text: 'Photo',
           handler: () => {
-            console.log("photo");
-            var link;
-            link = this.mediaProvider.captureImage(this.up.currentUser.uid);
-            console.log(link);
-            var aux = link.split("/");
+            this.mediaProvider.captureImage(this.up.currentUser.uid);
+
             let file = {
-              link: link,
-              name: aux[aux.length - 1],
+              name: "New Photo",
               type: "photo"
             }
-            console.log(file);
             this.files.push(file);
-            console.log(this.files);
           }
         },
         {
           text: 'Video',
           handler: () => {
-            var link: string;
-            link = this.mediaProvider.captureVideo(this.up.currentUser.uid);
-            var aux = link.split("/");
+            this.mediaProvider.captureVideo(this.up.currentUser.uid);
+
             let file = {
-              link: link,
-              name: aux[aux.length - 1],
+              name: "New video",
               type: "video"
             }
             this.files.push(file);
@@ -261,32 +257,22 @@ export class CreateOwnTaskPage {
         {
           text: 'File',
           handler: () => {
-            console.log("file");
-            var link: string = "";
+
             this.mediaProvider.captureFile(this.up.currentUser.uid);
-            console.log("reeeeesult out")
-            console.log(link);
-            var aux = link.split("/");
             let file = {
-              link: link,
-              name: aux[aux.length - 1],
+              name: "New File",
               type: "file"
             }
-            console.log(file);
             this.files.push(file);
-            console.log(this.files);
 
           }
         },
         {
           text: 'Audio',
           handler: () => {
-            var link: string;
-            link = this.mediaProvider.captureAudio(this.up.currentUser.uid);
-            var aux = link.split("/");
+            this.mediaProvider.captureAudio(this.up.currentUser.uid);
             let file = {
-              link: link,
-              name: aux[aux.length - 1],
+              name: "New audio",
               type: "audio"
             }
             this.files.push(file);

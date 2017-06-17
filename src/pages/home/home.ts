@@ -663,6 +663,36 @@ export class HomePage {
         this.taskProvider.editTask(key, permissons, responsable, "alarm2", newAlarm2.format("HH:mm"), "delegatedTasks")
         this.taskProvider.editTask(key, permissons, responsable, "alarm3", newAlarm3.format("HH:mm"), "delegatedTasks")
 
+        var startTime = moment();
+        var endTime = moment(newAlarm.format("HH:mm"), "HH:mm");;
+        var duration = moment.duration(endTime.diff(startTime));
+        var minutes = duration.asMinutes();
+
+        console.log("minutes");
+        console.log(Math.round(minutes*60));
+
+        this.notificationData.addLocalNotification("Task reminder", name, "",Math.round(minutes*60),"","");
+
+        var startTime = moment();
+        var endTime = moment(newAlarm2.format("HH:mm"), "HH:mm");;
+        var duration = moment.duration(endTime.diff(startTime));
+        var minutes = duration.asMinutes();
+
+        console.log("minutes");
+        console.log(Math.round(minutes*60));
+
+        this.notificationData.addLocalNotification("Task reminder", name, "",Math.round(minutes*60),"","");
+
+        var startTime = moment();
+        var endTime = moment(newAlarm3.format("HH:mm"), "HH:mm");;
+        var duration = moment.duration(endTime.diff(startTime));
+        var minutes = duration.asMinutes();
+
+        console.log("minutes");
+        console.log(Math.round(minutes*60));
+
+        this.notificationData.addLocalNotification("Task reminder", name, "",Math.round(minutes*60),"","");
+
         this.taskProvider.updateStatus(key, 1, permissons);
 
         permissons.forEach((user) => {
@@ -904,7 +934,7 @@ export class HomePage {
    * @param alarm3 
    * @param name 
    */
-  postpone(key, permissons, responsable, alarm1, alarm2, alarm3,name) {
+  postpone(key, permissons, responsable, alarm1, alarm2, alarm3, name) {
 
     var alarmAux = alarm1.split(":");
     var newAlarm = moment();
